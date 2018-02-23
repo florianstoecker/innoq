@@ -48,6 +48,7 @@ public class Spieler {
         {
             System.out.println("In welcher Spalte wollen Sie Ihren " + anz_zug_einz + ". Stein fallen lassen ? (Spieler " + anDerReihe + ")");
             einf_stellex = scan.nextInt() - 1;
+            Main.clear();
         }
         einf_stelley = 5;
         if(einf_stellex >= 0 && einf_stellex < 7)

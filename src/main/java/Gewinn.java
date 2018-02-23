@@ -60,7 +60,7 @@ public class Gewinn {
                         }
                     }
 
-                  /*  else if (i >= 3)
+                    /*else if (i >= 3)
                     {
                          if(j<3) //diagonal
                          {
@@ -86,9 +86,18 @@ public class Gewinn {
                              }
 
                          }*/
+
                     else if (j < 4) // wagerecht
                     {
                         if (Spielfeld[i][j + 1] == zeichen_spieler && Spielfeld[i][j + 2] == zeichen_spieler && Spielfeld[i][j + 3] == zeichen_spieler)
+                        {
+                            erg = true;
+                            return erg;
+                        }
+                    }
+                    else if (j > 3) // wagerecht
+                    {
+                        if (Spielfeld[i][j -1] == zeichen_spieler && Spielfeld[i][j - 2] == zeichen_spieler && Spielfeld[i][j - 3] == zeichen_spieler)
                         {
                             erg = true;
                             return erg;

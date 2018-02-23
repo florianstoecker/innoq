@@ -28,7 +28,7 @@ public class KI {
 
                     for(int j = 0; j<7; j++)
                     {
-                            if(KI_feld[i][j] == '@' && KI_feld[i][j-1] == 'O'&& j>0 ) // links neben eigenen Stein
+                            if(KI_feld[i][j] == '@' && j>0 && KI_feld[i][j-1] == 'O' ) // links neben eigenen Stein
                             {
                                 int help_j = j - 1;
                                 int help_i = i;
@@ -39,7 +39,7 @@ public class KI {
                                     return einf_stellex;
                                 }
 
-                                while(help_i>5)
+                                else if(help_i < 5)
                                 {
                                     if(KI_feld[help_i+1][help_j] == 'X' || KI_feld[help_i+1][help_j] == '@')
                                     {
@@ -49,7 +49,7 @@ public class KI {
                                 }
 
                             }
-                            else if(KI_feld[i][j] == '@' && KI_feld[i][j+1] == 'O') // rechts neben eigenen Stein
+                            else if(KI_feld[i][j] == '@' && j<6&& KI_feld[i][j+1] == 'O') // rechts neben eigenen Stein
                             {
                                 int help_j_ = j + 1;
                                 int help_i_ = i;
@@ -58,7 +58,7 @@ public class KI {
                                     einf_stellex = j+1;
                                     return einf_stellex;
                                 }
-                                while(help_i_>5)
+                                else  if(help_i_ < 5)
                                 {
                                     if(KI_feld[help_i_ +1][help_j_] == 'X' || KI_feld[help_i_+1][help_j_] == '@')
                                     {
