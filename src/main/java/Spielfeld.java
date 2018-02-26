@@ -16,7 +16,7 @@ public class Spielfeld {
     public static char[][] spielfeld = leeren();
     public static int[][] farbfeld = new int[6][7];
     public static Scanner scan = new Scanner(System.in);
-    public static void zeichneSpielfeld(int zug)
+    public void zeichneSpielfeld(int zug)
     {
         spielfeld = Main.getMainField();
 
@@ -79,7 +79,7 @@ public class Spielfeld {
         System.out.println("|---------------------------|" + color_RESET);
 
     }
-    public static char[][] steinEinfügen(int anDerReihe, int anzStein, int anzZugEinz, int difAusw)
+    public char[][] steinEinfügen(int anDerReihe, int anzStein, int anzZugEinz, int difAusw)
     {
 
         char zeichenSpieler = 'O';
@@ -155,7 +155,7 @@ public class Spielfeld {
         }
     }
 
-    public static boolean abfVoll()
+    public boolean abfVoll()
     {
         if(einfStelley == -1)
         {
