@@ -4,7 +4,7 @@ public class KI {
     public static int einfStellex;
     public static int steinEinfügen(char[][] kiFeld, int amZug)
     {
-
+        boolean feldLegbar = false;
         switch(difficulty)
         {
             case 1:
@@ -28,7 +28,7 @@ public class KI {
                     {
                             if(kiFeld[i][j] == '@' && j>0 && kiFeld[i][j-1] == 'O' ) // links neben eigenen Stein
                             {
-                                int help_j = j - 1;
+
                                 int help_i = i;
 
                                 if(i == 5)
@@ -37,11 +37,20 @@ public class KI {
                                     return einfStellex;
                                 }
 
-                                else if(help_i < 5)
+                                else  if(help_i < 5)
                                 {
-                                    if(kiFeld[help_i+1][help_j] == 'X' || kiFeld[help_i+1][help_j] == '@')
+                                    for (int m = 5; m > i; m--) {
+                                        if (kiFeld[m][j - 1] == 'O') {
+                                            feldLegbar = false;
+                                        }
+                                        else {
+                                            feldLegbar = true;
+                                        }
+
+                                    }
+                                    if (feldLegbar == true)
                                     {
-                                        einfStellex = j-1;
+                                        einfStellex = j - 1;
                                         return einfStellex;
                                     }
                                 }
@@ -49,7 +58,7 @@ public class KI {
                             }
                             else if(kiFeld[i][j] == '@' && j<6&& kiFeld[i][j+1] == 'O') // rechts neben eigenen Stein
                             {
-                                int help_j_ = j + 1;
+
                                 int help_i_ = i;
                                 if(i == 5)
                                 {
@@ -58,11 +67,20 @@ public class KI {
                                 }
                                 else  if(help_i_ < 5)
                                 {
-                                    if(kiFeld[help_i_ +1][help_j_] == 'X' || kiFeld[help_i_+1][help_j_] == '@')
-                                    {
-                                        einfStellex = j+1;
-                                        return einfStellex;
-                                    }
+                                        for (int m = 5; m > i; m--) {
+                                            if (kiFeld[m][j + 1] == 'O') {
+                                                feldLegbar = false;
+                                            }
+                                            else {
+                                                feldLegbar = true;
+                                            }
+
+                                        }
+                                        if (feldLegbar == true)
+                                        {
+                                            einfStellex = j + 1;
+                                            return einfStellex;
+                                        }
                                 }
                             }
                     }
@@ -72,25 +90,16 @@ public class KI {
                 break;
             case 2:
 
-                if(amZug == 1)
-                {
-                    amZug = 2;
-                }
-                if(Gewinn.kannGewinnen(kiFeld, amZug) == true)
-                {
-                    einfStellex = Gewinn.getPosxGewinn();
-                    return einfStellex;
-                }
-                if(amZug == 2)
-                {
-                    amZug = 1;
-                }
-                else if(Gewinn.kannGewinnen(kiFeld, amZug)== true)
-                {
-                    einfStellex = Gewinn.getPosxGewinn();
-                    return einfStellex;
-                }
 
+                if(Gewinn.kannGewinnen(kiFeld, 2) == true) { // Kann KI gewinnen ?
+                    einfStellex = Gewinn.getPosxGewinn();
+                    return einfStellex;
+                }
+                else if(Gewinn.kannGewinnen(kiFeld,1) == true) // Kann Spieler gewinnen ?
+                {
+                    einfStellex = Gewinn.getPosxGewinn();
+                    return einfStellex;
+                }
                 einfStellex = (int)((Math.random()) * 7 + 1)-1;
 
                 break;

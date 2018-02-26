@@ -37,7 +37,7 @@ public class Main {
 
             System.out.println("Das Spiel beginnt ! \n ");
             Spielfeld.zeichneSpielfeld(anzZug); // Spielfeld wird gezeichnet
-            while (anzZug < 42) {
+            while (anzZug < 43) {
                 if (amZug == 1) {
                     eins++;
                     anzZugEinz = eins;    // Anzahl der Züge(Spielerbezogen)

@@ -128,6 +128,7 @@ public class Gewinn
     {
         char zeichenSpieler = 0;
         boolean kannGewinnen = false;
+        boolean feldLegbar = false;
         if (amZug == 1)
         {
             zeichenSpieler = 'X';
@@ -136,30 +137,61 @@ public class Gewinn
         {
             zeichenSpieler = '@';
         }
+
+
         for (int i = 0; i < 6; i++)
         {
             for (int j = 0; j < 7; j++)
             {
-                if (Spielfeld[i][j] == zeichenSpieler)
-                {
+                if (Spielfeld[i][j] == zeichenSpieler) {
+
+
                     if (j < 4) // wagerecht
                     {
                         if (Spielfeld[i][j + 1] == zeichenSpieler && Spielfeld[i][j + 2] == zeichenSpieler )
                         {
-                            if(Spielfeld[i][j + 3] == 'O')
+                            if(j > 0)
                             {
-                                for(int m = 5; m > i; m -- )
+                                if(Spielfeld[i][j - 1] == 'O')
                                 {
-                                    if(Spielfeld[m][j + 3] == 'O')
-                                    {
+                                    for (int m = 5; m > i; m--) {
+                                        if (Spielfeld[m][j - 1] == 'O') {
+                                            feldLegbar = false;
+                                        }
+                                        else {
+                                            feldLegbar = true;
+                                        }
 
                                     }
-                                    else
+                                    if (feldLegbar == true)
                                     {
-                                        kannGewinnen = true;
-                                        posyGewinn = i;
-                                        posxGewinn = j + 3;
+                                        posxGewinn = j - 1;
+                                        return true;
+
                                     }
+                                }
+                            }
+                            if(Spielfeld[i][j + 3] == 'O')
+                            {
+                                if(i == 0)
+                                {
+                                    posxGewinn = j + 3;
+                                    return true;
+                                }
+                                for (int m = 5; m > i; m--) {
+                                    if (Spielfeld[m][j + 3] == 'O') {
+                                        feldLegbar = false;
+                                    }
+                                    else {
+                                        feldLegbar = true;
+                                    }
+
+                                }
+                                if (feldLegbar == true)
+                                {
+                                    posxGewinn = j + 3;
+                                    return true;
+
                                 }
                             }
                         }
@@ -168,238 +200,73 @@ public class Gewinn
                     {
                         if (Spielfeld[i][j - 1] == zeichenSpieler && Spielfeld[i][j - 2] == zeichenSpieler )
                         {
-                            if(Spielfeld[i][j - 3] == 'O')
-                            {
-                                for(int m = 5; m > i; m -- )
+
+                                if(i == 0)
                                 {
-                                    if(Spielfeld[m][j - 3] == 'O')
-                                    {
+                                    posxGewinn = j - 3;
+                                    return true;
+                                }
+                                if(Spielfeld[i][j - 3] == 'O')
+                                {
+                                    for (int m = 5; m > i; m--) {
+                                        if (Spielfeld[m][j - 3] == 'O') {
+                                            feldLegbar = false;
+                                        }
+                                        else {
+                                            feldLegbar = true;
+                                        }
 
                                     }
-                                    else
+                                    if (feldLegbar == true)
                                     {
-                                        kannGewinnen = true;
-                                        posyGewinn = i;
                                         posxGewinn = j - 3;
-                                    }
-                                }
-                            }
-                            else if(Spielfeld[i][j +1 ] == 'O')
-                            {
-                                for(int m = 5; m > i; m -- )
-                                {
-                                    if(Spielfeld[m][j + 1] == 'O')
-                                    {
+                                        return true;
 
                                     }
-                                    else
-                                    {
-                                        kannGewinnen = true;
-                                        posyGewinn = i;
+                                }
+                            if(j < 6) {
+
+
+                                if (Spielfeld[i][j + 1] == 'O') {
+                                    for (int m = 5; m > i; m--) {
+                                        if (Spielfeld[m][j + 1] == 'O') {
+                                            feldLegbar = false;
+                                        } else {
+                                            feldLegbar = true;
+                                        }
+
+                                    }
+                                    if (feldLegbar == true) {
                                         posxGewinn = j + 1;
+                                        return true;
+
                                     }
                                 }
                             }
                         }
                     }
-                    if (i < 3)
+                    if(i<3)
                     {
-                        // senkrecht
-                        if (Spielfeld[i + 1][j] == zeichenSpieler && Spielfeld[i + 2][j] == zeichenSpieler )
+                        if(Spielfeld[i + 1][j] == zeichenSpieler && Spielfeld[i + 2][j] == zeichenSpieler)
                         {
-                            if(Spielfeld[i + 3][j] == 'O')
+                            if(Spielfeld[i - 1][j] == 'O')
                             {
-                                kannGewinnen = true;
-                                posyGewinn = i + 3;
-                                posxGewinn = j;
-                            }
-                        }
-                        else if (j < 3) //diagonal
-                        {
-                            if (Spielfeld[i + 1][j + 1] == zeichenSpieler && Spielfeld[i + 2][j + 2] == zeichenSpieler )
-                            {
-                                if(Spielfeld[i + 3][j + 3] == 'O')
-                                {
-                                    for(int m = 5; m > i; m -- )
-                                    {
-                                        if(Spielfeld[m][j + 3] == 'O')
-                                        {
-
-                                        }
-                                        else
-                                        {
-                                            kannGewinnen = true;
-                                            posyGewinn = i + 3;
-                                            posxGewinn = j + 3;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        else if (j == 3) //diagonal
-                        {
-                            if (Spielfeld[i + 1][j + 1] == zeichenSpieler && Spielfeld[i + 2][j + 2] == zeichenSpieler )
-                            {
-                                if(Spielfeld[i + 3][j + 3] == 'O')
-                                {
-                                    for(int m = 5; m > i; m -- )
-                                    {
-                                        if(Spielfeld[m][j + 3] == 'O')
-                                        {
-
-                                        }
-                                        else
-                                        {
-                                            kannGewinnen = true;
-                                            posyGewinn = i + 3;
-                                            posxGewinn = j + 3;
-                                        }
-                                    }
-                                }
-                            }
-                            else if (Spielfeld[i + 1][j - 1] == zeichenSpieler && Spielfeld[i + 2][j - 2] == zeichenSpieler )
-                            {
-                                if(Spielfeld[i + 3][j - 3] == 'O')
-                                {
-                                    for(int m = 5; m > i; m -- )
-                                    {
-                                        if(Spielfeld[m][j - 3] == 'O')
-                                        {
-
-                                        }
-                                        else
-                                        {
-                                            kannGewinnen = true;
-                                            posyGewinn = i + 3;
-                                            posxGewinn = j - 3;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        else if (j > 3)  //diagonal
-                        {
-                            if (Spielfeld[i + 1][j - 1] == zeichenSpieler && Spielfeld[i + 2][j - 2] == zeichenSpieler )
-                            {
-                                if(Spielfeld[i + 3][j - 3] == 'O')
-                                {
-                                    for(int m = 5; m > i; m -- )
-                                    {
-                                        if(Spielfeld[m][j - 3] == 'O')
-                                        {
-
-                                        }
-                                        else
-                                        {
-                                            kannGewinnen = true;
-                                            posyGewinn = i + 3;
-                                            posxGewinn = j - 3;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    else if (i > 2)
-                    {
-                        // senkrecht
-                        if (Spielfeld[i - 1][j] == zeichenSpieler && Spielfeld[i - 2][j] == zeichenSpieler)
-                        {
-                            if(Spielfeld[i - 3][j] == 'O')
-                            {
-
-                                posyGewinn = i - 3;
                                 posxGewinn = j;
                                 return true;
                             }
                         }
-                        if (j < 3) //diagonal
+                    }
+                    else if (i > 2) {
+                        if (Spielfeld[i - 1][j] == zeichenSpieler && Spielfeld[i - 2][j] == zeichenSpieler)
                         {
-                            if (Spielfeld[i - 1][j + 1] == zeichenSpieler && Spielfeld[i - 2][j + 2] == zeichenSpieler)
+                            if(Spielfeld[i - 3][j] == 'O')
                             {
-                                if(Spielfeld[i - 3][j + 3]  == 'O')
-                                {
-                                    for(int m = 5; m > i; m -- )
-                                    {
-                                        if(Spielfeld[m][j - 3] == 'O')
-                                        {
-
-                                        }
-                                        else
-                                        {
-                                            kannGewinnen = true;
-                                            posyGewinn = i - 3;
-                                            posxGewinn = j + 3;
-                                        }
-                                    }
-                                }
+                                posxGewinn = j;
+                                return true;
                             }
                         }
-                        else if (j == 3) //diagonal
-                        {
-                            if (Spielfeld[i - 1][j + 1] == zeichenSpieler && Spielfeld[i - 2][j + 2] == zeichenSpieler)
-                            {
 
-                                    if(Spielfeld[i - 3][j + 3]  == 'O')
-                                    {
-                                        for(int m = 5; m > i; m -- )
-                                        {
-                                            if(Spielfeld[m][j - 3] == 'O')
-                                            {
 
-                                            }
-                                            else
-                                            {
-
-                                                posyGewinn = i - 3;
-                                                posxGewinn = j + 3;
-                                                kannGewinnen = true;
-                                            }
-                                        }
-                                    }
-
-                            }
-                            else if (Spielfeld[i - 1][j - 1] == zeichenSpieler && Spielfeld[i - 2][j - 2] == zeichenSpieler)
-                            {
-
-                                if (Spielfeld[i - 3][j - 3] == 'O')
-                                {
-                                    for (int m = 5; m > i; m--) {
-                                        if (Spielfeld[m][j - 3] == 'O') {
-
-                                        } else {
-                                            kannGewinnen = true;
-                                            posyGewinn = i - 3;
-                                            posxGewinn = j - 3;
-                                        }
-                                    }
-                                }
-                            }
-
-                        }
-                        else if (j > 3) //diagonal
-                        {
-                            if (Spielfeld[i - 1][j - 1] == zeichenSpieler && Spielfeld[i - 2][j - 2] == zeichenSpieler )
-                            {
-                                if(Spielfeld[i - 3][j - 3]  == 'O')
-                                {
-                                    for(int m = 5; m > i; m -- )
-                                    {
-                                        if(Spielfeld[m][j - 3] == 'O')
-                                        {
-
-                                        }
-                                        else
-                                        {
-                                            kannGewinnen = true;
-                                            posyGewinn = i - 3;
-                                            posxGewinn = j - 3;
-                                        }
-                                    }
-                                }
-                            }
-                        }
                     }
                 }
             }
