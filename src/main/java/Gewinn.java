@@ -1,7 +1,6 @@
 public class Gewinn
 {
     public static int posxGewinn;
-    public static int posyGewinn;
     public static boolean gewinn(char Spielfeld[][], int amZug)
     {
         char zeichenSpieler = 0;
@@ -146,38 +145,21 @@ public class Gewinn
                 if (Spielfeld[i][j] == zeichenSpieler) {
 
 
-                    if (j < 4) // wagerecht
+                    if (j <= 3) // wagerecht
                     {
+
                         if (Spielfeld[i][j + 1] == zeichenSpieler && Spielfeld[i][j + 2] == zeichenSpieler )
                         {
-                            if(j > 0)
-                            {
-                                if(Spielfeld[i][j - 1] == 'O')
-                                {
-                                    for (int m = 5; m > i; m--) {
-                                        if (Spielfeld[m][j - 1] == 'O') {
-                                            feldLegbar = false;
-                                        }
-                                        else {
-                                            feldLegbar = true;
-                                        }
 
-                                    }
-                                    if (feldLegbar == true)
-                                    {
-                                        posxGewinn = j - 1;
-                                        return true;
 
-                                    }
-                                }
-                            }
                             if(Spielfeld[i][j + 3] == 'O')
                             {
-                                if(i == 0)
+                                if(i == 5)
                                 {
                                     posxGewinn = j + 3;
                                     return true;
                                 }
+
                                 for (int m = 5; m > i; m--) {
                                     if (Spielfeld[m][j + 3] == 'O') {
                                         feldLegbar = false;
@@ -194,20 +176,41 @@ public class Gewinn
 
                                 }
                             }
+                            if(j > 0) {
+
+
+                                if (Spielfeld[i][j - 1] == 'O') {
+                                    for (int m = 5; m > i; m--) {
+                                        if (Spielfeld[m][j - 1] == 'O') {
+                                            feldLegbar = false;
+                                        } else {
+                                            feldLegbar = true;
+                                        }
+
+                                    }
+                                    if (feldLegbar == true) {
+                                        posxGewinn = j - 1;
+                                        return true;
+
+                                    }
+                                }
+                            }
                         }
                     }
-                    else if (j > 3) // wagerecht
+                    else if (j >= 3) // wagerecht
                     {
                         if (Spielfeld[i][j - 1] == zeichenSpieler && Spielfeld[i][j - 2] == zeichenSpieler )
                         {
 
-                                if(i == 0)
-                                {
-                                    posxGewinn = j - 3;
-                                    return true;
-                                }
+
                                 if(Spielfeld[i][j - 3] == 'O')
                                 {
+                                    if(i == 5)
+                                    {
+                                        posxGewinn = j - 3;
+                                        return true;
+                                    }
+
                                     for (int m = 5; m > i; m--) {
                                         if (Spielfeld[m][j - 3] == 'O') {
                                             feldLegbar = false;
@@ -249,10 +252,11 @@ public class Gewinn
                     {
                         if(Spielfeld[i + 1][j] == zeichenSpieler && Spielfeld[i + 2][j] == zeichenSpieler)
                         {
-                            if(Spielfeld[i - 1][j] == 'O')
-                            {
-                                posxGewinn = j;
-                                return true;
+                            if(i>0) {
+                                if (Spielfeld[i - 1][j] == 'O') {
+                                    posxGewinn = j;
+                                    return true;
+                                }
                             }
                         }
                     }

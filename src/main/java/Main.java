@@ -15,6 +15,7 @@ public class Main {
         int zwei = 0;
         int amZug = 1;
         int auswGegner = 0;
+        int staerke = 1;
 
         auswGegner = menue(); // Gegner soll ausgewählt werden
         clear(); // Konsole wird um 10 Einheiten nach oben leer ausgegeben
@@ -32,7 +33,8 @@ public class Main {
         anzZug = 1;
             if(auswGegner == 2)
             {
-                KI.setDifficulty(staerke());     //KI Stärke wird festgelegt
+                staerke = staerke();
+                KI.setDifficulty(staerke);     //KI Stärke wird festgelegt
             }
 
             System.out.println("Das Spiel beginnt ! \n ");
@@ -45,6 +47,7 @@ public class Main {
                     zwei++;
                     anzZugEinz = zwei;
                 }
+                KI.setDifficulty(staerke);
                 mainField = Spielfeld.steinEinfügen(amZug, anzZug, anzZugEinz,auswGegner); //Ein Stein wird eingefügt
                 if (Gewinn.gewinn(mainField, amZug) == true) // Gewinnausgabe
                 {

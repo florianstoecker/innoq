@@ -86,7 +86,7 @@ public class KI {
                     }
                 }
 
-                einfStellex = (int)((Math.random()) * 7 + 1)-1;
+                difficulty = 4;
                 break;
             case 2:
 
@@ -100,8 +100,10 @@ public class KI {
                     einfStellex = Gewinn.getPosxGewinn();
                     return einfStellex;
                 }
-                einfStellex = (int)((Math.random()) * 7 + 1)-1;
-
+                else
+                    {
+                        difficulty = 1;
+                    }
                 break;
             case 3: break;
             case 4:
