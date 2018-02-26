@@ -72,7 +72,12 @@ public class KI {
 
                 einf_stellex = (int)((Math.random()) * 7 + 1)-1;
                 break;
-            case 2: break;
+            case 2:
+
+
+
+
+                break;
             case 3: break;
             case 4:
                 einf_stellex = (int)((Math.random()) * 7 + 1)-1;
