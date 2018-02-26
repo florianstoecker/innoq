@@ -1,5 +1,7 @@
 import java.util.Scanner;
-
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 public class Spielfeld {
     public static final String color_RESET = "\u001B[0m";
     public static final String BLACK = "\u001B[30m";
@@ -16,8 +18,10 @@ public class Spielfeld {
     public static char[][] spielfeld = leeren();
     public static int[][] farbfeld = new int[6][7];
     public static Scanner scan = new Scanner(System.in);
+
     public void zeichneSpielfeld(int anzZug)
     {
+
         spielfeld = Main.getMainField();
 
 
@@ -81,7 +85,7 @@ public class Spielfeld {
     }
     public char[][] steinEinfügen(int anDerReihe, int anzStein, int anzZugEinz, int difAusw)
     {
-
+        String eingabeSpeichern;
         char zeichenSpieler = 'O';
 
         if(anzStein ==1)
@@ -144,7 +148,10 @@ public class Spielfeld {
                 }
 
             }
-
+            if (anDerReihe == 1) {
+                eingabeSpeichern = Integer.toString(einfStellex);
+                schreiben(eingabeSpeichern);
+            }
 
             return spielfeld;
         }
@@ -155,6 +162,22 @@ public class Spielfeld {
         }
     }
 
+    public static void schreiben(String eingabe)
+    {
+        try
+        {
+        File Datei = new File("Eingabe.txt");
+        FileWriter writer = new FileWriter(Datei);
+        writer.write(eingabe);
+        writer.flush();
+        writer.close();
+
+        }
+        catch( IOException e )
+        {
+            e.printStackTrace();
+        }
+    }
     public boolean abfVoll()
     {
         if(einfStelley == -1)
