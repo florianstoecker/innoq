@@ -16,7 +16,7 @@ public class Spielfeld {
     public static char[][] spielfeld = leeren();
     public static int[][] farbfeld = new int[6][7];
     public static Scanner scan = new Scanner(System.in);
-    public void zeichneSpielfeld(int zug)
+    public void zeichneSpielfeld(int anzZug)
     {
         spielfeld = Main.getMainField();
 
@@ -32,7 +32,7 @@ public class Spielfeld {
 
 
                 int farbe = farbfeld[i][j];
-                if(zug == 0)
+                if(anzZug == 0)
                 {
                     System.out.printf(WHITE + " %c ", spielfeld[i][j]);
                     System.out.print(BLACK + "|");

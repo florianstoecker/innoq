@@ -14,20 +14,6 @@ public class Spieler {
     }
 
 
-
-
-    public static boolean kannGewinnen(char[][]Spielfeld, int amZug)
-    {
-        boolean spieler_gewinn = false;
-
-        if(Gewinn.kannGewinnen(Spielfeld, amZug) == true)
-        {
-            spieler_gewinn = true;
-            return spieler_gewinn;
-        }
-        return spieler_gewinn;
-    }
-
     public static int wechseln(int am_Zug)
     {
         if(am_Zug == 1)

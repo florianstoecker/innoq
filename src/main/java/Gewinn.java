@@ -4,7 +4,6 @@ public class Gewinn
     public static boolean gewinn(char Spielfeld[][], int amZug)
     {
         char zeichenSpieler = 0;
-        boolean erg = false;
         if (amZug == 1)
         {
             zeichenSpieler = 'X';
@@ -24,16 +23,14 @@ public class Gewinn
                     {
                         if (Spielfeld[i][j + 1] == zeichenSpieler && Spielfeld[i][j + 2] == zeichenSpieler && Spielfeld[i][j + 3] == zeichenSpieler)
                         {
-                            erg = true;
-                            return erg;
+
                         }
                     }
                     else if (j > 3) // wagerecht
                     {
                         if (Spielfeld[i][j - 1] == zeichenSpieler && Spielfeld[i][j - 2] == zeichenSpieler && Spielfeld[i][j - 3] == zeichenSpieler)
                         {
-                            erg = true;
-                            return erg;
+                            return true;
                         }
                     }
                     if (i < 3)
@@ -41,36 +38,31 @@ public class Gewinn
                         // senkrecht
                         if (Spielfeld[i + 1][j] == zeichenSpieler && Spielfeld[i + 2][j] == zeichenSpieler && Spielfeld[i + 3][j] == zeichenSpieler)
                         {
-                            erg = true;
-                            return erg;
+                            return true;
                         }
                         else if (j < 3) //diagonal
                         {
                             if (Spielfeld[i + 1][j + 1] == zeichenSpieler && Spielfeld[i + 2][j + 2] == zeichenSpieler && Spielfeld[i + 3][j + 3] == zeichenSpieler)
                             {
-                                erg = true;
-                                return erg;
+                                return true;
                             }
                         }
                         else if (j == 3) //diagonal
                         {
                             if (Spielfeld[i + 1][j + 1] == zeichenSpieler && Spielfeld[i + 2][j + 2] == zeichenSpieler && Spielfeld[i + 3][j + 3] == zeichenSpieler)
                             {
-                                erg = true;
-                                return erg;
+                                return true;
                             }
                             else if (Spielfeld[i + 1][j - 1] == zeichenSpieler && Spielfeld[i + 2][j - 2] == zeichenSpieler && Spielfeld[i + 3][j - 3] == zeichenSpieler)
                             {
-                                erg = true;
-                                return erg;
+                                return true;
                             }
                         }
                         else if (j > 3)  //diagonal
                         {
                             if (Spielfeld[i + 1][j - 1] == zeichenSpieler && Spielfeld[i + 2][j - 2] == zeichenSpieler && Spielfeld[i + 3][j - 3] == zeichenSpieler)
                             {
-                                erg = true;
-                                return erg;
+                                return true;
                             }
                         }
                     }
@@ -80,43 +72,38 @@ public class Gewinn
                         // senkrecht
                         if (Spielfeld[i - 1][j] == zeichenSpieler && Spielfeld[i - 2][j] == zeichenSpieler && Spielfeld[i - 3][j] == zeichenSpieler)
                         {
-                            erg = true;
-                            return erg;
+                            return true;
                         }
                         if (j < 3) //diagonal
                         {
                             if (Spielfeld[i - 1][j + 1] == zeichenSpieler && Spielfeld[i - 2][j + 2] == zeichenSpieler && Spielfeld[i - 3][j + 3] == zeichenSpieler)
                             {
-                                erg = true;
-                                return erg;
+
                             }
                         }
                         else if (j == 3) //diagonal
                         {
                             if (Spielfeld[i - 1][j + 1] == zeichenSpieler && Spielfeld[i - 2][j + 2] == zeichenSpieler && Spielfeld[i - 3][j + 3] == zeichenSpieler)
                             {
-                                erg = true;
-                                return erg;
+                                return true;
                             }
                             else if (Spielfeld[i - 1][j - 1] == zeichenSpieler && Spielfeld[i - 2][j - 2] == zeichenSpieler && Spielfeld[i - 3][j - 3] == zeichenSpieler)
                             {
-                                erg = true;
-                                return erg;
+                                return true;
                             }
                         }
                         else if (j > 3) //diagonal
                         {
                             if (Spielfeld[i - 1][j - 1] == zeichenSpieler && Spielfeld[i - 2][j - 2] == zeichenSpieler && Spielfeld[i - 3][j - 3] == zeichenSpieler)
                             {
-                                erg = true;
-                                return erg;
+                                return true;
                             }
                         }
                     }
                 }
             }
         }
-        return erg;
+        return false;
     }
 
 
