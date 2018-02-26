@@ -8,7 +8,7 @@ public class Spielfeld {
     public static final String PURPLE = "\u001B[35m";
     public static final String CYAN = "\u001B[36m";
     public static final String WHITE = "\033[0;97m";;
-    public static void zeichne_spielfeld(char spielfeld[][],int zug, int amZug, int auswahlGegner)
+    public static void zeichneSpielfeld(char spielfeld[][],int zug, int amZug, int auswahlGegner)
     {
 
         int[][] farbig = Spieler.getFarbfeld();

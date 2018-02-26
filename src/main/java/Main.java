@@ -34,7 +34,7 @@ public class Main {
             }
 
             System.out.println("Das Spiel beginnt ! \n ");
-            Spielfeld.zeichne_spielfeld(mainField, anzZug, amZug, auswGegner); // Spielfeld wird gezeichnet
+            Spielfeld.zeichneSpielfeld(mainField, anzZug, amZug, auswGegner); // Spielfeld wird gezeichnet
             while (anzZug < 42) {
                 if (amZug == 1) {
                     eins++;
@@ -49,13 +49,13 @@ public class Main {
                     clear();
                     Animation.an_Gewinn();
                     clear();
-                    Spielfeld.zeichne_spielfeld(mainField, anzZug, amZug, auswGegner);
+                    Spielfeld.zeichneSpielfeld(mainField, anzZug, amZug, auswGegner);
                     System.out.println(BLACK_BOLD + "Der Gewinner ist Spieler " + amZug);
                     System.out.println("Das Spiel ist vorbei !");
                     return;
                 }
                 amZug = Spieler.wechseln(amZug); // Spieler wechseln
-                Spielfeld.zeichne_spielfeld(mainField, anzZug, amZug, auswGegner); // Spielfeld wird gezeichnet
+                Spielfeld.zeichneSpielfeld(mainField, anzZug, amZug, auswGegner); // Spielfeld wird gezeichnet
                 anzZug++; // Anzahl der Züge insgesamt wird hochgesetzt
 
 
