@@ -5,58 +5,58 @@ public class Main {
     public static Scanner scan = new Scanner(System.in);
     public static void main(String[] args) {
         Spielfeld spielfeld = new Spielfeld();
-        char[][] main_field = spielfeld.leeren();
-        int zahl_spieler = 1;
-        int anz_zug = 0;
-        int anz_zug_einz = 0;
+        char[][] mainField = spielfeld.leeren();
+        int zahlSpieler = 1;
+        int anzZug = 0;
+        int anzZugEinz = 0;
         int eins = 0;
         int zwei = 0;
-        int am_Zug = 1;
-        int ausw_gegner = 0;
+        int amZug = 1;
+        int auswGegner = 0;
 
-        ausw_gegner = menue(); // Gegner soll ausgewählt werden
+        auswGegner = menue(); // Gegner soll ausgewählt werden
         clear(); // Konsole wird um 10 Einheiten nach oben leer ausgegeben
-        if (ausw_gegner != 2 && ausw_gegner != 1) { // Überprüfen auf falsche Eingabe
+        if (auswGegner != 2 && auswGegner != 1) { // Überprüfen auf falsche Eingabe
             System.out.println("Falsche Eingabe !");
             return;
         }
-        int auswahl_farbe_eins = auswahlFarbe(zahl_spieler); // Farben für Spieler werden in Zwischenspeichervariabeln gespeichert
-        zahl_spieler++;
+        int auswahl_farbe_eins = auswahlFarbe(zahlSpieler); // Farben für Spieler werden in Zwischenspeichervariabeln gespeichert
+        zahlSpieler++;
         clear();
-        int auswahl_farbe_zwei = auswahlFarbe(zahl_spieler);
+        int auswahl_farbe_zwei = auswahlFarbe(zahlSpieler);
         clear();
-        Spieler.spieler_erstellen(ausw_gegner, auswahl_farbe_eins, auswahl_farbe_zwei); //Zwei Spieler werden erstellt, Übergabe von Farbe und Auswahl des Gegners
+        Spieler.spielerErstellen(auswGegner, auswahl_farbe_eins, auswahl_farbe_zwei); //Zwei Spieler werden erstellt, Übergabe von Farbe und Auswahl des Gegners
 
-        anz_zug = 1;
-            if(ausw_gegner == 2)
+        anzZug = 1;
+            if(auswGegner == 2)
             {
-                KI.setDifficulty(KI_staerke());     //KI Stärke wird festgelegt
+                KI.setDifficulty(staerke());     //KI Stärke wird festgelegt
             }
 
             System.out.println("Das Spiel beginnt ! \n ");
-            Spielfeld.zeichne_spielfeld(main_field, anz_zug, am_Zug, ausw_gegner); // Spielfeld wird gezeichnet
-            while (anz_zug < 42) {
-                if (am_Zug == 1) {
+            Spielfeld.zeichne_spielfeld(mainField, anzZug, amZug, auswGegner); // Spielfeld wird gezeichnet
+            while (anzZug < 42) {
+                if (amZug == 1) {
                     eins++;
-                    anz_zug_einz = eins;    // Anzahl der Züge(Spielerbezogen)
-                } else if (am_Zug == 2) {
+                    anzZugEinz = eins;    // Anzahl der Züge(Spielerbezogen)
+                } else if (amZug == 2) {
                     zwei++;
-                    anz_zug_einz = zwei;
+                    anzZugEinz = zwei;
                 }
-                main_field = Spieler.stein_einfuegen(am_Zug, anz_zug, main_field, anz_zug_einz,ausw_gegner); //Ein Stein wird eingefügt
-                if (Gewinn.gewinn(main_field, am_Zug) == true) // Gewinnausgabe
+                mainField = Spieler.steinEinfügen(amZug, anzZug, mainField, anzZugEinz,auswGegner); //Ein Stein wird eingefügt
+                if (Gewinn.gewinn(mainField, amZug) == true) // Gewinnausgabe
                 {
                     clear();
                     Animation.an_Gewinn();
                     clear();
-                    Spielfeld.zeichne_spielfeld(main_field, anz_zug, am_Zug, ausw_gegner);
-                    System.out.println(BLACK_BOLD + "Der Gewinner ist Spieler " + am_Zug);
+                    Spielfeld.zeichne_spielfeld(mainField, anzZug, amZug, auswGegner);
+                    System.out.println(BLACK_BOLD + "Der Gewinner ist Spieler " + amZug);
                     System.out.println("Das Spiel ist vorbei !");
                     return;
                 }
-                am_Zug = Spieler.wechseln(am_Zug); // Spieler wechseln
-                Spielfeld.zeichne_spielfeld(main_field, anz_zug, am_Zug, ausw_gegner); // Spielfeld wird gezeichnet
-                anz_zug++; // Anzahl der Züge insgesamt wird hochgesetzt
+                amZug = Spieler.wechseln(amZug); // Spieler wechseln
+                Spielfeld.zeichne_spielfeld(mainField, anzZug, amZug, auswGegner); // Spielfeld wird gezeichnet
+                anzZug++; // Anzahl der Züge insgesamt wird hochgesetzt
 
 
             }
@@ -75,17 +75,17 @@ public static void clear()
 }
     public static int menue()   // Menü - Gegnerauswahl
     {
-        int auswahl_gegner;
+        int auswGegner;
         System.out.println(BLACK_BOLD + "\n\n           4 Gewinnt!\n\n");
 
         System.out.println("Wählen Sie gegen wen Sie spielen möchten:\n\n");
         System.out.println("1: Weiterer lokaler Spieler\n");
         System.out.println("2: Künstliche Intelligenz");
-        auswahl_gegner = scan.nextInt();
-        return auswahl_gegner;
+        auswGegner = scan.nextInt();
+        return auswGegner;
     }
 
-    public static int KI_staerke() // KI - Stärkeauswahl
+    public static int staerke() // KI - Stärkeauswahl
     {
 
         System.out.println("Wählen Sie die Stärke der KI:");
@@ -96,11 +96,11 @@ public static void clear()
         int dif = scan.nextInt();
         return dif;
     }
-    public static int auswahlFarbe(int zahl_spieler) // Farbe für Spieler auswählen
+    public static int auswahlFarbe(int zahlSpieler) // Farbe für Spieler auswählen
     {
-        int auswahl_Farbe = 0;
+        int auswahlFarbe = 0;
 
-        System.out.println("Wählen sie eine Farbe für Spieler " + zahl_spieler);
+        System.out.println("Wählen sie eine Farbe für Spieler " + zahlSpieler);
         System.out.println("1: Grün");
         System.out.println("2: Rot");
         System.out.println("3: Gelb");
@@ -108,7 +108,7 @@ public static void clear()
         System.out.println("5: Lila");
         System.out.println("6: Cyan");
 
-        auswahl_Farbe = scan.nextInt();
-        return auswahl_Farbe;
+        auswahlFarbe = scan.nextInt();
+        return auswahlFarbe;
     }
 }

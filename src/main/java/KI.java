@@ -1,10 +1,8 @@
-import java.util.Scanner;
 
 public class KI {
     public static int difficulty ;
-    public static int einf_stellex;
-    public static int einf_stelley;
-    public static int KI_stein_einfügen(char[][] KI_feld)
+    public static int einfStellex;
+    public static int steinEinfügen(char[][] ki_feld, int amZug)
     {
 
         switch(difficulty)
@@ -16,9 +14,9 @@ public class KI {
                     for(int j = 0; j<7; j++)
                     {
                         if(i >2) {
-                            if (KI_feld[i][j] == '@' && KI_feld[i - 1][j] == 'O') {
-                                einf_stellex = j;
-                                return einf_stellex;
+                            if (ki_feld[i][j] == '@' && ki_feld[i - 1][j] == 'O') {
+                                einfStellex = j;
+                                return einfStellex;
                             }
                         }
                     }
@@ -28,71 +26,90 @@ public class KI {
 
                     for(int j = 0; j<7; j++)
                     {
-                            if(KI_feld[i][j] == '@' && j>0 && KI_feld[i][j-1] == 'O' ) // links neben eigenen Stein
+                            if(ki_feld[i][j] == '@' && j>0 && ki_feld[i][j-1] == 'O' ) // links neben eigenen Stein
                             {
                                 int help_j = j - 1;
                                 int help_i = i;
 
                                 if(i == 5)
                                 {
-                                    einf_stellex = j-1;
-                                    return einf_stellex;
+                                    einfStellex = j-1;
+                                    return einfStellex;
                                 }
 
                                 else if(help_i < 5)
                                 {
-                                    if(KI_feld[help_i+1][help_j] == 'X' || KI_feld[help_i+1][help_j] == '@')
+                                    if(ki_feld[help_i+1][help_j] == 'X' || ki_feld[help_i+1][help_j] == '@')
                                     {
-                                        einf_stellex = j-1;
-                                        return einf_stellex;
+                                        einfStellex = j-1;
+                                        return einfStellex;
                                     }
                                 }
 
                             }
-                            else if(KI_feld[i][j] == '@' && j<6&& KI_feld[i][j+1] == 'O') // rechts neben eigenen Stein
+                            else if(ki_feld[i][j] == '@' && j<6&& ki_feld[i][j+1] == 'O') // rechts neben eigenen Stein
                             {
                                 int help_j_ = j + 1;
                                 int help_i_ = i;
                                 if(i == 5)
                                 {
-                                    einf_stellex = j+1;
-                                    return einf_stellex;
+                                    einfStellex = j+1;
+                                    return einfStellex;
                                 }
                                 else  if(help_i_ < 5)
                                 {
-                                    if(KI_feld[help_i_ +1][help_j_] == 'X' || KI_feld[help_i_+1][help_j_] == '@')
+                                    if(ki_feld[help_i_ +1][help_j_] == 'X' || ki_feld[help_i_+1][help_j_] == '@')
                                     {
-                                        einf_stellex = j+1;
-                                        return einf_stellex;
+                                        einfStellex = j+1;
+                                        return einfStellex;
                                     }
                                 }
                             }
                     }
                 }
 
-                einf_stellex = (int)((Math.random()) * 7 + 1)-1;
+                einfStellex = (int)((Math.random()) * 7 + 1)-1;
                 break;
             case 2:
 
+                if(amZug == 1)
+                {
+                    amZug = 2;
+                }
+                if(kannGewinnen(ki_feld) == true)
+                {
+                    einfStellex = Gewinn.getPosxGewinn();
+                    return einfStellex;
+                }
+                if(amZug == 2)
+                {
+                    amZug = 1;
+                }
+                else if(Spieler.kannGewinnen(ki_feld, amZug)== true)
+                {
+                    einfStellex = Gewinn.getPosxGewinn();
+                    return einfStellex;
+                }
 
-
+                einfStellex = (int)((Math.random()) * 7 + 1)-1;
 
                 break;
             case 3: break;
             case 4:
-                einf_stellex = (int)((Math.random()) * 7 + 1)-1;
+                einfStellex = (int)((Math.random()) * 7 + 1)-1;
               break;
 
         }
-        return einf_stellex;
+        return einfStellex;
     }
-    public static int getEinf_stellex()
+
+    public static boolean kannGewinnen(char[][] ki_feld)
     {
-        return einf_stellex;
-    }
-    public static int getEinf_stelley()
-    {
-        return einf_stelley;
+        boolean ki_gewinn = false;
+
+
+        return ki_gewinn;
+
     }
     public static void setDifficulty(int dif)
     {

@@ -3,28 +3,29 @@ import java.util.Scanner;
 public class Spieler {
     public static Scanner scan = new Scanner(System.in);
     public static int farbe;
-    public static int feins;
-    public static int fzwei;
-    public static int einf_stellex;
-    public static int einf_stelley;
+    public static int fEins;
+    public static int fZwei;
+    public static int einfStellex;
+    public static int einfStelley;
+
     public static int[][] farbfeld = new int[6][7];
 
-    public static void spieler_erstellen(int ausw_gegner, int ausw_farbe_eins, int ausw_farbe_zwei)
+    public static void spielerErstellen(int auswGegner, int auswFarbeEins, int auswFarbeZwei)
     {
 
 
-        feins = ausw_farbe_eins;
-        fzwei = ausw_farbe_zwei;
-        if(ausw_gegner == 1 )
+        fEins = auswFarbeEins;
+        fZwei = auswFarbeZwei;
+        if(auswGegner == 1 )
         {
 
 
         }
     }
-    public static char[][] stein_einfuegen(int anDerReihe, int anzStein, char[][]spielfeld, int anz_zug_einz, int dif_ausw)
+    public static char[][] steinEinfügen(int anDerReihe, int anzStein, char[][]spielfeld, int anzZugEinz, int difAusw)
     {
 
-        char zeichen_spieler = 'O';
+        char zeichenSpieler = 'O';
 
         if(anzStein ==1)
         {
@@ -38,51 +39,51 @@ public class Spieler {
         }
 
 
-        if(dif_ausw == 2 && anDerReihe == 2)
+        if(difAusw == 2 && anDerReihe == 2)
         {
-            einf_stellex = KI.KI_stein_einfügen(spielfeld);
-            int KI_ausw_spalte = einf_stellex +1;
+            einfStellex = KI.steinEinfügen(spielfeld, anDerReihe);
+            int KI_ausw_spalte = einfStellex +1;
             System.out.println("Die KI nahm Spalte " + KI_ausw_spalte);
         }
         else
         {
-            System.out.println("In welcher Spalte wollen Sie Ihren " + anz_zug_einz + ". Stein fallen lassen ? (Spieler " + anDerReihe + ")");
-            einf_stellex = scan.nextInt() - 1;
+            System.out.println("In welcher Spalte wollen Sie Ihren " + anzZugEinz + ". Stein fallen lassen ? (Spieler " + anDerReihe + ")");
+            einfStellex = scan.nextInt() - 1;
             Main.clear();
         }
-        einf_stelley = 5;
-        if(einf_stellex >= 0 && einf_stellex < 7)
+        einfStelley = 5;
+        if(einfStellex >= 0 && einfStellex < 7)
         {
 
             if (anDerReihe == 1) {
-                zeichen_spieler = 'X';
-                farbe = feins;
+                zeichenSpieler = 'X';
+                farbe = fEins;
             } else if (anDerReihe == 2) {
-                zeichen_spieler = '@';
-                farbe = fzwei;
+                zeichenSpieler = '@';
+                farbe = fZwei;
             }
 
-            if (spielfeld[einf_stelley][einf_stellex] == 'O')
+            if (spielfeld[einfStelley][einfStellex] == 'O')
             {
-                spielfeld[einf_stelley][einf_stellex] = zeichen_spieler;
-                farbfeld[einf_stelley][einf_stellex] = farbe;
+                spielfeld[einfStelley][einfStellex] = zeichenSpieler;
+                farbfeld[einfStelley][einfStellex] = farbe;
 
             }
                 else
                 {
-                    while (spielfeld[einf_stelley][einf_stellex] == 'X' || spielfeld[einf_stelley][einf_stellex] == '@')
+                    while (spielfeld[einfStelley][einfStellex] == 'X' || spielfeld[einfStelley][einfStellex] == '@')
                     {
-                        einf_stelley--;
-                        if (abf_voll() == true)
+                        einfStelley--;
+                        if (abfVoll() == true)
                         {
-                            return stein_einfuegen(anDerReihe, anzStein, spielfeld, anz_zug_einz, dif_ausw);
+                            return steinEinfügen(anDerReihe, anzStein, spielfeld, anzZugEinz, difAusw);
                         }
 
                     }
-                     if (abf_voll() == false)
+                     if (abfVoll() == false)
                     {
-                        spielfeld[einf_stelley][einf_stellex] = zeichen_spieler;
-                        farbfeld[einf_stelley][einf_stellex] = farbe;
+                        spielfeld[einfStelley][einfStellex] = zeichenSpieler;
+                        farbfeld[einfStelley][einfStellex] = farbe;
                     }
 
                 }
@@ -93,13 +94,13 @@ public class Spieler {
         else
         {
             System.out.println("Falsche Eingabe!");
-            return stein_einfuegen(anDerReihe, anzStein, spielfeld, anz_zug_einz, dif_ausw);
+            return steinEinfügen(anDerReihe, anzStein, spielfeld, anzZugEinz, difAusw);
         }
     }
 
-    public static boolean abf_voll()
+    public static boolean abfVoll()
     {
-        if(einf_stelley == -1)
+        if(einfStelley == -1)
         {
         System.out.println("Spalte voll !");
         return true;
@@ -107,19 +108,21 @@ public class Spieler {
     return false;
     }
 
-    public static int[][] getfarbfeld()
+    public static int[][] getFarbfeld()
     {
         return farbfeld;
     }
 
-    public static int getEinf_stellex()
+    public static boolean kannGewinnen(char[][]Spielfeld, int amZug)
     {
-        return einf_stellex;
-    }
+        boolean spieler_gewinn = false;
 
-    public static int getEinf_stelley()
-    {
-        return einf_stelley;
+        if(Gewinn.kannGewinnen(Spielfeld, amZug) == true)
+        {
+            spieler_gewinn = true;
+            return spieler_gewinn;
+        }
+        return spieler_gewinn;
     }
 
     public static int wechseln(int am_Zug)
