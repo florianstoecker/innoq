@@ -1,11 +1,12 @@
 import java.util.Scanner;
 
 public class Main {
+    public  static char[][] mainField = Spielfeld.leeren();
     public static final String BLACK_BOLD = "\033[1;30m";
     public static Scanner scan = new Scanner(System.in);
     public static void main(String[] args) {
-        Spielfeld spielfeld = new Spielfeld();
-        char[][] mainField = spielfeld.leeren();
+
+
         int zahlSpieler = 1;
         int anzZug = 0;
         int anzZugEinz = 0;
@@ -20,12 +21,12 @@ public class Main {
             System.out.println("Falsche Eingabe !");
             return;
         }
-        int auswahl_farbe_eins = auswahlFarbe(zahlSpieler); // Farben für Spieler werden in Zwischenspeichervariabeln gespeichert
+        int auswFarbeEins = auswahlFarbe(zahlSpieler); // Farben für Spieler werden in Zwischenspeichervariabeln gespeichert
         zahlSpieler++;
         clear();
-        int auswahl_farbe_zwei = auswahlFarbe(zahlSpieler);
+        int auswFarbeZwei = auswahlFarbe(zahlSpieler);
         clear();
-        Spieler.spielerErstellen(auswGegner, auswahl_farbe_eins, auswahl_farbe_zwei); //Zwei Spieler werden erstellt, Übergabe von Farbe und Auswahl des Gegners
+        Spieler.spielerErstellen(auswFarbeEins, auswFarbeZwei); //Zwei Spieler werden erstellt, Übergabe von Farbe und Auswahl des Gegners
 
         anzZug = 1;
             if(auswGegner == 2)
@@ -34,7 +35,7 @@ public class Main {
             }
 
             System.out.println("Das Spiel beginnt ! \n ");
-            Spielfeld.zeichneSpielfeld(mainField, anzZug, amZug, auswGegner); // Spielfeld wird gezeichnet
+            Spielfeld.zeichneSpielfeld(anzZug); // Spielfeld wird gezeichnet
             while (anzZug < 42) {
                 if (amZug == 1) {
                     eins++;
@@ -43,19 +44,19 @@ public class Main {
                     zwei++;
                     anzZugEinz = zwei;
                 }
-                mainField = Spieler.steinEinfügen(amZug, anzZug, mainField, anzZugEinz,auswGegner); //Ein Stein wird eingefügt
+                mainField = Spielfeld.steinEinfügen(amZug, anzZug, anzZugEinz,auswGegner); //Ein Stein wird eingefügt
                 if (Gewinn.gewinn(mainField, amZug) == true) // Gewinnausgabe
                 {
                     clear();
                     Animation.an_Gewinn();
                     clear();
-                    Spielfeld.zeichneSpielfeld(mainField, anzZug, amZug, auswGegner);
+                    Spielfeld.zeichneSpielfeld(anzZug);
                     System.out.println(BLACK_BOLD + "Der Gewinner ist Spieler " + amZug);
                     System.out.println("Das Spiel ist vorbei !");
                     return;
                 }
                 amZug = Spieler.wechseln(amZug); // Spieler wechseln
-                Spielfeld.zeichneSpielfeld(mainField, anzZug, amZug, auswGegner); // Spielfeld wird gezeichnet
+                Spielfeld.zeichneSpielfeld(anzZug); // Spielfeld wird gezeichnet
                 anzZug++; // Anzahl der Züge insgesamt wird hochgesetzt
 
 
@@ -72,6 +73,10 @@ public static void clear()
     {
         System.out.println("\n");
     }
+}
+public static char[][] getMainField()
+{
+    return mainField;
 }
     public static int menue()   // Menü - Gegnerauswahl
     {
