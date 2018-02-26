@@ -2,7 +2,7 @@
 public class KI {
     public static int difficulty ;
     public static int einfStellex;
-    public static int steinEinfügen(char[][] ki_feld, int amZug)
+    public static int steinEinfügen(char[][] kiFeld, int amZug)
     {
 
         switch(difficulty)
@@ -14,7 +14,7 @@ public class KI {
                     for(int j = 0; j<7; j++)
                     {
                         if(i >2) {
-                            if (ki_feld[i][j] == '@' && ki_feld[i - 1][j] == 'O') {
+                            if (kiFeld[i][j] == '@' && kiFeld[i - 1][j] == 'O') {
                                 einfStellex = j;
                                 return einfStellex;
                             }
@@ -26,7 +26,7 @@ public class KI {
 
                     for(int j = 0; j<7; j++)
                     {
-                            if(ki_feld[i][j] == '@' && j>0 && ki_feld[i][j-1] == 'O' ) // links neben eigenen Stein
+                            if(kiFeld[i][j] == '@' && j>0 && kiFeld[i][j-1] == 'O' ) // links neben eigenen Stein
                             {
                                 int help_j = j - 1;
                                 int help_i = i;
@@ -39,7 +39,7 @@ public class KI {
 
                                 else if(help_i < 5)
                                 {
-                                    if(ki_feld[help_i+1][help_j] == 'X' || ki_feld[help_i+1][help_j] == '@')
+                                    if(kiFeld[help_i+1][help_j] == 'X' || kiFeld[help_i+1][help_j] == '@')
                                     {
                                         einfStellex = j-1;
                                         return einfStellex;
@@ -47,7 +47,7 @@ public class KI {
                                 }
 
                             }
-                            else if(ki_feld[i][j] == '@' && j<6&& ki_feld[i][j+1] == 'O') // rechts neben eigenen Stein
+                            else if(kiFeld[i][j] == '@' && j<6&& kiFeld[i][j+1] == 'O') // rechts neben eigenen Stein
                             {
                                 int help_j_ = j + 1;
                                 int help_i_ = i;
@@ -58,7 +58,7 @@ public class KI {
                                 }
                                 else  if(help_i_ < 5)
                                 {
-                                    if(ki_feld[help_i_ +1][help_j_] == 'X' || ki_feld[help_i_+1][help_j_] == '@')
+                                    if(kiFeld[help_i_ +1][help_j_] == 'X' || kiFeld[help_i_+1][help_j_] == '@')
                                     {
                                         einfStellex = j+1;
                                         return einfStellex;
@@ -76,7 +76,7 @@ public class KI {
                 {
                     amZug = 2;
                 }
-                if(kannGewinnen(ki_feld) == true)
+                if(Gewinn.kannGewinnen(kiFeld, amZug) == true)
                 {
                     einfStellex = Gewinn.getPosxGewinn();
                     return einfStellex;
@@ -85,7 +85,7 @@ public class KI {
                 {
                     amZug = 1;
                 }
-                else if(Spieler.kannGewinnen(ki_feld, amZug)== true)
+                else if(Gewinn.kannGewinnen(kiFeld, amZug)== true)
                 {
                     einfStellex = Gewinn.getPosxGewinn();
                     return einfStellex;
@@ -101,15 +101,6 @@ public class KI {
 
         }
         return einfStellex;
-    }
-
-    public static boolean kannGewinnen(char[][] ki_feld)
-    {
-        boolean ki_gewinn = false;
-
-
-        return ki_gewinn;
-
     }
     public static void setDifficulty(int dif)
     {

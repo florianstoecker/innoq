@@ -184,6 +184,22 @@ public class Gewinn
                                     }
                                 }
                             }
+                            else if(Spielfeld[i][j +1 ] == 'O')
+                            {
+                                for(int m = 5; m > i; m -- )
+                                {
+                                    if(Spielfeld[m][j + 1] == 'O')
+                                    {
+
+                                    }
+                                    else
+                                    {
+                                        kannGewinnen = true;
+                                        posyGewinn = i;
+                                        posxGewinn = j + 1;
+                                    }
+                                }
+                            }
                         }
                     }
                     if (i < 3)
@@ -292,9 +308,10 @@ public class Gewinn
                         {
                             if(Spielfeld[i - 3][j] == 'O')
                             {
-                                kannGewinnen = true;
+
                                 posyGewinn = i - 3;
                                 posxGewinn = j;
+                                return true;
                             }
                         }
                         if (j < 3) //diagonal
@@ -334,9 +351,10 @@ public class Gewinn
                                             }
                                             else
                                             {
-                                                kannGewinnen = true;
+
                                                 posyGewinn = i - 3;
                                                 posxGewinn = j + 3;
+                                                kannGewinnen = true;
                                             }
                                         }
                                     }
