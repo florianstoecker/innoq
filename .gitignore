@@ -22,6 +22,8 @@ cmake-build-debug/
 # Mongo Explorer plugin:
 .idea/**/mongoSettings.xml
 
+**/*.iml
+
 
 ## Plugin-specific files:
 
@@ -49,6 +51,8 @@ cmake-build-debug/
 ### Java ###
 # Compiled class file
 *.class
+
+**/target/
 
 # Log file
 *.log
