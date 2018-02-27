@@ -16,7 +16,6 @@ public class Spielfeld {
     public static final String BLUE = "\u001B[34m";
     public static final String PURPLE = "\u001B[35m";
     public static final String CYAN = "\u001B[36m";
-<<<<<<< HEAD:src/main/java/Spielfeld.java
     public static final String WHITE = "\033[0;97m";;
     public static int farbe;
     public static int einfStellex;
@@ -25,9 +24,7 @@ public class Spielfeld {
     public static char[][] spielfeld = leeren();
     public static int[][] farbfeld = new int[6][7];
     public static Scanner scan = new Scanner(System.in);
-=======
     public static final String WHITE = "\033[0;97m";
->>>>>>> b2eb352600a1a42f361462e3ae2ff81cea481412:src/main/java/com/innoq/praktikum/viergewinnt/Spielfeld.java
 
 
     private int farbe;
@@ -241,8 +238,6 @@ public class Spielfeld {
                             }
                         }
                     }
-
-<<<<<<< HEAD:src/main/java/Spielfeld.java
                     else if (i > 2)
                     {
                         // senkrecht
