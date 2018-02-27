@@ -39,6 +39,8 @@ public class Main {
             KI.setDifficulty(staerke);     //KI Stärke wird festgelegt
         }
 
+        amZug = auswBeginn();
+        clear();
         System.out.println("Das Spiel beginnt ! \n ");
         Spielfeld.zeichneSpielfeld(anzZug); // Spielfeld wird gezeichnet
         anzZug = 1;
@@ -77,7 +79,7 @@ public class Main {
 
     }
 
-    public static int nochmal()
+    private static int nochmal()
     {
         System.out.println("Möchten Sie noch einmal spielen ?");
         System.out.println("1: Ja!");
@@ -103,7 +105,7 @@ public class Main {
         }
     }
 
-    public static int menue()   // Menü - Gegnerauswahl
+    private static int menue()   // Menü - Gegnerauswahl
     {
         int auswGegner;
         System.out.println(BLACK_BOLD + "\n\n           4 Gewinnt!\n\n");
@@ -114,10 +116,24 @@ public class Main {
         auswGegner = scan.nextInt();
         return auswGegner;
     }
-
-    public static int staerke() // KI - Stärkeauswahl
+    private static int auswBeginn()
     {
-
+        int amZug = 1;
+        System.out.println("Wer Soll anfangen ?");
+        System.out.println("1: Spieler 1");
+        System.out.println("2: Spieler 2");
+        int auswAnfänger = scan.nextInt();
+        if(auswAnfänger == 2){
+            amZug = 2;
+        }
+        if(auswAnfänger != 2 && auswAnfänger != 1 )
+        {
+            System.out.println("Falsche Eingabe!");
+        }
+        return amZug;
+    }
+    private static int staerke() // KI - Stärkeauswahl
+    {
         System.out.println("Wählen Sie die Stärke der KI:");
         System.out.println("1: Einfach");
         System.out.println("2: Mittel");
@@ -126,7 +142,7 @@ public class Main {
         int dif = scan.nextInt();
         return dif;
     }
-    public static int auswahlFarbe(int zahlSpieler) // Farbe für Spieler auswählen
+    private static int auswahlFarbe(int zahlSpieler) // Farbe für Spieler auswählen
     {
         int auswahlFarbe = 0;
 
