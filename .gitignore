@@ -51,7 +51,7 @@ cmake-build-debug/
 ### Java ###
 # Compiled class file
 *.class
-
+**/.idea/
 **/target/
 
 # Log file
