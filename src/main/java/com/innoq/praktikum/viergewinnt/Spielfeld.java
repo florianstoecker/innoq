@@ -578,7 +578,7 @@ public class Spielfeld {
     }
 
     public int getPosxGewinn() {
-    return posxGewinn;
+        return posxGewinn;
     }
 
     public void schreiben(String eingabe)
