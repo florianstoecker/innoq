@@ -1,3 +1,4 @@
+package com.innoq.praktikum.viergewinnt;
 
 public class KI {
     public static int difficulty ;

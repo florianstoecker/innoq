@@ -1,3 +1,5 @@
+package com.innoq.praktikum.viergewinnt;
+
 import java.util.Scanner;
 
 public class Spieler {
