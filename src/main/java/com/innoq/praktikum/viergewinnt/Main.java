@@ -1,9 +1,13 @@
+package com.innoq.praktikum.viergewinnt;
+
 import java.util.Scanner;
 
 public class Main {
     public  static char[][] mainField = Spielfeld.leeren();
     public static final String BLACK_BOLD = "\033[1;30m";
     public static Scanner scan = new Scanner(System.in);
+
+
     public static void main(String[] args) {
         Spielfeld Spielfeld = new Spielfeld();
         mainField = Spielfeld.leeren();

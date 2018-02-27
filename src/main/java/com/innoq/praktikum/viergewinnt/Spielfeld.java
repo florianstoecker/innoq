@@ -1,9 +1,14 @@
+package com.innoq.praktikum.viergewinnt;
+
 import java.util.Scanner;
 import java.io.PrintWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+
+
 public class Spielfeld {
-    public static final String color_RESET = "\u001B[0m";
+
+    public static final String COLOR_RESET = "\u001B[0m";
     public static final String BLACK = "\u001B[30m";
     public static final String RED = "\u001B[31m";
     public static final String GREEN = "\u001B[32m";
@@ -11,6 +16,7 @@ public class Spielfeld {
     public static final String BLUE = "\u001B[34m";
     public static final String PURPLE = "\u001B[35m";
     public static final String CYAN = "\u001B[36m";
+<<<<<<< HEAD:src/main/java/Spielfeld.java
     public static final String WHITE = "\033[0;97m";;
     public static int farbe;
     public static int einfStellex;
@@ -19,13 +25,25 @@ public class Spielfeld {
     public static char[][] spielfeld = leeren();
     public static int[][] farbfeld = new int[6][7];
     public static Scanner scan = new Scanner(System.in);
+=======
+    public static final String WHITE = "\033[0;97m";
+>>>>>>> b2eb352600a1a42f361462e3ae2ff81cea481412:src/main/java/com/innoq/praktikum/viergewinnt/Spielfeld.java
+
+
+    private int farbe;
+    private int einfStellex;
+    private int einfStelley;
+    private char[][] spielfeld;
+    private int[][] farbfeld = new int[6][7];
+    private Scanner scan = new Scanner(System.in);
+
+    public Spielfeld(int farbe) {
+        this.farbe = farbe;
+        this.spielfeld = init();
+    }
 
     public void zeichneSpielfeld(int anzZug)
     {
-
-        spielfeld = Main.getMainField();
-
-
         System.out.println(BLACK + "|---------------------------|");
         System.out.println("| 1 | 2 | 3 | 4 | 5 | 6 | 7 |");
         for(int i = 0; i<6; i++)
@@ -81,7 +99,7 @@ public class Spielfeld {
             }
             System.out.println("");
         }
-        System.out.println("|---------------------------|" + color_RESET);
+        System.out.println("|---------------------------|" + COLOR_RESET);
 
     }
     public void steinEinfügen(int anDerReihe, int anzStein, int anzZugEinz, int difAusw)
@@ -103,7 +121,7 @@ public class Spielfeld {
 
         if(difAusw == 2 && anDerReihe == 2)
         {
-            einfStellex = KI.steinEinfügen(spielfeld, anDerReihe);
+            einfStellex = KI.steinEinfügen(this, anDerReihe);
             int KI_ausw_spalte = einfStellex +1;
             System.out.println("Die KI nahm Spalte " + KI_ausw_spalte);
         }
@@ -224,6 +242,7 @@ public class Spielfeld {
                         }
                     }
 
+<<<<<<< HEAD:src/main/java/Spielfeld.java
                     else if (i > 2)
                     {
                         // senkrecht
@@ -401,6 +420,9 @@ public class Spielfeld {
         return false;
     }
     public static void schreiben(String eingabe)
+=======
+    public void schreiben(String eingabe)
+>>>>>>> b2eb352600a1a42f361462e3ae2ff81cea481412:src/main/java/com/innoq/praktikum/viergewinnt/Spielfeld.java
     {
         try
         {
@@ -426,7 +448,11 @@ public class Spielfeld {
         return false;
     }
 
-    public static char[][] leeren()
+    public boolean istBereitsGefuellt(int x, int y) {
+
+    }
+
+    private char[][] init()
     {
         char[][] spielfeld = new char[6][7];
         for(int i = 0; i<6; i++)

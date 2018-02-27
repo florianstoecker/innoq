@@ -1,3 +1,5 @@
+package com.innoq.praktikum.viergewinnt;
+
 import java.util.concurrent.TimeUnit;
 public class Animation {
 

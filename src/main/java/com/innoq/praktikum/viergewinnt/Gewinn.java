@@ -1,3 +1,5 @@
+package com.innoq.praktikum.viergewinnt;
+
 public class Gewinn
 {
 
