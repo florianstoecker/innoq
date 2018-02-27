@@ -107,9 +107,6 @@ public class Gewinn
     }
 
 
-
-
-
     public static boolean kannGewinnen(char[][]Spielfeld, int amZug)
     {
         char zeichenSpieler = 0;

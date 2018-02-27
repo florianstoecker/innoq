@@ -103,7 +103,19 @@ public class KI {
 
                 difficulty = 1;
                 break;
-            case 3: break;
+            case 3:
+                if(Gewinn.kannGewinnen(kiFeld, 2) == true) { // Kann KI gewinnen ?
+                    einfStellex = Gewinn.getPosxGewinn();
+                    return einfStellex;
+                }
+                else if(Gewinn.kannGewinnen(kiFeld,1) == true) // Kann Spieler gewinnen ?
+                {
+                    einfStellex = Gewinn.getPosxGewinn();
+                    return einfStellex;
+                }
+
+                break;
+
             case 4:
                 einfStellex = (int)((Math.random()) * 7 + 1)-1;
               break;
@@ -111,6 +123,7 @@ public class KI {
         }
         return einfStellex;
     }
+
     public static void setDifficulty(int dif)
     {
         difficulty = dif;

@@ -1,5 +1,5 @@
 import java.util.Scanner;
-import java.io.File;
+import java.io.PrintWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 public class Spielfeld {
@@ -145,16 +145,11 @@ public class Spielfeld {
                 {
                     spielfeld[einfStelley][einfStellex] = zeichenSpieler;
                     farbfeld[einfStelley][einfStellex] = farbe;
-                    eingabeSpeichern = Integer.toString(einfStellex);
-                    schreiben(eingabeSpeichern);
                 }
 
             }
-
-                eingabeSpeichern = Integer.toString(einfStellex);
-                schreiben(eingabeSpeichern);
-
-
+            eingabeSpeichern = Integer.toString(einfStellex);
+            schreiben(eingabeSpeichern);
             return spielfeld;
         }
         else
@@ -168,18 +163,18 @@ public class Spielfeld {
     {
         try
         {
-        File Datei = new File("Eingabe.txt");
-        FileWriter writer = new FileWriter(Datei);
-        writer.write(eingabe);
-        writer.flush();
+        PrintWriter writer = new PrintWriter(new FileWriter("/Users/user/Documents/GitHub/innoq/src/main/java/Eingabe.txt"));
+        writer.println(eingabe);
+        writer.println();
+        writer.print("neu");
         writer.close();
-
         }
         catch( IOException e )
         {
             e.printStackTrace();
         }
     }
+
     public boolean abfVoll()
     {
         if(einfStelley == -1)
