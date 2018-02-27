@@ -1,8 +1,7 @@
 package com.innoq.praktikum.viergewinnt;
 
 public class KI {
-    public static int difficulty ;
-    public static int einfStellex;
+    public static int difficulty;
 
 
     public static int dreiGleich(char xEins,char xZwei, char xDrei, char xVier, char zeichenSpieler)

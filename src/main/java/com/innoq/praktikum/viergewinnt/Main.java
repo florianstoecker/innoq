@@ -30,7 +30,7 @@ public class Main {
         clear();
         int auswFarbeZwei = auswahlFarbe(zahlSpieler);
         clear();
-        Spieler.spielerErstellen(auswFarbeEins, auswFarbeZwei); //Zwei Spieler werden erstellt, Übergabe von Farbe und Auswahl des Gegners
+        Spieler spieler = new Spieler(auswFarbeEins, auswFarbeZwei); //Zwei Spieler werden erstellt, Übergabe von Farbe und Auswahl des Gegners
 
 
         if(auswGegner == 2)
@@ -76,6 +76,7 @@ public class Main {
 
 
     }
+
     public static int nochmal()
     {
         System.out.println("Möchten Sie noch einmal spielen ?");
@@ -93,6 +94,7 @@ public class Main {
         }
         return 0;
     }
+
     public static void clear()
     {
         for(int i = 0; i<10;i++)    // Konsole um 10 Einheiten leer ausgeben
@@ -100,6 +102,7 @@ public class Main {
             System.out.println("\n");
         }
     }
+
     public static int menue()   // Menü - Gegnerauswahl
     {
         int auswGegner;

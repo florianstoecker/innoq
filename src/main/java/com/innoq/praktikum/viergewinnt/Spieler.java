@@ -1,15 +1,10 @@
 package com.innoq.praktikum.viergewinnt;
 
-import java.util.Scanner;
-
 public class Spieler {
     public static int fEins;
     public static int fZwei;
 
-    public static void spielerErstellen(int auswFarbeEins, int auswFarbeZwei)
-    {
-
-
+    public Spieler(int auswFarbeEins, int auswFarbeZwei) {
         fEins = auswFarbeEins;
         fZwei = auswFarbeZwei;
     }

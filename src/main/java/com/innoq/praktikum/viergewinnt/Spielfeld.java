@@ -168,6 +168,7 @@ public class Spielfeld {
             steinEinfügen(anDerReihe, anzStein,anzZugEinz, difAusw);
         }
     }
+
     public void kiSteinEinfügen(int amZug)
     {
         difficulty = KI.getDifficulty();
@@ -207,6 +208,7 @@ public class Spielfeld {
 
         }
     }
+
     private char[][] init()
     {
         char[][] spielfeld = new char[6][7];
@@ -463,7 +465,7 @@ public class Spielfeld {
         }
         return false;
     }
-    
+
     private boolean feldLegbar(int Stellex, int Stelley)
     {
         boolean feldLegbar = false;
@@ -574,6 +576,7 @@ public class Spielfeld {
         }
         return false;
     }
+
     public int getPosxGewinn() {
     return posxGewinn;
     }

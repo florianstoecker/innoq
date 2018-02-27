@@ -5,6 +5,7 @@ public class Animation {
 
     public static final String ANSI_RED = "\u001B[31m";
     public static final String ANSI_YELLOW = "\u001B[33m";
+
     public static void an_Gewinn()
     {
         for(int i = 0; i<50; i++)
@@ -38,11 +39,13 @@ public class Animation {
             e.printStackTrace();
         }
     }
+
     public static int an_random()
     {
         int num_rand = (int)((Math.random()) * 100);
         return num_rand;
     }
+
     public static void an_leer(int num)
     {
         for(int i = 0; i < num; i ++)
