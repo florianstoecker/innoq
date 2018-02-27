@@ -15,6 +15,7 @@ public class Spielfeld {
     public static int farbe;
     public static int einfStellex;
     public static int einfStelley;
+    public static int posxGewinn;
     public static char[][] spielfeld = leeren();
     public static int[][] farbfeld = new int[6][7];
     public static Scanner scan = new Scanner(System.in);
@@ -83,7 +84,7 @@ public class Spielfeld {
         System.out.println("|---------------------------|" + color_RESET);
 
     }
-    public char[][] steinEinfügen(int anDerReihe, int anzStein, int anzZugEinz, int difAusw)
+    public void steinEinfügen(int anDerReihe, int anzStein, int anzZugEinz, int difAusw)
     {
         String eingabeSpeichern;
         char zeichenSpieler = 'O';
@@ -137,7 +138,7 @@ public class Spielfeld {
                     einfStelley--;
                     if (abfVoll() == true)
                     {
-                        return steinEinfügen(anDerReihe, anzStein,anzZugEinz, difAusw);
+                        steinEinfügen(anDerReihe, anzStein,anzZugEinz, difAusw);
                     }
 
                 }
@@ -150,15 +151,255 @@ public class Spielfeld {
             }
             eingabeSpeichern = Integer.toString(einfStellex);
             schreiben(eingabeSpeichern);
-            return spielfeld;
         }
         else
         {
             System.out.println("Falsche Eingabe!");
-            return steinEinfügen(anDerReihe, anzStein,anzZugEinz, difAusw);
+            steinEinfügen(anDerReihe, anzStein,anzZugEinz, difAusw);
         }
     }
+    public static boolean gewinn(int amZug)
+    {
+        char zeichenSpieler = 'D';
+        if (amZug == 1)
+        {
+            zeichenSpieler = 'X';
+        }
+        else if (amZug == 2)
+        {
+            zeichenSpieler = '@';
+        }
 
+        for (int i = 0; i < 6; i++)
+        {
+            for (int j = 0; j < 7; j++)
+            {
+                if (spielfeld[i][j] == zeichenSpieler)
+                {
+                    if (j < 4) // wagerecht
+                    {
+                        if (spielfeld[i][j + 1] == zeichenSpieler && spielfeld[i][j + 2] == zeichenSpieler && spielfeld[i][j + 3] == zeichenSpieler)
+                        {
+                            return true;
+                        }
+                    }
+                    else if (j > 3) // wagerecht
+                    {
+                        if (spielfeld[i][j - 1] == zeichenSpieler && spielfeld[i][j - 2] == zeichenSpieler && spielfeld[i][j - 3] == zeichenSpieler)
+                        {
+                            return true;
+                        }
+                    }
+                    if (i < 3)
+                    {
+                        // senkrecht
+                        if (spielfeld[i + 1][j] == zeichenSpieler && spielfeld[i + 2][j] == zeichenSpieler && spielfeld[i + 3][j] == zeichenSpieler)
+                        {
+                            return true;
+                        }
+                        else if (j < 3) //diagonal
+                        {
+                            if (spielfeld[i + 1][j + 1] == zeichenSpieler && spielfeld[i + 2][j + 2] == zeichenSpieler && spielfeld[i + 3][j + 3] == zeichenSpieler)
+                            {
+                                return true;
+                            }
+                        }
+                        else if (j == 3) //diagonal
+                        {
+                            if (spielfeld[i + 1][j + 1] == zeichenSpieler && spielfeld[i + 2][j + 2] == zeichenSpieler && spielfeld[i + 3][j + 3] == zeichenSpieler)
+                            {
+                                return true;
+                            }
+                            else if (spielfeld[i + 1][j - 1] == zeichenSpieler && spielfeld[i + 2][j - 2] == zeichenSpieler && spielfeld[i + 3][j - 3] == zeichenSpieler)
+                            {
+                                return true;
+                            }
+                        }
+                        else if (j > 3)  //diagonal
+                        {
+                            if (spielfeld[i + 1][j - 1] == zeichenSpieler && spielfeld[i + 2][j - 2] == zeichenSpieler && spielfeld[i + 3][j - 3] == zeichenSpieler)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+
+                    else if (i > 2)
+                    {
+                        // senkrecht
+                        if (spielfeld[i - 1][j] == zeichenSpieler && spielfeld[i - 2][j] == zeichenSpieler && spielfeld[i - 3][j] == zeichenSpieler)
+                        {
+                            return true;
+                        }
+                        if (j < 3) //diagonal
+                        {
+                            if (spielfeld[i - 1][j + 1] == zeichenSpieler && spielfeld[i - 2][j + 2] == zeichenSpieler && spielfeld[i - 3][j + 3] == zeichenSpieler)
+                            {
+
+                            }
+                        }
+                        else if (j == 3) //diagonal
+                        {
+                            if (spielfeld[i - 1][j + 1] == zeichenSpieler && spielfeld[i - 2][j + 2] == zeichenSpieler && spielfeld[i - 3][j + 3] == zeichenSpieler)
+                            {
+                                return true;
+                            }
+                            else if (spielfeld[i - 1][j - 1] == zeichenSpieler && spielfeld[i - 2][j - 2] == zeichenSpieler && spielfeld[i - 3][j - 3] == zeichenSpieler)
+                            {
+                                return true;
+                            }
+                        }
+                        else if (j > 3) //diagonal
+                        {
+                            if (spielfeld[i - 1][j - 1] == zeichenSpieler && spielfeld[i - 2][j - 2] == zeichenSpieler && spielfeld[i - 3][j - 3] == zeichenSpieler)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    public static boolean kannGewinnen(char[][]Spielfeld, int amZug)
+    {
+        char zeichenSpieler = 0;
+        char xEins, xZwei, xDrei,xVier;
+        if (amZug == 1)
+        {
+            zeichenSpieler = 'X';
+        }
+        else if (amZug == 2)
+        {
+            zeichenSpieler = '@';
+        }
+
+
+        for (int i = 0; i < 6; i++)
+        {
+            for (int j = 0; j < 7; j++)
+            {
+                xEins = Spielfeld[i][j];
+                //wagerecht
+                if (j < 4)
+                {
+
+                    xZwei = Spielfeld[i][j + 1];
+                    xDrei = Spielfeld[i][j + 2];
+                    xVier = Spielfeld[i][j + 3];
+                    switch (dreiGleich(xEins, xZwei, xDrei, xVier, zeichenSpieler))
+                    {
+                        case 1:
+                            if (feldLegbar(Spielfeld, i, j) == true) {
+                                posxGewinn = j;
+                                return true;
+                            }
+                        case 2:
+                            if (feldLegbar(Spielfeld, i, j + 1) == true) {
+                                posxGewinn = j + 1;
+                                return true;
+                            }
+                        case 3:
+                            if (feldLegbar(Spielfeld, i, j + 2) == true) {
+                                posxGewinn = j + 2;
+                                return true;
+                            }
+                        case 4:
+                            if (feldLegbar(Spielfeld, i, j + 3) == true) {
+                                posxGewinn = j + 3;
+                                return true;
+                            }
+
+                    }
+                }
+                // senkrecht
+                if(i>2)
+                {
+                    if(Spielfeld[i][j] == zeichenSpieler && Spielfeld[i - 1][j] == zeichenSpieler && Spielfeld[i - 2][j] == zeichenSpieler)
+                    {
+                        if(Spielfeld[i - 3][j] == 'O')
+                        {
+                            posxGewinn = j;
+                            return true;
+                        }
+                    }
+                }
+
+                //diagonal unten rechts & oben links
+                if(i<3 && j < 4)
+                {
+                    xZwei = Spielfeld[i + 1][j + 1];
+                    xDrei = Spielfeld[i + 2][j + 2];
+                    xVier = Spielfeld[i + 3][j + 3];
+                    switch (dreiGleich(xEins, xZwei, xDrei, xVier, zeichenSpieler))
+                    {
+                        case 1:
+                            if (feldLegbar(Spielfeld, i, j) == true) {
+                                posxGewinn = j;
+                                return true;
+                            }
+                        case 2:
+                            if (feldLegbar(Spielfeld, i + 1, j + 1) == true) {
+                                posxGewinn = j + 1;
+                                return true;
+                            }
+                        case 3:
+                            if (feldLegbar(Spielfeld, i + 2, j + 2) == true) {
+                                posxGewinn = j + 2;
+                                return true;
+                            }
+                        case 4:
+                            if (feldLegbar(Spielfeld, i + 3, j + 3) == true) {
+                                posxGewinn = j + 3;
+                                return true;
+                            }
+
+                    }
+                }
+                //diagonal unten links & oben rechts
+                if(i>2 && j < 4)
+                {
+                    xZwei = Spielfeld[i - 1][j + 1];
+                    xDrei = Spielfeld[i - 2][j + 2];
+                    xVier = Spielfeld[i - 3][j + 3];
+                    switch (dreiGleich(xEins, xZwei, xDrei, xVier, zeichenSpieler))
+                    {
+                        case 1:
+                            if (feldLegbar(Spielfeld, i, j) == true) {
+                                posxGewinn = j;
+                                return true;
+                            }
+                        case 2:
+                            if (feldLegbar(Spielfeld, i - 1, j + 1) == true) {
+                                posxGewinn = j + 1;
+                                return true;
+                            }
+                        case 3:
+                            if (feldLegbar(Spielfeld, i - 2, j + 2) == true) {
+                                posxGewinn = j + 2;
+                                return true;
+                            }
+                        case 4:
+                            if (feldLegbar(Spielfeld, i - 3, j + 3) == true) {
+                                posxGewinn = j + 3;
+                                return true;
+                            }
+
+                    }
+                }
+
+
+
+
+
+
+
+
+            }
+        }
+        return false;
+    }
     public static void schreiben(String eingabe)
     {
         try

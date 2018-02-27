@@ -49,8 +49,8 @@ public class Main {
                     anzZugEinz = zwei;
                 }
                 KI.setDifficulty(staerke);
-                mainField = Spielfeld.steinEinfügen(amZug, anzZug, anzZugEinz,auswGegner); //Ein Stein wird eingefügt
-                if (Gewinn.gewinn(mainField, amZug) == true) // Gewinnausgabe
+                Spielfeld.steinEinfügen(amZug, anzZug, anzZugEinz,auswGegner); //Ein Stein wird eingefügt
+                if (Spielfeld.gewinn(amZug) == true) // Gewinnausgabe
                 {
                     clear();
                     Animation.an_Gewinn();
