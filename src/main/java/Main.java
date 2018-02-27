@@ -138,6 +138,11 @@ public static char[][] getMainField()
         System.out.println("6: Cyan");
 
         auswahlFarbe = scan.nextInt();
+        if(auswahlFarbe > 6 || auswahlFarbe < 1)
+        {
+            System.out.println("Falsche Eingabe!");
+            return auswahlFarbe(zahlSpieler);
+        }
         return auswahlFarbe;
     }
 }

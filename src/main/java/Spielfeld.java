@@ -145,13 +145,15 @@ public class Spielfeld {
                 {
                     spielfeld[einfStelley][einfStellex] = zeichenSpieler;
                     farbfeld[einfStelley][einfStellex] = farbe;
+                    eingabeSpeichern = Integer.toString(einfStellex);
+                    schreiben(eingabeSpeichern);
                 }
 
             }
-            if (anDerReihe == 1) {
+
                 eingabeSpeichern = Integer.toString(einfStellex);
                 schreiben(eingabeSpeichern);
-            }
+
 
             return spielfeld;
         }

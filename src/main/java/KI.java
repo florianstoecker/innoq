@@ -100,10 +100,8 @@ public class KI {
                     einfStellex = Gewinn.getPosxGewinn();
                     return einfStellex;
                 }
-                else
-                    {
-                        difficulty = 1;
-                    }
+
+                difficulty = 1;
                 break;
             case 3: break;
             case 4:
