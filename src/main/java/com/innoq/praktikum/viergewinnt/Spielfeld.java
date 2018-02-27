@@ -16,27 +16,19 @@ public class Spielfeld {
     public static final String BLUE = "\u001B[34m";
     public static final String PURPLE = "\u001B[35m";
     public static final String CYAN = "\u001B[36m";
-    public static final String WHITE = "\033[0;97m";;
-    public static int farbe;
-    public static int einfStellex;
-    public static int einfStelley;
-    public static int posxGewinn;
-    public static char[][] spielfeld = leeren();
-    public static int[][] farbfeld = new int[6][7];
-    public static Scanner scan = new Scanner(System.in);
     public static final String WHITE = "\033[0;97m";
 
 
     private int farbe;
     private int einfStellex;
     private int einfStelley;
+    private int posxGewinn;
     private char[][] spielfeld;
     private int[][] farbfeld = new int[6][7];
     private Scanner scan = new Scanner(System.in);
 
-    public Spielfeld(int farbe) {
-        this.farbe = farbe;
-        this.spielfeld = init();
+    public Spielfeld() {
+        spielfeld = init();
     }
 
     public void zeichneSpielfeld(int anzZug)
@@ -84,11 +76,11 @@ public class Spielfeld {
                         }
 
                     }
-                        else
-                        {
+                    else
+                    {
                         System.out.printf(WHITE + " %c ", spielfeld[i][j]);
                         System.out.print(BLACK + "|");
-                        }
+                    }
                 }
 
 
@@ -99,8 +91,9 @@ public class Spielfeld {
         System.out.println("|---------------------------|" + COLOR_RESET);
 
     }
-    public void steinEinfügen(int anDerReihe, int anzStein, int anzZugEinz, int difAusw)
+    public char[][] steinEinfügen(int anDerReihe, int anzStein, int anzZugEinz, int difAusw)
     {
+        KI ki = new KI();
         String eingabeSpeichern;
         char zeichenSpieler = 'O';
 
@@ -118,7 +111,8 @@ public class Spielfeld {
 
         if(difAusw == 2 && anDerReihe == 2)
         {
-            einfStellex = KI.steinEinfügen(this, anDerReihe);
+            ki.kiSteinEinfügen(anDerReihe);
+            einfStellex = ki.getEinfStellex();
             int KI_ausw_spalte = einfStellex +1;
             System.out.println("Die KI nahm Spalte " + KI_ausw_spalte);
         }
@@ -153,7 +147,7 @@ public class Spielfeld {
                     einfStelley--;
                     if (abfVoll() == true)
                     {
-                        steinEinfügen(anDerReihe, anzStein,anzZugEinz, difAusw);
+                        return steinEinfügen(anDerReihe, anzStein,anzZugEinz, difAusw);
                     }
 
                 }
@@ -166,14 +160,15 @@ public class Spielfeld {
             }
             eingabeSpeichern = Integer.toString(einfStellex);
             schreiben(eingabeSpeichern);
+            return spielfeld;
         }
         else
         {
             System.out.println("Falsche Eingabe!");
-            steinEinfügen(anDerReihe, anzStein,anzZugEinz, difAusw);
+            return steinEinfügen(anDerReihe, anzStein,anzZugEinz, difAusw);
         }
     }
-    public static boolean gewinn(int amZug)
+    public boolean gewinn(int amZug)
     {
         char zeichenSpieler = 'D';
         if (amZug == 1)
@@ -238,6 +233,7 @@ public class Spielfeld {
                             }
                         }
                     }
+
                     else if (i > 2)
                     {
                         // senkrecht
@@ -276,7 +272,8 @@ public class Spielfeld {
         }
         return false;
     }
-    public static boolean kannGewinnen(char[][]Spielfeld, int amZug)
+
+    public boolean kannGewinnen(int amZug)
     {
         char zeichenSpieler = 0;
         char xEins, xZwei, xDrei,xVier;
@@ -294,33 +291,33 @@ public class Spielfeld {
         {
             for (int j = 0; j < 7; j++)
             {
-                xEins = Spielfeld[i][j];
+                xEins = spielfeld[i][j];
                 //wagerecht
                 if (j < 4)
                 {
 
-                    xZwei = Spielfeld[i][j + 1];
-                    xDrei = Spielfeld[i][j + 2];
-                    xVier = Spielfeld[i][j + 3];
+                    xZwei = spielfeld[i][j + 1];
+                    xDrei = spielfeld[i][j + 2];
+                    xVier = spielfeld[i][j + 3];
                     switch (dreiGleich(xEins, xZwei, xDrei, xVier, zeichenSpieler))
                     {
                         case 1:
-                            if (feldLegbar(Spielfeld, i, j) == true) {
+                            if (feldLegbar(i, j) == true) {
                                 posxGewinn = j;
                                 return true;
                             }
                         case 2:
-                            if (feldLegbar(Spielfeld, i, j + 1) == true) {
+                            if (feldLegbar(i, j + 1) == true) {
                                 posxGewinn = j + 1;
                                 return true;
                             }
                         case 3:
-                            if (feldLegbar(Spielfeld, i, j + 2) == true) {
+                            if (feldLegbar(i, j + 2) == true) {
                                 posxGewinn = j + 2;
                                 return true;
                             }
                         case 4:
-                            if (feldLegbar(Spielfeld, i, j + 3) == true) {
+                            if (feldLegbar(i, j + 3) == true) {
                                 posxGewinn = j + 3;
                                 return true;
                             }
@@ -330,9 +327,9 @@ public class Spielfeld {
                 // senkrecht
                 if(i>2)
                 {
-                    if(Spielfeld[i][j] == zeichenSpieler && Spielfeld[i - 1][j] == zeichenSpieler && Spielfeld[i - 2][j] == zeichenSpieler)
+                    if(spielfeld[i][j] == zeichenSpieler && spielfeld[i - 1][j] == zeichenSpieler && spielfeld[i - 2][j] == zeichenSpieler)
                     {
-                        if(Spielfeld[i - 3][j] == 'O')
+                        if(spielfeld[i - 3][j] == 'O')
                         {
                             posxGewinn = j;
                             return true;
@@ -343,28 +340,28 @@ public class Spielfeld {
                 //diagonal unten rechts & oben links
                 if(i<3 && j < 4)
                 {
-                    xZwei = Spielfeld[i + 1][j + 1];
-                    xDrei = Spielfeld[i + 2][j + 2];
-                    xVier = Spielfeld[i + 3][j + 3];
+                    xZwei = spielfeld[i + 1][j + 1];
+                    xDrei = spielfeld[i + 2][j + 2];
+                    xVier = spielfeld[i + 3][j + 3];
                     switch (dreiGleich(xEins, xZwei, xDrei, xVier, zeichenSpieler))
                     {
                         case 1:
-                            if (feldLegbar(Spielfeld, i, j) == true) {
+                            if (feldLegbar(i, j) == true) {
                                 posxGewinn = j;
                                 return true;
                             }
                         case 2:
-                            if (feldLegbar(Spielfeld, i + 1, j + 1) == true) {
+                            if (feldLegbar(i + 1, j + 1) == true) {
                                 posxGewinn = j + 1;
                                 return true;
                             }
                         case 3:
-                            if (feldLegbar(Spielfeld, i + 2, j + 2) == true) {
+                            if (feldLegbar(i + 2, j + 2) == true) {
                                 posxGewinn = j + 2;
                                 return true;
                             }
                         case 4:
-                            if (feldLegbar(Spielfeld, i + 3, j + 3) == true) {
+                            if (feldLegbar(i + 3, j + 3) == true) {
                                 posxGewinn = j + 3;
                                 return true;
                             }
@@ -374,28 +371,28 @@ public class Spielfeld {
                 //diagonal unten links & oben rechts
                 if(i>2 && j < 4)
                 {
-                    xZwei = Spielfeld[i - 1][j + 1];
-                    xDrei = Spielfeld[i - 2][j + 2];
-                    xVier = Spielfeld[i - 3][j + 3];
+                    xZwei = spielfeld[i - 1][j + 1];
+                    xDrei = spielfeld[i - 2][j + 2];
+                    xVier = spielfeld[i - 3][j + 3];
                     switch (dreiGleich(xEins, xZwei, xDrei, xVier, zeichenSpieler))
                     {
                         case 1:
-                            if (feldLegbar(Spielfeld, i, j) == true) {
+                            if (feldLegbar(i, j) == true) {
                                 posxGewinn = j;
                                 return true;
                             }
                         case 2:
-                            if (feldLegbar(Spielfeld, i - 1, j + 1) == true) {
+                            if (feldLegbar(i - 1, j + 1) == true) {
                                 posxGewinn = j + 1;
                                 return true;
                             }
                         case 3:
-                            if (feldLegbar(Spielfeld, i - 2, j + 2) == true) {
+                            if (feldLegbar(i - 2, j + 2) == true) {
                                 posxGewinn = j + 2;
                                 return true;
                             }
                         case 4:
-                            if (feldLegbar(Spielfeld, i - 3, j + 3) == true) {
+                            if (feldLegbar(i - 3, j + 3) == true) {
                                 posxGewinn = j + 3;
                                 return true;
                             }
@@ -414,23 +411,67 @@ public class Spielfeld {
         }
         return false;
     }
-    public static void schreiben(String eingabe)
-=======
+    public int dreiGleich(char xEins,char xZwei, char xDrei, char xVier, char zeichenSpieler)
+    {
+
+        if(xVier == xZwei && xZwei== xDrei && xDrei == zeichenSpieler)
+        {
+            return 1;
+        }
+        else if(xVier == xEins && xEins== xDrei && xDrei == zeichenSpieler)
+        {
+            return 2;
+        }
+        else if(xVier == xZwei && xZwei == xEins && xEins == zeichenSpieler)
+        {
+            return 3;
+        }
+        else if(xEins == xZwei && xZwei == xDrei && xDrei == zeichenSpieler)
+        {
+            return 4;
+        }
+        return 0;
+    }
+    private boolean feldLegbar(int Stellex, int Stelley)
+    {
+        boolean feldLegbar = false;
+        if(spielfeld[Stellex][Stelley] == 'O') {
+            if (Stellex == 5) {
+                return true;
+            } else {
+                for (int m = 5; m > Stellex; m --) {
+                    if (spielfeld[m][Stelley] == 'O') {
+                        return false;
+                    } else {
+                        feldLegbar = true;
+                    }
+                }
+                if (feldLegbar == true) {
+                    return true;
+
+                }
+            }
+        }
+        return false;
+    }
     public void schreiben(String eingabe)
->>>>>>> b2eb352600a1a42f361462e3ae2ff81cea481412:src/main/java/com/innoq/praktikum/viergewinnt/Spielfeld.java
     {
         try
         {
-        PrintWriter writer = new PrintWriter(new FileWriter("/Users/user/Documents/GitHub/innoq/src/main/java/Eingabe.txt"));
-        writer.println(eingabe);
-        writer.println();
-        writer.print("neu");
-        writer.close();
+            PrintWriter writer = new PrintWriter(new FileWriter("/Users/user/Documents/GitHub/innoq/src/main/java/Eingabe.txt"));
+            writer.println(eingabe);
+            writer.println();
+            writer.print("neu");
+            writer.close();
         }
         catch( IOException e )
         {
             e.printStackTrace();
         }
+    }
+    public int getPosxGewinn()
+    {
+    return posxGewinn;
     }
 
     public boolean abfVoll()
@@ -441,10 +482,6 @@ public class Spielfeld {
             return true;
         }
         return false;
-    }
-
-    public boolean istBereitsGefuellt(int x, int y) {
-
     }
 
     private char[][] init()
@@ -459,4 +496,81 @@ public class Spielfeld {
         }
         return spielfeld;
     }
+    public void eigenerStein()
+    {
+        boolean feldLegbar = false;
+        for(int i = 5; i>= 1; i--)//senkrecht auf eigenen Stein
+        {
+
+            for(int j = 0; j<7; j++)
+            {
+                if(i >2) {
+                    if (spielfeld[i][j] == '@' && spielfeld[i - 1][j] == 'O') {
+                        einfStellex = j;
+                    }
+                }
+            }
+        }
+
+                    for(int i = 5; i>= 0; i--) //wagerecht neben eigenen Stein
+        {
+
+            for(int j = 0; j<7; j++)
+            {
+                if(spielfeld[i][j] == '@' && j>0 && spielfeld[i][j-1] == 'O' ) // links neben eigenen Stein
+                {
+
+                    int help_i = i;
+
+                    if(i == 5)
+                    {
+                        einfStellex = j-1;
+                    }
+
+                    else  if(help_i < 5)
+                    {
+                        for (int m = 5; m > i; m--) {
+                            if (spielfeld[m][j - 1] == 'O') {
+                                feldLegbar = false;
+                            }
+                            else {
+                                feldLegbar = true;
+                            }
+
+                        }
+                        if (feldLegbar == true)
+                        {
+                            einfStellex = j - 1;
+                        }
+                    }
+
+                }
+                else if(spielfeld[i][j] == '@' && j<6&& spielfeld[i][j+1] == 'O') // rechts neben eigenen Stein
+                {
+
+                    int help_i_ = i;
+                    if(i == 5)
+                    {
+                        einfStellex = j+1;
+                    }
+                    else  if(help_i_ < 5)
+                    {
+                        for (int m = 5; m > i; m--) {
+                            if (spielfeld[m][j + 1] == 'O') {
+                                feldLegbar = false;
+                            }
+                            else {
+                                feldLegbar = true;
+                            }
+
+                        }
+                        if (feldLegbar == true)
+                        {
+                            einfStellex = j + 1;
+                        }
+                    }
+                }
+            }
+        }
+}
 }

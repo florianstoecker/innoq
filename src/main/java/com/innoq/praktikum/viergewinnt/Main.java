@@ -3,14 +3,12 @@ package com.innoq.praktikum.viergewinnt;
 import java.util.Scanner;
 
 public class Main {
-    public  static char[][] mainField = Spielfeld.leeren();
     public static final String BLACK_BOLD = "\033[1;30m";
     public static Scanner scan = new Scanner(System.in);
 
 
     public static void main(String[] args) {
         Spielfeld Spielfeld = new Spielfeld();
-        mainField = Spielfeld.leeren();
 
         int zahlSpieler = 1;
         int anzZug = 0;
@@ -35,77 +33,73 @@ public class Main {
         Spieler.spielerErstellen(auswFarbeEins, auswFarbeZwei); //Zwei Spieler werden erstellt, Übergabe von Farbe und Auswahl des Gegners
 
 
-            if(auswGegner == 2)
-            {
-                staerke = staerke();
-                KI.setDifficulty(staerke);     //KI Stärke wird festgelegt
-            }
+        if(auswGegner == 2)
+        {
+            staerke = staerke();
+            KI.setDifficulty(staerke);     //KI Stärke wird festgelegt
+        }
 
-            System.out.println("Das Spiel beginnt ! \n ");
-            Spielfeld.zeichneSpielfeld(anzZug); // Spielfeld wird gezeichnet
+        System.out.println("Das Spiel beginnt ! \n ");
+        Spielfeld.zeichneSpielfeld(anzZug); // Spielfeld wird gezeichnet
         anzZug = 1;
-            while (anzZug < 43) {
-                if (amZug == 1) {
-                    eins++;
-                    anzZugEinz = eins;    // Anzahl der Züge(Spielerbezogen)
-                } else if (amZug == 2) {
-                    zwei++;
-                    anzZugEinz = zwei;
-                }
-                KI.setDifficulty(staerke);
-                Spielfeld.steinEinfügen(amZug, anzZug, anzZugEinz,auswGegner); //Ein Stein wird eingefügt
-                if (Spielfeld.gewinn(amZug) == true) // Gewinnausgabe
-                {
-                    clear();
-                    Animation.an_Gewinn();
-                    clear();
-                    Spielfeld.zeichneSpielfeld(anzZug);
-                    System.out.println(BLACK_BOLD + "Der Gewinner ist Spieler " + amZug);
-                    System.out.println("Das Spiel ist vorbei !");
-                    if(nochmal() == 0)
-                    {
-                        return;
-                    }
-
-                }
-                amZug = Spieler.wechseln(amZug); // Spieler wechseln
-                Spielfeld.zeichneSpielfeld(anzZug); // Spielfeld wird gezeichnet
-                anzZug++; // Anzahl der Züge insgesamt wird hochgesetzt
+        while (anzZug < 43) {
+            if (amZug == 1) {
+                eins++;
+                anzZugEinz = eins;    // Anzahl der Züge(Spielerbezogen)
+            } else if (amZug == 2) {
+                zwei++;
+                anzZugEinz = zwei;
             }
+            KI.setDifficulty(staerke);
+            Spielfeld.steinEinfügen(amZug, anzZug, anzZugEinz,auswGegner); //Ein Stein wird eingefügt
+            if (Spielfeld.gewinn(amZug) == true) // Gewinnausgabe
+            {
+                clear();
+                Animation.an_Gewinn();
+                clear();
+                Spielfeld.zeichneSpielfeld(anzZug);
+                System.out.println(BLACK_BOLD + "Der Gewinner ist Spieler " + amZug);
+                System.out.println("Das Spiel ist vorbei !");
+                if(nochmal() == 0)
+                {
+                    return;
+                }
 
-            System.out.println(BLACK_BOLD + "Alle Felder sind voll !");
-            System.out.println("Das Spiel ist vorbei !");
+            }
+            amZug = Spieler.wechseln(amZug); // Spieler wechseln
+            Spielfeld.zeichneSpielfeld(anzZug); // Spielfeld wird gezeichnet
+            anzZug++; // Anzahl der Züge insgesamt wird hochgesetzt
+        }
+
+        System.out.println(BLACK_BOLD + "Alle Felder sind voll !");
+        System.out.println("Das Spiel ist vorbei !");
 
 
     }
-public static int nochmal()
-{
-    System.out.println("Möchten Sie noch einmal spielen ?");
-    System.out.println("1: Ja!");
-    System.out.println("2: Nein!");
-    int nochmal = scan.nextInt();
-    if (nochmal == 1) {
-        String[] another = new String[5];
-        clear();
-        main(another);
-
-    } else if (nochmal == 2)
+    public static int nochmal()
     {
+        System.out.println("Möchten Sie noch einmal spielen ?");
+        System.out.println("1: Ja!");
+        System.out.println("2: Nein!");
+        int nochmal = scan.nextInt();
+        if (nochmal == 1) {
+            String[] another = new String[5];
+            clear();
+            main(another);
+
+        } else if (nochmal == 2)
+        {
+            return 0;
+        }
         return 0;
     }
-    return 0;
-}
-public static void clear()
-{
-    for(int i = 0; i<10;i++)    // Konsole um 10 Einheiten leer ausgeben
+    public static void clear()
     {
-        System.out.println("\n");
+        for(int i = 0; i<10;i++)    // Konsole um 10 Einheiten leer ausgeben
+        {
+            System.out.println("\n");
+        }
     }
-}
-public static char[][] getMainField()
-{
-    return mainField;
-}
     public static int menue()   // Menü - Gegnerauswahl
     {
         int auswGegner;
