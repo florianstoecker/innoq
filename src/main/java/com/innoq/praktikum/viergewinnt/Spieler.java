@@ -3,7 +3,6 @@ package com.innoq.praktikum.viergewinnt;
 import java.util.Scanner;
 
 public class Spieler {
-    public static Scanner scan = new Scanner(System.in);
     public static int fEins;
     public static int fZwei;
 
@@ -30,10 +29,12 @@ public class Spieler {
         }
         return 0;
     }
+
     public static int getfEins()
     {
         return fEins;
     }
+
     public static int getfZwei()
     {
         return fZwei;

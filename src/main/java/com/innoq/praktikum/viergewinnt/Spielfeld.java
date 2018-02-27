@@ -20,6 +20,7 @@ public class Spielfeld {
 
 
     private int farbe;
+    private int difficulty ;
     private int einfStellex;
     private int einfStelley;
     private int posxGewinn;
@@ -91,7 +92,8 @@ public class Spielfeld {
         System.out.println("|---------------------------|" + COLOR_RESET);
 
     }
-    public char[][] steinEinfügen(int anDerReihe, int anzStein, int anzZugEinz, int difAusw)
+
+    public void steinEinfügen(int anDerReihe, int anzStein, int anzZugEinz, int difAusw)
     {
         KI ki = new KI();
         String eingabeSpeichern;
@@ -111,8 +113,7 @@ public class Spielfeld {
 
         if(difAusw == 2 && anDerReihe == 2)
         {
-            ki.kiSteinEinfügen(anDerReihe);
-            einfStellex = ki.getEinfStellex();
+            kiSteinEinfügen(anDerReihe);
             int KI_ausw_spalte = einfStellex +1;
             System.out.println("Die KI nahm Spalte " + KI_ausw_spalte);
         }
@@ -147,7 +148,7 @@ public class Spielfeld {
                     einfStelley--;
                     if (abfVoll() == true)
                     {
-                        return steinEinfügen(anDerReihe, anzStein,anzZugEinz, difAusw);
+                        steinEinfügen(anDerReihe, anzStein,anzZugEinz, difAusw);
                     }
 
                 }
@@ -160,14 +161,65 @@ public class Spielfeld {
             }
             eingabeSpeichern = Integer.toString(einfStellex);
             schreiben(eingabeSpeichern);
-            return spielfeld;
         }
         else
         {
             System.out.println("Falsche Eingabe!");
-            return steinEinfügen(anDerReihe, anzStein,anzZugEinz, difAusw);
+            steinEinfügen(anDerReihe, anzStein,anzZugEinz, difAusw);
         }
     }
+    public void kiSteinEinfügen(int amZug)
+    {
+        difficulty = KI.getDifficulty();
+        switch(difficulty)
+        {
+            case 1:
+                eigenerStein();
+                einfStellex = getPosxGewinn();
+                difficulty = 4;
+                break;
+            case 2:
+
+
+                if(kannGewinnen( 2) == true) { // Kann KI gewinnen ?
+                    einfStellex = getPosxGewinn();
+                }
+                else if(kannGewinnen(1) == true) // Kann Spieler gewinnen ?
+                {
+                    einfStellex = getPosxGewinn();
+                }
+                difficulty = 1;
+                break;
+            case 3:
+                if(kannGewinnen( 2) == true) { // Kann KI gewinnen ?
+                    einfStellex = getPosxGewinn();
+                }
+                else if(kannGewinnen(1) == true) // Kann Spieler gewinnen ?
+                {
+                    einfStellex = getPosxGewinn();
+                }
+
+                break;
+
+            case 4:
+                einfStellex = (int)((Math.random()) * 7 + 1)-1;
+                break;
+
+        }
+    }
+    private char[][] init()
+    {
+        char[][] spielfeld = new char[6][7];
+        for(int i = 0; i<6; i++)
+        {
+            for(int j = 0; j<7; j++)
+            {
+                spielfeld[i][j] = 'O';
+            }
+        }
+        return spielfeld;
+    }
+
     public boolean gewinn(int amZug)
     {
         char zeichenSpieler = 'D';
@@ -299,7 +351,7 @@ public class Spielfeld {
                     xZwei = spielfeld[i][j + 1];
                     xDrei = spielfeld[i][j + 2];
                     xVier = spielfeld[i][j + 3];
-                    switch (dreiGleich(xEins, xZwei, xDrei, xVier, zeichenSpieler))
+                    switch (KI.dreiGleich(xEins, xZwei, xDrei, xVier, zeichenSpieler))
                     {
                         case 1:
                             if (feldLegbar(i, j) == true) {
@@ -343,7 +395,7 @@ public class Spielfeld {
                     xZwei = spielfeld[i + 1][j + 1];
                     xDrei = spielfeld[i + 2][j + 2];
                     xVier = spielfeld[i + 3][j + 3];
-                    switch (dreiGleich(xEins, xZwei, xDrei, xVier, zeichenSpieler))
+                    switch (KI.dreiGleich(xEins, xZwei, xDrei, xVier, zeichenSpieler))
                     {
                         case 1:
                             if (feldLegbar(i, j) == true) {
@@ -374,7 +426,7 @@ public class Spielfeld {
                     xZwei = spielfeld[i - 1][j + 1];
                     xDrei = spielfeld[i - 2][j + 2];
                     xVier = spielfeld[i - 3][j + 3];
-                    switch (dreiGleich(xEins, xZwei, xDrei, xVier, zeichenSpieler))
+                    switch (KI.dreiGleich(xEins, xZwei, xDrei, xVier, zeichenSpieler))
                     {
                         case 1:
                             if (feldLegbar(i, j) == true) {
@@ -411,27 +463,7 @@ public class Spielfeld {
         }
         return false;
     }
-    public int dreiGleich(char xEins,char xZwei, char xDrei, char xVier, char zeichenSpieler)
-    {
-
-        if(xVier == xZwei && xZwei== xDrei && xDrei == zeichenSpieler)
-        {
-            return 1;
-        }
-        else if(xVier == xEins && xEins== xDrei && xDrei == zeichenSpieler)
-        {
-            return 2;
-        }
-        else if(xVier == xZwei && xZwei == xEins && xEins == zeichenSpieler)
-        {
-            return 3;
-        }
-        else if(xEins == xZwei && xZwei == xDrei && xDrei == zeichenSpieler)
-        {
-            return 4;
-        }
-        return 0;
-    }
+    
     private boolean feldLegbar(int Stellex, int Stelley)
     {
         boolean feldLegbar = false;
@@ -454,49 +486,8 @@ public class Spielfeld {
         }
         return false;
     }
-    public void schreiben(String eingabe)
-    {
-        try
-        {
-            PrintWriter writer = new PrintWriter(new FileWriter("/Users/user/Documents/GitHub/innoq/src/main/java/Eingabe.txt"));
-            writer.println(eingabe);
-            writer.println();
-            writer.print("neu");
-            writer.close();
-        }
-        catch( IOException e )
-        {
-            e.printStackTrace();
-        }
-    }
-    public int getPosxGewinn()
-    {
-    return posxGewinn;
-    }
 
-    public boolean abfVoll()
-    {
-        if(einfStelley == -1)
-        {
-            System.out.println("Spalte voll !");
-            return true;
-        }
-        return false;
-    }
-
-    private char[][] init()
-    {
-        char[][] spielfeld = new char[6][7];
-        for(int i = 0; i<6; i++)
-        {
-            for(int j = 0; j<7; j++)
-            {
-                spielfeld[i][j] = 'O';
-            }
-        }
-        return spielfeld;
-    }
-    public void eigenerStein()
+    private void eigenerStein()
     {
         boolean feldLegbar = false;
         for(int i = 5; i>= 1; i--)//senkrecht auf eigenen Stein
@@ -512,7 +503,7 @@ public class Spielfeld {
             }
         }
 
-                    for(int i = 5; i>= 0; i--) //wagerecht neben eigenen Stein
+        for(int i = 5; i>= 0; i--) //wagerecht neben eigenen Stein
         {
 
             for(int j = 0; j<7; j++)
@@ -572,5 +563,34 @@ public class Spielfeld {
                 }
             }
         }
-}
+    }
+
+    public boolean abfVoll()
+    {
+        if(einfStelley == -1)
+        {
+            System.out.println("Spalte voll !");
+            return true;
+        }
+        return false;
+    }
+    public int getPosxGewinn() {
+    return posxGewinn;
+    }
+
+    public void schreiben(String eingabe)
+    {
+        try
+        {
+            PrintWriter writer = new PrintWriter(new FileWriter("/Users/user/Documents/GitHub/innoq/src/main/java/Eingabe.txt"));
+            writer.println(eingabe);
+            writer.println();
+            writer.print("neu");
+            writer.close();
+        }
+        catch( IOException e )
+        {
+            e.printStackTrace();
+        }
+    }
 }

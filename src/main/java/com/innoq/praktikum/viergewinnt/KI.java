@@ -3,52 +3,36 @@ package com.innoq.praktikum.viergewinnt;
 public class KI {
     public static int difficulty ;
     public static int einfStellex;
-    public void kiSteinEinfügen(int amZug)
+
+
+    public static int dreiGleich(char xEins,char xZwei, char xDrei, char xVier, char zeichenSpieler)
     {
-        switch(difficulty)
+
+        if(xVier == xZwei && xZwei== xDrei && xDrei == zeichenSpieler)
         {
-            case 1:
-                Spielfeld.eigenerStein();
-                einfStellex = Spielfeld.getPosxGewinn();
-                difficulty = 4;
-                break;
-            case 2:
-
-
-                if(Spielfeld.kannGewinnen( 2) == true) { // Kann KI gewinnen ?
-                    einfStellex = Spielfeld.getPosxGewinn();
-                }
-                else if(Spielfeld.kannGewinnen(1) == true) // Kann Spieler gewinnen ?
-                {
-                    einfStellex = Spielfeld.getPosxGewinn();
-                }
-
-                difficulty = 1;
-                break;
-            case 3:
-                if(Spielfeld.kannGewinnen( 2) == true) { // Kann KI gewinnen ?
-                    einfStellex = Spielfeld.getPosxGewinn();
-                }
-                else if(Spielfeld.kannGewinnen(1) == true) // Kann Spieler gewinnen ?
-                {
-                    einfStellex = Spielfeld.getPosxGewinn();
-                }
-
-                break;
-
-            case 4:
-                einfStellex = (int)((Math.random()) * 7 + 1)-1;
-                break;
-
+            return 1;
         }
-    }
-
-    public int getEinfStellex() {
-        return einfStellex;
+        else if(xVier == xEins && xEins== xDrei && xDrei == zeichenSpieler)
+        {
+            return 2;
+        }
+        else if(xVier == xZwei && xZwei == xEins && xEins == zeichenSpieler)
+        {
+            return 3;
+        }
+        else if(xEins == xZwei && xZwei == xDrei && xDrei == zeichenSpieler)
+        {
+            return 4;
+        }
+        return 0;
     }
 
     public static void setDifficulty(int dif)
     {
         difficulty = dif;
+    }
+    public static int getDifficulty()
+    {
+        return difficulty;
     }
 }
