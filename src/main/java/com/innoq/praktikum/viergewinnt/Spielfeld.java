@@ -26,6 +26,7 @@ public class Spielfeld {
     private int posxGewinn;
     private int richtung;
     private char[][] spielfeld;
+    private char[][] hilfsfeld;
     private int[][] farbfeld = new int[6][7];
     private Scanner scan = new Scanner(System.in);
 
@@ -413,7 +414,7 @@ public class Spielfeld {
     }
 
     private boolean zweiÜberprüfen(int i, int j, char zeichenSpieler, int schonGecheckt)
-        {
+    {
             char xEins, xZwei, xDrei, xVier;
             int ran = (int)((Math.random()) * 7 + 1)-1;
             xEins = spielfeld[i][j];
@@ -731,7 +732,68 @@ public class Spielfeld {
                 }
             }
             return false;
+    }
+
+   /* private boolean minmax(int amZug, char zeichenSpieler)
+    {
+
+        if(kannGewinnen(amZug) == false)
+        {
+            hilfsfeld = spielfeld;
+            for(int j = 0; j<7; j++)
+            {
+                if(hilfeSteinEinfügen(j, amZug)== true)
+                {
+
+                }
+            }
+
+
+
+
+
         }
+        else
+        {
+            einfStellex = posxGewinn;
+        }
+        return false;
+    }
+    private boolean hilfeSteinEinfügen(int hilfeStellex,int amZug)
+    {
+        char zeichenSpieler = 'D';
+        if (amZug == 1)
+        {
+            zeichenSpieler = 'X';
+        }
+        else if (amZug == 2)
+        {
+            zeichenSpieler = '@';
+        }
+        int hilfeStelley = 5;
+        if (spielfeld[hilfeStelley][hilfeStellex] == 'O') {
+            spielfeld[hilfeStelley][hilfeStellex] = zeichenSpieler;
+        }
+        else
+        {
+            while (spielfeld[einfStelley][einfStellex] == 'X' || spielfeld[einfStelley][einfStellex] == '@')
+            {
+                hilfStelley--;
+                if (hilfeStelley)
+                {
+                    return false;
+                }
+
+            }
+            if (abfVoll() == false)
+            {
+                spielfeld[einfStelley][einfStellex] = zeichenSpieler;
+                farbfeld[einfStelley][einfStellex] = farbe;
+            }
+
+        }
+        return false;
+    }*/
 
     private boolean kannGewinnen(int amZug) {
         char zeichenSpieler = 0;
