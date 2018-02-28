@@ -25,6 +25,21 @@ public class KI {
         }
         return 0;
     }
+    public static int zweiGleich(char xEins,char xZwei, char xDrei, char zeichenSpieler) {
+        if(xZwei== xDrei && xDrei == zeichenSpieler)
+        {
+            return 1;
+        }
+        else if(xEins== xDrei && xDrei == zeichenSpieler)
+        {
+            return 2;
+        }
+        else if(xZwei == xEins && xEins == zeichenSpieler)
+        {
+            return 3;
+        }
+        return 0;
+    }
 
     public static void setDifficulty(int dif)
     {

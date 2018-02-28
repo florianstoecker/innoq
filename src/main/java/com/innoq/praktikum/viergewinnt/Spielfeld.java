@@ -198,6 +198,16 @@ public class Spielfeld {
                     einfStellex = getPosxGewinn();
                     return;
                 }
+                else if(zweiGleicheErweitern(2) == true)
+                {
+                    einfStellex = getPosxGewinn();
+                    return;
+                }
+                else if(zweiGleicheErweitern(1) == true)
+                {
+                    einfStellex = getPosxGewinn();
+                    return;
+                }
                 else
                 {
                     KI.setDifficulty(1);
@@ -341,8 +351,7 @@ public class Spielfeld {
         }
         return false;
     }
-
-    public boolean kannGewinnen(int amZug)
+    private boolean zweiGleicheErweitern(int amZug)
     {
         char zeichenSpieler = 0;
         char xEins, xZwei, xDrei,xVier;
@@ -352,6 +361,105 @@ public class Spielfeld {
         }
         else if (amZug == 2)
         {
+            zeichenSpieler = '@';
+        }
+
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 7; j++) {
+                xEins = spielfeld[i][j];
+                //wagerecht
+                if (j < 5)
+                {
+                    xZwei = spielfeld[i][j + 1];
+                    xDrei = spielfeld[i][j + 2];
+                    switch (KI.zweiGleich(xEins, xZwei, xDrei, zeichenSpieler))
+                    {
+                        case 1:
+                            if (feldLegbar(i, j) == true) {
+                                posxGewinn = j;
+                                return true;
+                            }
+                        case 2:
+                            if (feldLegbar(i, j + 1) == true) {
+                                posxGewinn = j + 1;
+                                return true;
+                            }
+                        case 3:
+                            if (feldLegbar(i, j + 2) == true) {
+                                posxGewinn = j + 2;
+                                return true;
+                            }
+                    }
+                }
+                if(i>2)
+                {
+                    if(spielfeld[i][j] == zeichenSpieler && spielfeld[i - 1][j] == zeichenSpieler)
+                    {
+                        if(spielfeld[i - 2][j] == 'O')
+                        {
+                            posxGewinn = j;
+                            return true;
+                        }
+                    }
+                }
+                //diagonal unten rechts & oben links
+                if(i<3 && j < 4)
+                {
+                    xZwei = spielfeld[i + 1][j + 1];
+                    xDrei = spielfeld[i + 2][j + 2];
+                    switch (KI.zweiGleich(xEins, xZwei, xDrei, zeichenSpieler))
+                    {
+                        case 1:
+                            if (feldLegbar(i, j) == true) {
+                                posxGewinn = j;
+                                return true;
+                            }
+                        case 2:
+                            if (feldLegbar(i + 1, j + 1) == true) {
+                                posxGewinn = j + 1;
+                                return true;
+                            }
+                        case 3:
+                            if (feldLegbar(i + 2, j + 2) == true) {
+                                posxGewinn = j + 2;
+                                return true;
+                            }
+                    }
+                }
+                //diagonal unten links & oben rechts
+                if(i>2 && j < 4)
+                {
+                    xZwei = spielfeld[i - 1][j + 1];
+                    xDrei = spielfeld[i - 2][j + 2];
+                    switch (KI.zweiGleich(xEins, xZwei, xDrei,zeichenSpieler))
+                    {
+                        case 1:
+                            if (feldLegbar(i, j) == true) {
+                                posxGewinn = j;
+                                return true;
+                            }
+                        case 2:
+                            if (feldLegbar(i - 1, j + 1) == true) {
+                                posxGewinn = j + 1;
+                                return true;
+                            }
+                        case 3:
+                            if (feldLegbar(i - 2, j + 2) == true) {
+                                posxGewinn = j + 2;
+                                return true;
+                            }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    public boolean kannGewinnen(int amZug) {
+        char zeichenSpieler = 0;
+        char xEins, xZwei, xDrei, xVier;
+        if (amZug == 1) {
+            zeichenSpieler = 'X';
+        } else if (amZug == 2) {
             zeichenSpieler = '@';
         }
 
@@ -468,14 +576,6 @@ public class Spielfeld {
 
                     }
                 }
-
-
-
-
-
-
-
-
             }
         }
         return false;
