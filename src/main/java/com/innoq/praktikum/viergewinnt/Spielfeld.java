@@ -386,11 +386,10 @@ public class Spielfeld {
 
     private boolean zweiGleicheGewinnMöglich(int amZug, int schonGecheckt, int anzZug)
     {
+        char zeichenSpieler = 'N';
         if(anzZug>3) {
-            int ran = (int) ((Math.random()) * 2 + 1);
-            char zeichenSpieler = 'N';
-            char xEins, xZwei, xDrei, xVier;
-            if (amZug == 1) {
+           if(amZug == 1)
+           {
                 zeichenSpieler = 'X';
             } else if (amZug == 2) {
                 zeichenSpieler = '@';
@@ -398,328 +397,341 @@ public class Spielfeld {
 
             for (int i = 5; i >= 0; i--) {
                 for (int j = 0; j < 7; j++) {
-                    xEins = spielfeld[i][j];
-                    //wagerecht
-                    if (j < 4) {
-                        xZwei = spielfeld[i][j + 1];
-                        xDrei = spielfeld[i][j + 2];
-                        xVier = spielfeld[i][j + 3];
-                        KI.zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
-                        int entscheidung = KI.getEntscheidung();
+                  if(zweiÜberprüfen(i,j, zeichenSpieler, schonGecheckt) == true)
+                  {
+                      return true;
+                  }
 
-                        switch (entscheidung) {
-                            case 0:
-                                break;
-                            case 1:
-                                if (feldLegbar(i, j + 2) == true && feldLegbar(i, j + 3) == true) {
-                                    if (ran == 1) {
-                                        posxGewinn = j + 2;
-                                        return true;
-                                    } else {
-                                        posxGewinn = j + 3;
-                                        return true;
-                                    }
-
-                                } else {
-                                    schonGecheckt = 1;
-                                    KI.zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
-                                }
-                            case 2:
-                                if (feldLegbar(i, j + 1) == true && feldLegbar(i, j + 3) == true) {
-                                    if (ran == 1) {
-                                        posxGewinn = j + 1;
-                                        return true;
-                                    } else {
-                                        posxGewinn = j + 3;
-                                        return true;
-                                    }
-
-                                } else {
-                                    schonGecheckt = 2;
-                                    KI.zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
-                                }
-                            case 3:
-                                if (feldLegbar(i, j + 1) == true && feldLegbar(i, j + 2) == true) {
-                                    if (ran == 1) {
-                                        posxGewinn = j + 1;
-                                        return true;
-                                    } else {
-                                        posxGewinn = j + 2;
-                                        return true;
-                                    }
-
-                                } else {
-                                    schonGecheckt = 3;
-                                    KI.zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
-
-                                }
-                            case 4:
-                                if (feldLegbar(i, j) == true && feldLegbar(i, j + 3) == true) {
-                                    if (ran == 1) {
-                                        posxGewinn = j;
-                                        return true;
-                                    } else {
-                                        posxGewinn = j + 3;
-                                        return true;
-                                    }
-
-                                } else {
-                                    schonGecheckt = 4;
-                                    KI.zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
-
-                                }
-                            case 5:
-                                if (feldLegbar(i, j) == true && feldLegbar(i, j + 2) == true) {
-                                    if (ran == 1) {
-                                        posxGewinn = j;
-                                        return true;
-                                    } else {
-                                        posxGewinn = j + 2;
-                                        return true;
-                                    }
-
-                                } else {
-                                    schonGecheckt = 5;
-                                    KI.zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
-
-                                }
-                            case 6:
-                                if (feldLegbar(i, j) == true && feldLegbar(i, j + 1) == true) {
-                                    if (ran == 1) {
-                                        posxGewinn = j;
-                                        return true;
-                                    } else {
-                                        posxGewinn = j + 1;
-                                        return true;
-                                    }
-
-                                } else {
-                                    schonGecheckt = 6;
-                                    KI.zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
-                                }
-                        }
-                    }
-                    schonGecheckt = 0;
-                    if (i > 2)//senkrecht
-                    {
-                        if (spielfeld[i][j] == zeichenSpieler && spielfeld[i - 1][j] == zeichenSpieler) {
-                            if (spielfeld[i - 2][j] == 'O') {
-                                posxGewinn = j;
-                                richtung = 2;
-                                return true;
-                            }
-                        }
-
-                    }
-                    //diagonal unten rechts & oben links
-                    if (i < 3 && j < 4) {
-                        xZwei = spielfeld[i + 1][j + 1];
-                        xDrei = spielfeld[i + 2][j + 2];
-                        xVier = spielfeld[i + 3][j + 3];
-                        KI.zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
-                        int entscheidung = KI.getEntscheidung();
-                        switch (entscheidung) {
-                            case 0:
-                                break;
-                            case 1:
-                                if (feldLegbar(i + 2, j + 2) == true && feldLegbar(i + 3, j + 3) == true) {
-                                    if (ran == 1) {
-                                        posxGewinn = j + 2;
-                                        return true;
-                                    } else {
-                                        posxGewinn = j + 3;
-                                        return true;
-                                    }
-
-                                } else {
-                                    schonGecheckt = 1;
-                                    KI.zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
-                                }
-                            case 2:
-                                if (feldLegbar(i + 1, j + 1) == true && feldLegbar(i + 3, j + 3) == true) {
-                                    if (ran == 1) {
-                                        posxGewinn = j + 1;
-                                        return true;
-                                    } else {
-                                        posxGewinn = j + 3;
-                                        return true;
-                                    }
-
-                                } else {
-                                    schonGecheckt = 2;
-                                    KI.zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
-                                }
-                            case 3:
-                                if (feldLegbar(i + 1, j + 1) == true && feldLegbar(i + 2, j + 2) == true) {
-                                    if (ran == 1) {
-                                        posxGewinn = j + 1;
-                                        return true;
-                                    } else {
-                                        posxGewinn = j + 2;
-                                        return true;
-                                    }
-
-                                } else {
-                                    schonGecheckt = 3;
-                                    KI.zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
-
-                                }
-                            case 4:
-                                if (feldLegbar(i, j) == true && feldLegbar(i + 3, j + 3) == true) {
-                                    if (ran == 1) {
-                                        posxGewinn = j;
-                                        return true;
-                                    } else {
-                                        posxGewinn = j + 3;
-                                        return true;
-                                    }
-
-                                } else {
-                                    schonGecheckt = 4;
-                                    KI.zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
-
-                                }
-                            case 5:
-                                if (feldLegbar(i, j) == true && feldLegbar(i + 2, j + 2) == true) {
-                                    if (ran == 1) {
-                                        posxGewinn = j;
-                                        return true;
-                                    } else {
-                                        posxGewinn = j + 2;
-                                        return true;
-                                    }
-
-                                } else {
-                                    schonGecheckt = 5;
-                                    KI.zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
-
-                                }
-                            case 6:
-                                if (feldLegbar(i, j) == true && feldLegbar(i + 1, j + 1) == true) {
-                                    if (ran == 1) {
-                                        posxGewinn = j;
-                                        return true;
-                                    } else {
-                                        posxGewinn = j + 1;
-                                        return true;
-                                    }
-
-                                } else {
-                                    schonGecheckt = 6;
-                                    KI.zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
-
-                                }
-                        }
-                    }
-                    schonGecheckt = 0;
-                    //diagonal unten links & oben rechts
-                    if (i > 2 && j < 4) {
-                        xZwei = spielfeld[i - 1][j + 1];
-                        xDrei = spielfeld[i - 2][j + 2];
-                        xVier = spielfeld[i - 3][j + 3];
-                        KI.zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
-                        int entscheidung = KI.getEntscheidung();
-                        switch (entscheidung) {
-                            case 0:
-                                break;
-                            case 1:
-                                if (feldLegbar(i - 2, j + 2) == true && feldLegbar(i - 3, j + 3) == true) {
-                                    if (ran == 1) {
-                                        posxGewinn = j + 2;
-                                        return true;
-                                    } else {
-                                        posxGewinn = j + 3;
-                                        return true;
-                                    }
-
-                                } else {
-                                    schonGecheckt = 1;
-                                    KI.zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
-                                }
-                            case 2:
-                                if (feldLegbar(i - 1, j + 1) == true && feldLegbar(i - 3, j + 3) == true) {
-                                    if (ran == 1) {
-                                        posxGewinn = j + 1;
-                                        return true;
-                                    } else {
-                                        posxGewinn = j + 3;
-                                        return true;
-                                    }
-
-                                } else {
-                                    schonGecheckt = 2;
-                                    KI.zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
-                                }
-                            case 3:
-                                if (feldLegbar(i - 1, j + 1) == true && feldLegbar(i - 2, j + 2) == true) {
-                                    if (ran == 1) {
-                                        posxGewinn = j + 1;
-                                        return true;
-                                    } else {
-                                        posxGewinn = j + 2;
-                                        return true;
-                                    }
-
-                                } else {
-                                    schonGecheckt = 3;
-                                    KI.zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
-
-                                }
-                            case 4:
-                                if (feldLegbar(i, j) == true && feldLegbar(i - 3, j + 3) == true) {
-                                    if (ran == 1) {
-                                        posxGewinn = j;
-                                        return true;
-                                    } else {
-                                        posxGewinn = j + 3;
-                                        return true;
-                                    }
-
-                                } else {
-                                    schonGecheckt = 4;
-                                    KI.zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
-
-                                }
-                            case 5:
-                                if (feldLegbar(i, j) == true && feldLegbar(i - 2, j + 2) == true) {
-                                    if (ran == 1) {
-                                        posxGewinn = j;
-                                        return true;
-                                    } else {
-                                        posxGewinn = j + 2;
-                                        return true;
-                                    }
-
-                                } else {
-                                    schonGecheckt = 5;
-                                    KI.zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
-
-                                }
-                            case 6:
-                                if (feldLegbar(i, j) == true && feldLegbar(i - 1, j + 1) == true) {
-                                    if (ran == 1) {
-                                        posxGewinn = j;
-                                        return true;
-                                    } else {
-                                        posxGewinn = j + 1;
-                                        return true;
-                                    }
-
-                                } else {
-                                    schonGecheckt = 6;
-                                    KI.zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
-
-                                }
-                        }
-                    }
-                }
 
             }
 
 
         }
+
+        }
         return false;
     }
+
+    private boolean zweiÜberprüfen(int i, int j, char zeichenSpieler, int schonGecheckt)
+        {
+            char xEins, xZwei, xDrei, xVier;
+            int ran = (int)((Math.random()) * 7 + 1)-1;
+            xEins = spielfeld[i][j];
+            //wagerecht
+            if (j < 4) {
+                xZwei = spielfeld[i][j + 1];
+                xDrei = spielfeld[i][j + 2];
+                xVier = spielfeld[i][j + 3];
+                KI.zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
+                int entscheidung = KI.getEntscheidung();
+
+                switch (entscheidung) {
+                    case 0:
+                        break;
+                    case 1:
+                        if (feldLegbar(i, j + 2) == true && feldLegbar(i, j + 3) == true) {
+                            if (ran == 1) {
+                                posxGewinn = j + 2;
+                                return true;
+                            } else {
+                                posxGewinn = j + 3;
+                                return true;
+                            }
+
+                        } else {
+                            schonGecheckt = 1;
+                            KI.zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
+                        }
+                    case 2:
+                        if (feldLegbar(i, j + 1) == true && feldLegbar(i, j + 3) == true) {
+                            if (ran == 1) {
+                                posxGewinn = j + 1;
+                                return true;
+                            } else {
+                                posxGewinn = j + 3;
+                                return true;
+                            }
+
+                        } else {
+                            schonGecheckt = 2;
+                            KI.zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
+                        }
+                    case 3:
+                        if (feldLegbar(i, j + 1) == true && feldLegbar(i, j + 2) == true) {
+                            if (ran == 1) {
+                                posxGewinn = j + 1;
+                                return true;
+                            } else {
+                                posxGewinn = j + 2;
+                                return true;
+                            }
+
+                        } else {
+                            schonGecheckt = 3;
+                            KI.zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
+
+                        }
+                    case 4:
+                        if (feldLegbar(i, j) == true && feldLegbar(i, j + 3) == true) {
+                            if (ran == 1) {
+                                posxGewinn = j;
+                                return true;
+                            } else {
+                                posxGewinn = j + 3;
+                                return true;
+                            }
+
+                        } else {
+                            schonGecheckt = 4;
+                            KI.zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
+
+                        }
+                    case 5:
+                        if (feldLegbar(i, j) == true && feldLegbar(i, j + 2) == true) {
+                            if (ran == 1) {
+                                posxGewinn = j;
+                                return true;
+                            } else {
+                                posxGewinn = j + 2;
+                                return true;
+                            }
+
+                        } else {
+                            schonGecheckt = 5;
+                            KI.zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
+
+                        }
+                    case 6:
+                        if (feldLegbar(i, j) == true && feldLegbar(i, j + 1) == true) {
+                            if (ran == 1) {
+                                posxGewinn = j;
+                                return true;
+                            } else {
+                                posxGewinn = j + 1;
+                                return true;
+                            }
+
+                        } else {
+                            schonGecheckt = 6;
+                            KI.zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
+                        }
+                }
+            }
+            schonGecheckt = 0;
+            if (i > 2)//senkrecht
+            {
+                if (spielfeld[i][j] == zeichenSpieler && spielfeld[i - 1][j] == zeichenSpieler) {
+                    if (spielfeld[i - 2][j] == 'O') {
+                        posxGewinn = j;
+                        richtung = 2;
+                        return true;
+                    }
+                }
+
+            }
+            //diagonal unten rechts & oben links
+            if (i < 3 && j < 4) {
+                xZwei = spielfeld[i + 1][j + 1];
+                xDrei = spielfeld[i + 2][j + 2];
+                xVier = spielfeld[i + 3][j + 3];
+                KI.zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
+                int entscheidung = KI.getEntscheidung();
+                switch (entscheidung) {
+                    case 0:
+                        break;
+                    case 1:
+                        if (feldLegbar(i + 2, j + 2) == true && feldLegbar(i + 3, j + 3) == true) {
+                            if (ran == 1) {
+                                posxGewinn = j + 2;
+                                return true;
+                            } else {
+                                posxGewinn = j + 3;
+                                return true;
+                            }
+
+                        } else {
+                            schonGecheckt = 1;
+                            KI.zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
+                        }
+                    case 2:
+                        if (feldLegbar(i + 1, j + 1) == true && feldLegbar(i + 3, j + 3) == true) {
+                            if (ran == 1) {
+                                posxGewinn = j + 1;
+                                return true;
+                            } else {
+                                posxGewinn = j + 3;
+                                return true;
+                            }
+
+                        } else {
+                            schonGecheckt = 2;
+                            KI.zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
+                        }
+                    case 3:
+                        if (feldLegbar(i + 1, j + 1) == true && feldLegbar(i + 2, j + 2) == true) {
+                            if (ran == 1) {
+                                posxGewinn = j + 1;
+                                return true;
+                            } else {
+                                posxGewinn = j + 2;
+                                return true;
+                            }
+
+                        } else {
+                            schonGecheckt = 3;
+                            KI.zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
+
+                        }
+                    case 4:
+                        if (feldLegbar(i, j) == true && feldLegbar(i + 3, j + 3) == true) {
+                            if (ran == 1) {
+                                posxGewinn = j;
+                                return true;
+                            } else {
+                                posxGewinn = j + 3;
+                                return true;
+                            }
+
+                        } else {
+                            schonGecheckt = 4;
+                            KI.zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
+
+                        }
+                    case 5:
+                        if (feldLegbar(i, j) == true && feldLegbar(i + 2, j + 2) == true) {
+                            if (ran == 1) {
+                                posxGewinn = j;
+                                return true;
+                            } else {
+                                posxGewinn = j + 2;
+                                return true;
+                            }
+
+                        } else {
+                            schonGecheckt = 5;
+                            KI.zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
+
+                        }
+                    case 6:
+                        if (feldLegbar(i, j) == true && feldLegbar(i + 1, j + 1) == true) {
+                            if (ran == 1) {
+                                posxGewinn = j;
+                                return true;
+                            } else {
+                                posxGewinn = j + 1;
+                                return true;
+                            }
+
+                        } else {
+                            schonGecheckt = 6;
+                            KI.zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
+
+                        }
+                }
+            }
+            schonGecheckt = 0;
+            //diagonal unten links & oben rechts
+            if (i > 2 && j < 4) {
+                xZwei = spielfeld[i - 1][j + 1];
+                xDrei = spielfeld[i - 2][j + 2];
+                xVier = spielfeld[i - 3][j + 3];
+                KI.zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
+                int entscheidung = KI.getEntscheidung();
+                switch (entscheidung) {
+                    case 0:
+                        break;
+                    case 1:
+                        if (feldLegbar(i - 2, j + 2) == true && feldLegbar(i - 3, j + 3) == true) {
+                            if (ran == 1) {
+                                posxGewinn = j + 2;
+                                return true;
+                            } else {
+                                posxGewinn = j + 3;
+                                return true;
+                            }
+
+                        } else {
+                            schonGecheckt = 1;
+                            KI.zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
+                        }
+                    case 2:
+                        if (feldLegbar(i - 1, j + 1) == true && feldLegbar(i - 3, j + 3) == true) {
+                            if (ran == 1) {
+                                posxGewinn = j + 1;
+                                return true;
+                            } else {
+                                posxGewinn = j + 3;
+                                return true;
+                            }
+
+                        } else {
+                            schonGecheckt = 2;
+                            KI.zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
+                        }
+                    case 3:
+                        if (feldLegbar(i - 1, j + 1) == true && feldLegbar(i - 2, j + 2) == true) {
+                            if (ran == 1) {
+                                posxGewinn = j + 1;
+                                return true;
+                            } else {
+                                posxGewinn = j + 2;
+                                return true;
+                            }
+
+                        } else {
+                            schonGecheckt = 3;
+                            KI.zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
+
+                        }
+                    case 4:
+                        if (feldLegbar(i, j) == true && feldLegbar(i - 3, j + 3) == true) {
+                            if (ran == 1) {
+                                posxGewinn = j;
+                                return true;
+                            } else {
+                                posxGewinn = j + 3;
+                                return true;
+                            }
+
+                        } else {
+                            schonGecheckt = 4;
+                            KI.zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
+
+                        }
+                    case 5:
+                        if (feldLegbar(i, j) == true && feldLegbar(i - 2, j + 2) == true) {
+                            if (ran == 1) {
+                                posxGewinn = j;
+                                return true;
+                            } else {
+                                posxGewinn = j + 2;
+                                return true;
+                            }
+
+                        } else {
+                            schonGecheckt = 5;
+                            KI.zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
+
+                        }
+                    case 6:
+                        if (feldLegbar(i, j) == true && feldLegbar(i - 1, j + 1) == true) {
+                            if (ran == 1) {
+                                posxGewinn = j;
+                                return true;
+                            } else {
+                                posxGewinn = j + 1;
+                                return true;
+                            }
+
+                        } else {
+                            schonGecheckt = 6;
+                            KI.zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
+
+                        }
+                }
+            }
+            return false;
+        }
 
     private boolean kannGewinnen(int amZug) {
         char zeichenSpieler = 0;

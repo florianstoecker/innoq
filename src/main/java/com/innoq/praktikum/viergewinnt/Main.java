@@ -78,7 +78,7 @@ public class Main {
             KI.setDifficulty(staerke);
         }
 
-        System.out.println(BLACK_BOLD + "Alle Felder sind voll !");
+        System.out.println(BLACK_BOLD + "Alle Felder sind voll ! Unentschieden!");
         System.out.println("Das Spiel ist vorbei !");
 
 
