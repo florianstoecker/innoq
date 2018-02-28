@@ -41,7 +41,7 @@ public class Main {
 
         amZug = auswBeginn();
         clear();
-        System.out.println("Das Spiel beginnt ! \n ");
+        System.out.println("Das Spiel beginnt !  ");
         Spielfeld.zeichneSpielfeld(anzZug); // Spielfeld wird gezeichnet
         anzZug = 1;
         while (anzZug < 43) {
@@ -71,6 +71,7 @@ public class Main {
             amZug = Spieler.wechseln(amZug); // Spieler wechseln
             Spielfeld.zeichneSpielfeld(anzZug); // Spielfeld wird gezeichnet
             anzZug++; // Anzahl der Züge insgesamt wird hochgesetzt
+            KI.setDifficulty(staerke);
         }
 
         System.out.println(BLACK_BOLD + "Alle Felder sind voll !");
@@ -119,6 +120,7 @@ public class Main {
     private static int auswBeginn()
     {
         int amZug = 1;
+        clear();
         System.out.println("Wer Soll anfangen ?");
         System.out.println("1: Spieler 1");
         System.out.println("2: Spieler 2");
@@ -128,7 +130,9 @@ public class Main {
         }
         if(auswAnfänger != 2 && auswAnfänger != 1 )
         {
+            clear();
             System.out.println("Falsche Eingabe!");
+            return auswBeginn();
         }
         return amZug;
     }

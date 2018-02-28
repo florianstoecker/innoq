@@ -113,7 +113,7 @@ public class Spielfeld {
 
         if(difAusw == 2 && anDerReihe == 2)
         {
-            kiSteinEinfügen(anDerReihe);
+            kiSteinEinfügen();
             int KI_ausw_spalte = einfStellex +1;
             System.out.println("Die KI nahm Spalte " + KI_ausw_spalte);
         }
@@ -169,42 +169,57 @@ public class Spielfeld {
         }
     }
 
-    public void kiSteinEinfügen(int amZug)
+    public void kiSteinEinfügen()
     {
         difficulty = KI.getDifficulty();
         switch(difficulty)
         {
             case 1:
-                eigenerStein();
-                einfStellex = getPosxGewinn();
-                difficulty = 4;
+                if(eigenerStein() == true)
+                {
+                    einfStellex = posxGewinn;
+                    return;
+                }
+                else
+                {
+                    KI.setDifficulty(4);
+                    kiSteinEinfügen();
+                }
                 break;
             case 2:
 
 
                 if(kannGewinnen( 2) == true) { // Kann KI gewinnen ?
                     einfStellex = getPosxGewinn();
+                    return;
                 }
                 else if(kannGewinnen(1) == true) // Kann Spieler gewinnen ?
                 {
                     einfStellex = getPosxGewinn();
+                    return;
                 }
-                einfStellex = (int)((Math.random()) * 7 + 1)-1;
-                break;
+                else
+                {
+                    KI.setDifficulty(1);
+                    kiSteinEinfügen();
+                }
+
             case 3:
                 if(kannGewinnen( 2) == true) { // Kann KI gewinnen ?
                     einfStellex = getPosxGewinn();
+                    return;
                 }
                 else if(kannGewinnen(1) == true) // Kann Spieler gewinnen ?
                 {
                     einfStellex = getPosxGewinn();
+                    return;
                 }
 
                 break;
 
             case 4:
                 einfStellex = (int)((Math.random()) * 7 + 1)-1;
-                break;
+                return;
 
         }
     }
@@ -489,82 +504,42 @@ public class Spielfeld {
         return false;
     }
 
-    private void eigenerStein()
+    private boolean eigenerStein()
     {
-        boolean feldLegbar = false;
-        for(int i = 5; i>= 1; i--)//senkrecht auf eigenen Stein
+        for(int i = 0; i < 6; i++)
         {
 
             for(int j = 0; j<7; j++)
             {
-                if(i >2) {
-                    if (spielfeld[i][j] == '@' && spielfeld[i - 1][j] == 'O') {
-                        einfStellex = j;
+                if (spielfeld[i][j] == '@') {
+                if(i >0)
+                {
+                    if(feldLegbar(i - 1, j) == true)//senkrecht auf eigenen Stein
+                    {
+                        posxGewinn = j;
+                        return true;
+                    }
+                }
+                if(j>0)
+                {
+                    if(feldLegbar(i, j - 1) == true)//links neben eigenen Stein
+                    {
+                        posxGewinn = j - 1;
+                        return true;
+                    }
+                }
+                else if(j<6)
+                {
+                    if (feldLegbar(i, j + 1) == true) //rechts neben eigenen Stein
+                    {
+                        posxGewinn = j + 1;
+                        return true;
                     }
                 }
             }
         }
-
-        for(int i = 5; i>= 0; i--) //wagerecht neben eigenen Stein
-        {
-
-            for(int j = 0; j<7; j++)
-            {
-                if(spielfeld[i][j] == '@' && j>0 && spielfeld[i][j-1] == 'O' ) // links neben eigenen Stein
-                {
-
-                    int help_i = i;
-
-                    if(i == 5)
-                    {
-                        einfStellex = j-1;
-                    }
-
-                    else  if(help_i < 5)
-                    {
-                        for (int m = 5; m > i; m--) {
-                            if (spielfeld[m][j - 1] == 'O') {
-                                feldLegbar = false;
-                            }
-                            else {
-                                feldLegbar = true;
-                            }
-
-                        }
-                        if (feldLegbar == true)
-                        {
-                            einfStellex = j - 1;
-                        }
-                    }
-
-                }
-                else if(spielfeld[i][j] == '@' && j<6&& spielfeld[i][j+1] == 'O') // rechts neben eigenen Stein
-                {
-
-                    int help_i_ = i;
-                    if(i == 5)
-                    {
-                        einfStellex = j+1;
-                    }
-                    else  if(help_i_ < 5)
-                    {
-                        for (int m = 5; m > i; m--) {
-                            if (spielfeld[m][j + 1] == 'O') {
-                                feldLegbar = false;
-                            }
-                            else {
-                                feldLegbar = true;
-                            }
-
-                        }
-                        if (feldLegbar == true)
-                        {
-                            einfStellex = j + 1;
-                        }
-                    }
-                }
-            }
         }
+        return false;
     }
 
     public boolean abfVoll()
