@@ -38,8 +38,13 @@ public class Main {
             staerke = staerke();
             KI.setDifficulty(staerke);     //KI Stärke wird festgelegt
         }
-
+        int hilfe_start = 0;
         amZug = auswBeginn();
+        if (amZug == 1) {
+             hilfe_start = 1;    // Anzahl der Züge(Spielerbezogen)
+        } else if (amZug == 2) {
+            hilfe_start = 2;
+            }
         clear();
         System.out.println("Das Spiel beginnt !  ");
         Spielfeld.zeichneSpielfeld(anzZug); // Spielfeld wird gezeichnet
@@ -53,10 +58,9 @@ public class Main {
                 anzZugEinz = zwei;
             }
             KI.setDifficulty(staerke);
-            Spielfeld.steinEinfügen(amZug, anzZug, anzZugEinz,auswGegner); //Ein Stein wird eingefügt
+            Spielfeld.steinEinfügen(hilfe_start,amZug, anzZug, anzZugEinz,auswGegner); //Ein Stein wird eingefügt
             if (Spielfeld.gewinn(amZug) == true) // Gewinnausgabe
             {
-                clear();
                 Animation.an_Gewinn();
                 clear();
                 Spielfeld.zeichneSpielfeld(anzZug);

@@ -2,7 +2,7 @@ package com.innoq.praktikum.viergewinnt;
 
 public class KI {
     public static int difficulty;
-
+    public static int entscheidung;
 
     public static int dreiGleich(char xEins,char xZwei, char xDrei, char xVier, char zeichenSpieler)
     {
@@ -25,20 +25,57 @@ public class KI {
         }
         return 0;
     }
-    public static int zweiGleich(char xEins,char xZwei, char xDrei, char zeichenSpieler) {
-        if(xZwei== xDrei && xDrei == zeichenSpieler)
+
+    public static void zweiGleichGewinnMoeglich(char xEins,char xZwei, char xDrei, char xVier, char zeichenSpieler, int schonGecheckt)
+    {
+        if(schonGecheckt < 1)
         {
-            return 1;
-        }
-        else if(xEins== xDrei && xDrei == zeichenSpieler)
+        if(xEins== xZwei && xZwei == zeichenSpieler && xDrei == 'O' && xDrei == xVier)
         {
-            return 2;
+            setEntscheidung(1);
+            return;
         }
-        else if(xZwei == xEins && xEins == zeichenSpieler)
-        {
-            return 3;
         }
-        return 0;
+        if(schonGecheckt <2) {
+        if (xEins == xDrei && xDrei == zeichenSpieler && xZwei == 'O' && xZwei == xVier) {
+                setEntscheidung(2);
+                return;
+            }
+        }
+        if(schonGecheckt <3) {
+            if (xEins == xVier && xVier == zeichenSpieler && xZwei == 'O' && xZwei == xDrei) {
+                setEntscheidung(3);
+                return;
+            }
+        }
+        if(schonGecheckt <4) {
+            if (xZwei == xDrei && xDrei == zeichenSpieler && xEins == 'O' && xEins == xVier) {
+                setEntscheidung(4);
+                return;
+            }
+        }
+        if(schonGecheckt <5) {
+            if (xZwei == xVier && xVier == zeichenSpieler && xEins == 'O' && xEins == xDrei) {
+                setEntscheidung(5);
+                return;
+            }
+        }
+        if(schonGecheckt <6) {
+            if (xDrei == xVier && xVier == zeichenSpieler && xEins == 'O' && xEins == xZwei) {
+                setEntscheidung(6);
+                return;
+            }
+        }
+        setEntscheidung(0);
+    }
+
+    public static void setEntscheidung(int ent)
+    {
+        entscheidung = ent;
+    }
+
+    public static int getEntscheidung() {
+        return entscheidung;
     }
 
     public static void setDifficulty(int dif)
