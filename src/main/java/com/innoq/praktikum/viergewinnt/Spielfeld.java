@@ -189,7 +189,7 @@ public class Spielfeld {
                 {
                     einfStellex = getPosxGewinn();
                 }
-                difficulty = 1;
+                einfStellex = (int)((Math.random()) * 7 + 1)-1;
                 break;
             case 3:
                 if(kannGewinnen( 2) == true) { // Kann KI gewinnen ?
