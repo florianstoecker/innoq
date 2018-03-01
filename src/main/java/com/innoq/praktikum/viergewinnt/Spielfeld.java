@@ -922,6 +922,9 @@ public class Spielfeld {
         return false;
     }
 
+    public void setPosxGewinn(int posxGewinn) {
+        this.posxGewinn = posxGewinn;
+    }
     private boolean feldLegbar(int Stellex, int Stelley)
     {
         boolean feldBelegbar = false;
@@ -944,7 +947,10 @@ public class Spielfeld {
         }
         return false;
     }
-
+    public char getZeichenAusSpielfeld(int i, int j)
+    {
+        return spielfeld[i][j];
+    }
     private boolean eigenerStein()
     {
         for(int i = 0; i < 6; i++)

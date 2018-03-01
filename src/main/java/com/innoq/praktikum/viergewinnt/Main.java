@@ -6,10 +6,8 @@ public class Main {
     public static final String BLACK_BOLD = "\033[1;30m";
     public static Scanner scan = new Scanner(System.in);
 
-
     public static void main(String[] args) {
         Spielfeld Spielfeld = new Spielfeld();
-
         int zahlSpieler = 1;
         int anzZug = 0;
         int anzZugEinz = 0;
@@ -30,7 +28,7 @@ public class Main {
         clear();
         int auswFarbeZwei = auswahlFarbe(zahlSpieler);
         clear();
-        Spieler spieler = new Spieler(auswFarbeEins, auswFarbeZwei); //Zwei Spieler werden erstellt, Übergabe von Farbe und Auswahl des Gegners
+        Spieler Spieler = new Spieler(auswFarbeEins, auswFarbeZwei); //Übergabe von Farbe und Auswahl des Gegners
 
 
         if(auswGegner == 2)

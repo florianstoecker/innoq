@@ -3,10 +3,12 @@ package com.innoq.praktikum.viergewinnt;
 public class Spieler {
     public static int fEins;
     public static int fZwei;
+    int insertPos;
 
     public Spieler(int auswFarbeEins, int auswFarbeZwei) {
         fEins = auswFarbeEins;
         fZwei = auswFarbeZwei;
+        insertPos = 0;
     }
 
 
@@ -24,7 +26,14 @@ public class Spieler {
         }
         return 0;
     }
-
+    public void setinsertPos(int auswSpieler)
+    {
+        insertPos = auswSpieler;
+    }
+    public int getinsertPos()
+    {
+        return insertPos;
+    }
     public static int getfEins()
     {
         return fEins;
