@@ -24,7 +24,8 @@ public class Spielfeld {
     private int einfStellex;
     private int einfStelley;
     private int posxGewinn;
-    private int richtung;
+    private boolean ersterZug = true;
+    public int richtung;
     private char[][] spielfeld;
     private char[][] hilfsfeld;
     private int[][] farbfeld = new int[6][7];
@@ -34,7 +35,7 @@ public class Spielfeld {
         spielfeld = init();
     }
 
-    public void zeichneSpielfeld(int anzZug)
+    public void zeichneSpielfeld()
     {
         System.out.println(BLACK + "|---------------------------|");
         System.out.println("| 1 | 2 | 3 | 4 | 5 | 6 | 7 |");
@@ -47,10 +48,11 @@ public class Spielfeld {
 
 
                 int farbe = farbfeld[i][j];
-                if(anzZug == 0)
+                if(ersterZug == true)
                 {
                     System.out.printf(WHITE + " %c ", spielfeld[i][j]);
                     System.out.print(BLACK + "|");
+
                 }
                 else
                 {
@@ -92,6 +94,7 @@ public class Spielfeld {
             System.out.println("");
         }
         System.out.println("|---------------------------|" + COLOR_RESET);
+        ersterZug = false;
 
     }
 

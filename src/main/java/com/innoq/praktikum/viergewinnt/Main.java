@@ -45,7 +45,7 @@ public class Main {
             }
         clear();
         System.out.println("Das Spiel beginnt !  ");
-        Spielfeld.zeichneSpielfeld(anzZug); // Spielfeld wird gezeichnet
+        Spielfeld.zeichneSpielfeld(); // Spielfeld wird gezeichnet
         anzZug = 1;
         while (anzZug < 43) {
             if (amZug == 1) {
@@ -61,7 +61,7 @@ public class Main {
             {
                 Animation.an_Gewinn();
                 clear();
-                Spielfeld.zeichneSpielfeld(anzZug);
+                Spielfeld.zeichneSpielfeld();
                 System.out.println(BLACK_BOLD + "Der Gewinner ist Spieler " + amZug);
                 System.out.println("Das Spiel ist vorbei !");
                 if(nochmal() == 0)
@@ -71,7 +71,7 @@ public class Main {
 
             }
             amZug = Spieler.wechseln(amZug); // Spieler wechseln
-            Spielfeld.zeichneSpielfeld(anzZug); // Spielfeld wird gezeichnet
+            Spielfeld.zeichneSpielfeld(); // Spielfeld wird gezeichnet
             anzZug++; // Anzahl der Züge insgesamt wird hochgesetzt
             KI.setDifficulty(staerke);
         }
