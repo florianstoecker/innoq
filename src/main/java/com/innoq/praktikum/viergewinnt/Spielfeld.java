@@ -24,13 +24,7 @@ public class Spielfeld {
         initSpielfeld();
     }
 
-    public void setAnDerReihe(int anDerReihe) {
-        this.anDerReihe = anDerReihe;
-    }
-    public int getAnDerReihe()
-    {
-        return anDerReihe;
-    }
+    //Felder leeren
     private void initSpielfeld()
     {
         for(int i = 0; i<6; i++)
@@ -52,6 +46,8 @@ public class Spielfeld {
             }
         }
     }
+
+    //Spielmethoden
     public boolean gewinn()
     {
         char zeichenSpieler = 'D';
@@ -156,9 +152,40 @@ public class Spielfeld {
         }
         return false;
     }
-    public int getZeichenAusFarbfeld(int i, int j)
+    public void spiele(Konsole oberflaeche, Spieler spielerA, Spieler spielerB, Spielfeld TempInstanzSpielfeld)
     {
-        return farbfeld[i][j];
+        Spieler Erster;
+        Spieler Zweiter;
+        if(oberflaeche.getBeginner() == 1)
+        {
+            Erster = spielerA;
+            Zweiter = spielerB;
+        }
+        else
+        {
+            Erster = spielerB;
+            Zweiter = spielerA;
+        }
+        while(spieleWeiter = true)
+        {
+            Erster.macheZug(oberflaeche, TempInstanzSpielfeld);
+            anzahlZüge ++;
+            if(gewinn()== true)
+            {
+                oberflaeche.gewinnText(TempInstanzSpielfeld, 1);
+                spieleWeiter = false;
+                return;
+            }
+            wechseln();
+            Zweiter.macheZug(oberflaeche, TempInstanzSpielfeld);
+            anzahlZüge ++;
+            if(gewinn()== true)
+            {
+                oberflaeche.gewinnText(TempInstanzSpielfeld, 2);
+                return;
+            }
+            wechseln();
+        }
     }
     public  void wechseln()
     {
@@ -199,45 +226,9 @@ public class Spielfeld {
             }
         }
     }
-    public void spiele(Konsole oberflaeche, Spieler spielerA, Spieler spielerB, Spielfeld TempInstanzSpielfeld)
-    {
-        Spieler Erster;
-        Spieler Zweiter;
-        if(oberflaeche.getBeginner() == 1)
-        {
-            Erster = spielerA;
-            Zweiter = spielerB;
-        }
-        else
-        {
-            Erster = spielerB;
-            Zweiter = spielerA;
-        }
-        while(spieleWeiter = true)
-        {
-            Erster.macheZug(oberflaeche, TempInstanzSpielfeld);
-            anzahlZüge ++;
-            if(gewinn()== true)
-            {
-                oberflaeche.gewinnText(TempInstanzSpielfeld, 1);
-                spieleWeiter = false;
-                return;
-            }
-            wechseln();
-            Zweiter.macheZug(oberflaeche, TempInstanzSpielfeld);
-            anzahlZüge ++;
-            if(gewinn()== true)
-            {
-                oberflaeche.gewinnText(TempInstanzSpielfeld, 2);
-                return;
-            }
-            wechseln();
-        }
-    }
-    public int getAnzahlZüge()
-    {
-        return anzahlZüge;
-    }
+
+
+    // Darf das Feld belegt werden?
     public boolean legalerZug(Konsole oberflaeche)
     {
         int insertPosy = 5;
@@ -279,10 +270,7 @@ public class Spielfeld {
             return false;
         }
     }
-    public int getInsertPos()
-    {
-        return insertPos;
-    }
+
     public boolean feldLegbar(int Stellex, int Stelley)
     {
         boolean feldBelegbar = false;
@@ -305,29 +293,36 @@ public class Spielfeld {
         }
         return false;
     }
-    public char getZeichenAusSpielfeld(int i, int j)
-    {
-        return spielfeld[i][j];
-    }
 
+
+    // Get- & Set-Methoden
     public void setInsertPos(int spalte)
     {
         insertPos = spalte;
 
     }
-    public void schreiben(String eingabe)
+    public int getInsertPos()
     {
-        try
-        {
-            PrintWriter writer = new PrintWriter(new FileWriter("/Users/user/Documents/GitHub/innoq/src/main/java/Eingabe.txt"));
-            writer.println(eingabe);
-            writer.println();
-            writer.print("neu");
-            writer.close();
-        }
-        catch( IOException e )
-        {
-            e.printStackTrace();
-        }
+        return insertPos;
     }
+    public void setAnDerReihe(int anDerReihe) {
+        this.anDerReihe = anDerReihe;
+    }
+    public int getAnDerReihe()
+    {
+        return anDerReihe;
+    }
+    public int getAnzahlZüge()
+    {
+        return anzahlZüge;
+    }
+    public char getZeichenAusSpielfeld(int i, int j)
+    {
+        return spielfeld[i][j];
+    }
+    public int getZeichenAusFarbfeld(int i, int j)
+    {
+        return farbfeld[i][j];
+    }
+
 }
