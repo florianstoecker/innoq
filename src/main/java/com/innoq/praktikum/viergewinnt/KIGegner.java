@@ -247,7 +247,7 @@ public class KIGegner extends Spieler {
         }
         entscheidung = 0;
     }
-    private boolean zweiÜberprüfen(int i, int j, Spielfeld spielfeld, int schonGecheckt, char zeichenSpieler)
+    private boolean zweiÜberprüfen(int i, int j, int schonGecheckt, char zeichenSpieler)
     {
         char xEins, xZwei, xDrei, xVier;
         int ran = (int)((Math.random()) * 7 + 1)-1;
@@ -576,7 +576,7 @@ public class KIGegner extends Spieler {
 
             for (int i = 5; i >= 0; i--) {
                 for (int j = 0; j < 7; j++) {
-                    if(zweiÜberprüfen(i,j, spielfeld, schonGecheckt, zeichenSpieler) == true)
+                    if(zweiÜberprüfen(i,j, schonGecheckt, zeichenSpieler) == true)
                     {
                         return true;
                     }

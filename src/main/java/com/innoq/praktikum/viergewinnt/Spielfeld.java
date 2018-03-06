@@ -27,6 +27,7 @@ public class Spielfeld {
     public Spielfeld( Konsole oberflaeche, Config config, ZeichneSpielfeld zeichneSpielfeld) {
     this.oberflaeche = oberflaeche;
     this.config = config;
+        initSpielfeld();
     }
 
     private Spielfeld(char[][] spielfeld, int anDerReihe, int anzahlZüge, Konsole oberflaeche) {
@@ -34,7 +35,7 @@ public class Spielfeld {
         this.anDerReihe = anDerReihe;
         this.anzahlZüge = anzahlZüge;
         this.oberflaeche = oberflaeche;
-        initSpielfeld();
+
     }
     public int getAuswahlAnfänger()
     {

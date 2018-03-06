@@ -22,8 +22,8 @@ public class Main {
 
          do{
             switch(spielfeld.getAnDerReihe()) {
-                case 1: s = s1;
-                case 2: s = s2;
+                case 1: s = s1;break;
+                case 2: s = s2;break;
             }
             s.macheZug();
             zeichneSpielfeld.zeichneSpielfeld(spielfeld);
