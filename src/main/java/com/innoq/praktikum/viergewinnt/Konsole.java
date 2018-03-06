@@ -84,7 +84,7 @@ public class Konsole {
     public static void gewinnText(int anDerReihe)
     {
         Animation.an_Gewinn();
-        System.out.println("Der Gewinner ist Spieler " + anDerReihe + "!");
+        System.out.println(BLACK_BOLD + "Der Gewinner ist Spieler " + anDerReihe + "!");
         System.out.println("Das Spiel ist zu Ende!");
     }
 }

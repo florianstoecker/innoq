@@ -170,6 +170,7 @@ public class Spielfeld {
                 }
             }
         }
+        wechseln();
         return false;
     }
     public  void wechseln()
@@ -211,7 +212,7 @@ public class Spielfeld {
             }
         }
         anzahlZüge++;
-        wechseln();
+
     }
 
 

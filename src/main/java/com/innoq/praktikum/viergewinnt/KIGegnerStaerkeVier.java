@@ -5,7 +5,7 @@ public class KIGegnerStaerkeVier extends KIGegner {
     {
         super(spielfeld, sign, anfänger);
     }
-    public void macheZug(Konsole oberflaeche, Spielfeld spielfeld)
+    public void macheZug()
     {
         spielfeld.setInsertPos(findeBestenZug());
         steinWurdeAusgewaehlt();

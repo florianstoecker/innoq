@@ -5,7 +5,7 @@ public class KIGegnerStaerkeDrei extends KIGegner {
     {
         super(spielfeld, sign, anfänger);
     }
-    public void macheZug(Konsole oberflaeche, Spielfeld spielfeld) {
+    public void macheZug() {
 
         betrachteterSpieler = 2;
         if (kannGewinnen() == true) {
@@ -38,7 +38,6 @@ public class KIGegnerStaerkeDrei extends KIGegner {
             }
             int auswahlSpalte = spielfeld.getInsertPos();
             spielfeld.wirfSteinEin();
-            oberflaeche.kiGelegtText(auswahlSpalte + 1);
         }
 
 

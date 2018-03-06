@@ -5,18 +5,17 @@ public class KIGegnerStaerkeEins extends KIGegner {
     {
         super(spielfeld, sign, anfänger);
     }
-    public void macheZug(Konsole oberflaeche, Spielfeld spielfeld)
+    public void macheZug()
     {
         random();
         if(spielfeld.legalerZug() == true)
         {
             int auswahlSpalte =spielfeld.getInsertPos();
             spielfeld.wirfSteinEin();
-            oberflaeche.kiGelegtText(auswahlSpalte + 1);
         }
         else
         {
-            macheZug(oberflaeche, spielfeld);
+            macheZug();
         }
     }
 }

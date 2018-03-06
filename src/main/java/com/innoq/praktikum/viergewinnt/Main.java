@@ -20,14 +20,14 @@ public class Main {
 
         Spieler s = s1;
 
-        while(spielfeld.gewinn() == false) {
-            s.macheZug();
-            zeichneSpielfeld.zeichneSpielfeld(spielfeld);
+         do{
             switch(spielfeld.getAnDerReihe()) {
                 case 1: s = s1;
                 case 2: s = s2;
             }
-        }
+            s.macheZug();
+            zeichneSpielfeld.zeichneSpielfeld(spielfeld);
+        }while(spielfeld.gewinn() == false);
 
         oberflaeche.gewinnText(spielfeld.getAnDerReihe());
     }
