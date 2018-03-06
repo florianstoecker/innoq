@@ -1,6 +1,10 @@
 package com.innoq.praktikum.viergewinnt;
 
 public class KIGegnerStaerkeEins extends KIGegner {
+    public KIGegnerStaerkeEins(Spielfeld spielfeld, char sign, int anfänger)
+    {
+        super(spielfeld, sign, anfänger);
+    }
     public void macheZug(Konsole oberflaeche, Spielfeld spielfeld)
     {
         random();

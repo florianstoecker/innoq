@@ -53,7 +53,7 @@ public class Config {
     }
     public static int getBeginner()
     {
-        return amZug;
+        return auswAnfänger;
     }
     public void farbeAuswaehlen()
     {
@@ -76,30 +76,30 @@ public class Config {
         }
         return auswahlFarbe;
     }
-    private KIGegner kiErstellen(int kiStaerke)
+    private KIGegner kiErstellen(int kiStaerke, Spielfeld spielfeld, char sign, int anfänger)
     {
         switch(kiStaerke)
         {
-            case 1: return new KIGegnerStaerkeEins();
+            case 1: return new KIGegnerStaerkeEins(spielfeld, '@', anfänger);
 
-            case 2: return new KIGegnerStaerkeZwei();
+            case 2: return new KIGegnerStaerkeZwei(spielfeld, '@', anfänger);
 
-            case 3: return new KIGegnerStaerkeDrei();
+            case 3: return new KIGegnerStaerkeDrei(spielfeld, '@', anfänger);
 
-            case 4: return new KIGegnerStaerkeVier();
+            case 4: return new KIGegnerStaerkeVier(spielfeld, '@', anfänger);
 
         }
         return null;
     }
-    public Spieler spielerZweiAuswaehlen()
+    public Spieler spielerZweiAuswaehlen(Spielfeld spielfeld, char sign, int anfänger)
     {
         if (auswahlGegner == 2)
         {
-            return kiErstellen(staerkeAuswahl());
+            return kiErstellen(staerkeAuswahl(), spielfeld, sign, anfänger);
         }
         if(auswahlGegner == 1)
         {
-            return new LokalerSpieler();
+            return new LokalerSpieler(spielfeld, sign, anfänger);
         }
         return null;
     }

@@ -211,6 +211,7 @@ public class Spielfeld {
             }
         }
         anzahlZüge++;
+        wechseln();
     }
 
 
@@ -295,7 +296,6 @@ public class Spielfeld {
     public void setInsertPos(int spalte)
     {
         insertPos = spalte;
-
     }
     public int getInsertPos()
     {

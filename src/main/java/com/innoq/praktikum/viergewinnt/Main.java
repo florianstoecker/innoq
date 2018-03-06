@@ -1,10 +1,7 @@
 package com.innoq.praktikum.viergewinnt;
 
-import java.util.Scanner;
-
 public class Main {
 
-    public static Scanner scan = new Scanner(System.in);
     public static void main(String[] args) {
         Konsole oberflaeche = new Konsole();
         Config config = new Config(oberflaeche);
@@ -16,11 +13,10 @@ public class Main {
         {
             anfänger = 1;
         }
-        Spieler s1 = new Spieler(spielfeld, 'X', anfänger);
-        Spieler s2 = new Spieler(spielfeld, '@', anfänger);
         spielfeld.initFarbfeld();
-        s1 = new LokalerSpieler();
-        s2 = config.spielerZweiAuswaehlen();
+        spielfeld.setAnDerReihe(config.getBeginner());
+        Spieler s1 =  new LokalerSpieler(spielfeld, 'X', anfänger);
+        Spieler s2 = config.spielerZweiAuswaehlen(spielfeld, '@', anfänger);
 
         Spieler s = s1;
 
@@ -34,11 +30,6 @@ public class Main {
         }
 
         oberflaeche.gewinnText(spielfeld.getAnDerReihe());
-
-
-        LokalerSpieler spielerEins = new LokalerSpieler();
-
-
     }
 
 

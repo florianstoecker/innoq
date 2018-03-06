@@ -1,6 +1,11 @@
 package com.innoq.praktikum.viergewinnt;
 
 public class KIGegner extends Spieler {
+
+    public KIGegner(Spielfeld spielfeld, char sign, int anfänger)
+    {
+        super(spielfeld, sign, anfänger);
+    }
     public static char[][] hilfsfeld;
     public static int entscheidung;
     private  Spielfeld spielfeldTMP;
