@@ -32,9 +32,4 @@ public class Main {
 
         oberflaeche.gewinnText(spielfeld.getAnDerReihe());
     }
-
-
-
-
-
 }
