@@ -1,20 +1,23 @@
 package com.innoq.praktikum.viergewinnt;
 
 public class KIGegner extends Spieler {
+    public static char[][] hilfsfeld;
     public static int entscheidung;
+    private  Spielfeld spielfeldTMP;
+    public int betrachteterSpieler = spielfeld.getAuswahlAnfänger();
 
-    public void macheZug(Konsole oberflaeche, Spielfeld spielfeld)
+    public void macheZug()
     {
     }
     //KIGegnerStaerkeEins
-    public void random(Spielfeld spielfeld)
+    public void random()
     {
         int ran = (int)((Math.random()) * 7 + 1)-1;
         spielfeld.setInsertPos(ran);
     }
 
     //KIGegnerStaerkeZwei
-    public boolean eigenerStein(Spielfeld spielfeld)
+    public boolean eigenerStein()
     {
         if(spielfeld.getAnzahlZüge() >1) {
             for (int i = 0; i < 6; i++) {
@@ -50,12 +53,12 @@ public class KIGegner extends Spieler {
     }
 
     //KIGegner StaerkeDrei
-    public boolean kannGewinnen(Spielfeld spielfeld) {
+    public boolean kannGewinnen() {
         char zeichenSpieler = 0;
         char xEins, xZwei, xDrei, xVier;
-        if (spielfeld.getAnDerReihe() == 1) {
+        if (betrachteterSpieler == 1) {
             zeichenSpieler = 'X';
-        } else if (spielfeld.getAnDerReihe() == 2) {
+        } else if (betrachteterSpieler == 2) {
             zeichenSpieler = '@';
         }
 
@@ -197,7 +200,7 @@ public class KIGegner extends Spieler {
         }
         return 0;
     }
-    public static void zweiGleichGewinnMoeglich(char xEins,char xZwei, char xDrei, char xVier, char zeichenSpieler, int schonGecheckt)
+    public static void zweiGleichHilfe(char xEins,char xZwei, char xDrei, char xVier, char zeichenSpieler, int schonGecheckt)
     {
         if(schonGecheckt < 1)
         {
@@ -249,7 +252,7 @@ public class KIGegner extends Spieler {
             xZwei = spielfeld.getZeichenAusSpielfeld(i,j + 1);
             xDrei = spielfeld.getZeichenAusSpielfeld(i,j + 2);
             xVier = spielfeld.getZeichenAusSpielfeld(i,j + 3);
-            zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
+            zweiGleichHilfe(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
 
             switch (entscheidung) {
                 case 0:
@@ -266,7 +269,7 @@ public class KIGegner extends Spieler {
 
                     } else {
                         schonGecheckt = 1;
-                        zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
+                        zweiGleichHilfe(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
                     }
                 case 2:
                     if (spielfeld.feldLegbar(i, j + 1) == true && spielfeld.feldLegbar(i, j + 3) == true) {
@@ -280,7 +283,7 @@ public class KIGegner extends Spieler {
 
                     } else {
                         schonGecheckt = 2;
-                        zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
+                        zweiGleichHilfe(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
                     }
                 case 3:
                     if (spielfeld.feldLegbar(i, j + 1) == true && spielfeld.feldLegbar(i, j + 2) == true) {
@@ -294,7 +297,7 @@ public class KIGegner extends Spieler {
 
                     } else {
                         schonGecheckt = 3;
-                        zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
+                        zweiGleichHilfe(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
 
                     }
                 case 4:
@@ -309,7 +312,7 @@ public class KIGegner extends Spieler {
 
                     } else {
                         schonGecheckt = 4;
-                        zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
+                        zweiGleichHilfe(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
 
                     }
                 case 5:
@@ -324,7 +327,7 @@ public class KIGegner extends Spieler {
 
                     } else {
                         schonGecheckt = 5;
-                        zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
+                        zweiGleichHilfe(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
 
                     }
                 case 6:
@@ -339,7 +342,7 @@ public class KIGegner extends Spieler {
 
                     } else {
                         schonGecheckt = 6;
-                        zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
+                        zweiGleichHilfe(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
                     }
             }
         }
@@ -359,7 +362,7 @@ public class KIGegner extends Spieler {
             xZwei = spielfeld.getZeichenAusSpielfeld(i + 1,j + 1);
             xDrei = spielfeld.getZeichenAusSpielfeld(i + 2,j + 2);
             xVier = spielfeld.getZeichenAusSpielfeld(i + 3,j + 3);
-            zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
+            zweiGleichHilfe(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
             switch (entscheidung) {
                 case 0:
                     break;
@@ -375,7 +378,7 @@ public class KIGegner extends Spieler {
 
                     } else {
                         schonGecheckt = 1;
-                        zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
+                        zweiGleichHilfe(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
                     }
                 case 2:
                     if (spielfeld.feldLegbar(i + 1, j + 1) == true && spielfeld.feldLegbar(i + 3, j + 3) == true) {
@@ -389,7 +392,7 @@ public class KIGegner extends Spieler {
 
                     } else {
                         schonGecheckt = 2;
-                        zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
+                        zweiGleichHilfe(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
                     }
                 case 3:
                     if (spielfeld.feldLegbar(i + 1, j + 1) == true && spielfeld.feldLegbar(i + 2, j + 2) == true) {
@@ -403,7 +406,7 @@ public class KIGegner extends Spieler {
 
                     } else {
                         schonGecheckt = 3;
-                        zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
+                        zweiGleichHilfe(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
 
                     }
                 case 4:
@@ -418,7 +421,7 @@ public class KIGegner extends Spieler {
 
                     } else {
                         schonGecheckt = 4;
-                        zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
+                        zweiGleichHilfe(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
 
                     }
                 case 5:
@@ -433,7 +436,7 @@ public class KIGegner extends Spieler {
 
                     } else {
                         schonGecheckt = 5;
-                        zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
+                        zweiGleichHilfe(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
 
                     }
                 case 6:
@@ -448,7 +451,7 @@ public class KIGegner extends Spieler {
 
                     } else {
                         schonGecheckt = 6;
-                        zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
+                        zweiGleichHilfe(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
 
                     }
             }
@@ -459,7 +462,7 @@ public class KIGegner extends Spieler {
             xZwei = spielfeld.getZeichenAusSpielfeld(i - 1,j + 1);
             xDrei = spielfeld.getZeichenAusSpielfeld(i - 2,j + 2);
             xVier = spielfeld.getZeichenAusSpielfeld(i - 3,j + 3);
-            zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
+            zweiGleichHilfe(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
             switch (entscheidung) {
                 case 0:
                     break;
@@ -475,7 +478,7 @@ public class KIGegner extends Spieler {
 
                     } else {
                         schonGecheckt = 1;
-                        zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
+                        zweiGleichHilfe(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
                     }
                 case 2:
                     if (spielfeld.feldLegbar(i - 1, j + 1) == true && spielfeld.feldLegbar(i - 3, j + 3) == true) {
@@ -489,7 +492,7 @@ public class KIGegner extends Spieler {
 
                     } else {
                         schonGecheckt = 2;
-                        zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
+                        zweiGleichHilfe(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
                     }
                 case 3:
                     if (spielfeld.feldLegbar(i - 1, j + 1) == true && spielfeld.feldLegbar(i - 2, j + 2) == true) {
@@ -503,7 +506,7 @@ public class KIGegner extends Spieler {
 
                     } else {
                         schonGecheckt = 3;
-                        zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
+                        zweiGleichHilfe(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
 
                     }
                 case 4:
@@ -518,7 +521,7 @@ public class KIGegner extends Spieler {
 
                     } else {
                         schonGecheckt = 4;
-                        zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
+                        zweiGleichHilfe(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
 
                     }
                 case 5:
@@ -533,7 +536,7 @@ public class KIGegner extends Spieler {
 
                     } else {
                         schonGecheckt = 5;
-                        zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
+                        zweiGleichHilfe(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
 
                     }
                 case 6:
@@ -548,21 +551,21 @@ public class KIGegner extends Spieler {
 
                     } else {
                         schonGecheckt = 6;
-                        zweiGleichGewinnMoeglich(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
+                        zweiGleichHilfe(xEins, xZwei, xDrei, xVier, zeichenSpieler, schonGecheckt);
 
                     }
             }
         }
         return false;
     }
-    public boolean zweiGleicheGewinnMöglich(int schonGecheckt, Spielfeld spielfeld)
+    public boolean zweiGleicheGewinnMöglich(int schonGecheckt)
     {
         char zeichenSpieler = 'N';
-        if(spielfeld.getAnzahlZüge()>3) {
-            if(spielfeld.getAnDerReihe() == 1)
+        if(spielfeld.getAnzahlZüge()>=3) {
+            if(betrachteterSpieler == 1)
             {
                 zeichenSpieler = 'X';
-            } else if (spielfeld.getAnDerReihe() == 2) {
+            } else if (betrachteterSpieler == 2) {
                 zeichenSpieler = '@';
             }
 
@@ -582,74 +585,229 @@ public class KIGegner extends Spieler {
         }
         return false;
     }
-    public void steinWurdeAusgewaehlt(Spielfeld spielfeld, Konsole oberflaeche)
+    public void steinWurdeAusgewaehlt()
     {
         int spaltenAuswahl;
         spaltenAuswahl = spielfeld.getInsertPos();;
-        spielfeld.wirfSteinEin(oberflaeche, spielfeld);
-        oberflaeche.kiGelegtText(spaltenAuswahl + 1);
+        spielfeld.wirfSteinEin();
     }
 
     //KIGegnerStaerkeVier
-
-/* private boolean minmax(int amZug, char zeichenSpieler)
+    private boolean probeEinfügen(int insertPos)
     {
+       int insertPosy = 5;
+            if (spielfeldTMP.getZeichenAusSpielfeld(insertPosy, insertPos) == 'O') {return true;
 
-        if(kannGewinnen(amZug) == false)
-        {
-            hilfsfeld = spielfeld;
-            for(int j = 0; j<7; j++)
-            {
-                if(hilfeSteinEinfügen(j, amZug)== true)
-                {
-
-                }
-            }
-
-
-
-
+            } else {
+                while (spielfeldTMP.getZeichenAusSpielfeld(insertPosy, insertPos) == 'X' || spielfeldTMP.getZeichenAusSpielfeld(insertPosy, insertPos) == '@') {
+                    insertPosy--;
+                    if(insertPosy == -1)
+                    {return false;}
+                }return true;
 
         }
-        else
-        {
-            insertPos = posxGewinn;
-        }
-        return false;
     }
-    private boolean hilfeSteinEinfügen(int hilfeStellex,int amZug)
+    public int findeBestenZug()
     {
-        char zeichenSpieler = 'D';
-        if (amZug == 1)
-        {
-            zeichenSpieler = 'X';
-        }
-        else if (amZug == 2)
-        {
-            zeichenSpieler = '@';
-        }
-        int hilfeStelley = 5;
-        if (spielfeld[hilfeStelley][hilfeStellex] == 'O') {
-            spielfeld[hilfeStelley][hilfeStellex] = zeichenSpieler;
-        }
-        else
-        {
-            while (spielfeld[insertPosy][insertPos] == 'X' || spielfeld[insertPosy][insertPos] == '@')
-            {
-                hilfStelley--;
-                if (hilfeStelley)
+        int[] werteFeld = new int [7];
+        int suchtiefe = 2;
+        int besterZug;
+
+        spielfeldTMP = spielfeld.getCopy();
+                for(int j = 0; j < 7; j++)
                 {
-                    return false;
+                    if(probeEinfügen(j) == true)
+                    {
+                        spielfeldTMP.setInsertPos(j);
+                        spielfeldTMP.wirfSteinEin();
+                        werteFeld[j] = berechneMiniMax(suchtiefe);
+                    }
+                }
+                besterZug = werteFeld[0];
+                for(int i = 0; i < 6; i ++ )
+                {
+                    if(werteFeld[i] == 10 ||werteFeld[i] == -10)
+                    {
+                        return besterZug;
+                    }
+                    if(werteFeld[i] >= besterZug)
+                    {
+                        besterZug = werteFeld[i];
+                    }
+                }
+                return besterZug;
+    }
+
+    private int berechneMiniMax(int tiefe)
+    {
+        int minimax;
+        int minimaxTMP;
+        /*if(tiefe == 0)
+        {
+            return bewertung(spielfeldTMP);
+        }
+        else{
+
+                if(probeEinfügen(1, spielfeldTMP) == true)
+                {
+                    spielfeldTMP.setInsertPos(i);
+                    spielfeldTMP.wirfSteinEin(oberflaeche, spielfeldTMP);
                 }
 
-            }
-            if (abfVoll() == false)
-            {
-                spielfeld[insertPosy][insertPos] = zeichenSpieler;
-                farbfeld[insertPosy][insertPos] = farbe;
-            }
+        }*/
+        minimax = bewertung();
+        return minimax;
+    }
+    private int bewertung()
+    {
+            int spielerEinsZweier = 0;
+            int spielerZweiZweier = 0;
+            int spielerEinsDreier = 0;
+            int spielerZweiDreier = 0;
+            int ergebnis = 0;
+            char zeichenSpielerEins = 'X';
+            char zeichenSpielerZwei = '@';
 
+            for(int i = 0; i < 6; i ++)
+            {
+                for(int j = 0; j < 7 ; j++)
+                {
+
+                    if(j < 4) {
+                        //gewonnen wagerecht rechts SpielerEins
+                        if (reiheZeichenSpieler(zeichenSpielerEins, 0, 1, i, j) == 4) {
+                            return 10;
+                        }
+                        //gewonnen wagerecht rechts SpielerZwei
+                        if (reiheZeichenSpieler(zeichenSpielerZwei, 0, 1, i, j) == 4) {
+                            return -10;
+                        }
+                        //Drei Steine wagerecht rechts SpielerEins
+                        if (reiheZeichenSpieler(zeichenSpielerEins, 0, 1, i, j) == 3) {
+                            spielerEinsDreier ++;
+                        }
+                        //Drei Steine wagerecht rechts SpielerZwei
+                        if (reiheZeichenSpieler(zeichenSpielerZwei, 0, 1, i, j) == 3) {
+                            spielerZweiDreier ++;
+                        }
+                        //Zwei Steine wagerecht rechts SpielerEins
+                        if (reiheZeichenSpieler(zeichenSpielerEins, 0, 1, i, j) == 2) {
+                            spielerZweiDreier ++;
+                        }
+                        //Zwei Steine wagerecht rechts SpielerZwei
+                        if (reiheZeichenSpieler(zeichenSpielerZwei, 0, 1, i, j) == 2) {
+                           spielerZweiZweier ++;
+                        }
+                    }
+                    if(i > 2) {
+                        //gewonnen senkrecht rechts SpielerEins
+                        if (reiheZeichenSpieler(zeichenSpielerEins, -1, 0, i, j) == 4) {
+                            return 10;
+                        }
+                        //gewonnen senkrecht rechts SpielerZwei
+                        if (reiheZeichenSpieler(zeichenSpielerZwei, -1, 0, i, j) == 4) {
+                            return -10;
+                        }
+                        //Drei Steine senkrecht rechts SpielerEins
+                        if (reiheZeichenSpieler(zeichenSpielerEins, -1, 0, i, j) == 3) {
+                            spielerEinsDreier ++;
+                        }
+                        //Drei Steine senkrecht rechts SpielerZwei
+                        if (reiheZeichenSpieler(zeichenSpielerZwei, -1, 0, i, j) == 3) {
+                            spielerZweiDreier ++;
+                        }
+                        //Zwei Steine senkrecht rechts SpielerEins
+                        if (reiheZeichenSpieler(zeichenSpielerEins, -1, 0, i, j) == 2) {
+                            spielerZweiDreier ++;
+                        }
+                        //Zwei Steine senkrecht rechts SpielerZwei
+                        if (reiheZeichenSpieler(zeichenSpielerZwei, -1, 0, i, j) == 2) {
+                            spielerZweiZweier ++;
+                        }
+                    }
+                    if(j < 4 && i < 3) {
+                        //gewonnen diagonal rechts unten SpielerEins
+                        if (reiheZeichenSpieler(zeichenSpielerEins, 1, 1, i, j) == 4) {
+                            return 10;
+                        }
+                        //gewonnen diagonal rechts unten SpielerZwei
+                        if (reiheZeichenSpieler(zeichenSpielerZwei, 1, 1, i, j) == 4) {
+                            return -10;
+                        }
+                        //Drei Steine diagonal rechts unten SpielerEins
+                        if (reiheZeichenSpieler(zeichenSpielerEins, 1, 1, i, j) == 3) {
+                            spielerEinsDreier ++;
+                        }
+                        //Drei Steine diagonal rechts unten SpielerZwei
+                        if (reiheZeichenSpieler(zeichenSpielerZwei, 1, 1, i, j) == 3) {
+                            spielerZweiDreier ++;
+                        }
+                        //Zwei Steine diagonal rechts unten SpielerEins
+                        if (reiheZeichenSpieler(zeichenSpielerEins, 1, 1, i, j) == 2) {
+                            spielerZweiDreier ++;
+                        }
+                        //Zwei Steine diagonal rechts unten SpielerZwei
+                        if (reiheZeichenSpieler(zeichenSpielerZwei, 1, 1, i, j) == 2) {
+                            spielerZweiZweier ++;
+                        }
+                    }
+                    if(j < 4 && i > 2) {
+                        //gewonnen diagonal rechts oben SpielerEins
+                        if (reiheZeichenSpieler(zeichenSpielerEins, -1, 1, i, j) == 4) {
+                            return 10;
+                        }
+                        //gewonnen diagonal rechts oben SpielerZwei
+                        if (reiheZeichenSpieler(zeichenSpielerZwei, -1, 1, i, j) == 4) {
+                            return -10;
+                        }
+                        //Drei Steine diagonal rechts oben SpielerEins
+                        if (reiheZeichenSpieler(zeichenSpielerEins, -1, 1, i, j) == 3) {
+                            spielerEinsDreier ++;
+                        }
+                        //Drei Steine diagonal rechts oben SpielerZwei
+                        if (reiheZeichenSpieler(zeichenSpielerZwei, -1, 1, i, j) == 3) {
+                            spielerZweiDreier ++;
+                        }
+                        //Zwei Steine diagonal rechts oben SpielerEins
+                        if (reiheZeichenSpieler(zeichenSpielerEins, -1, 1, i, j) == 2) {
+                            spielerZweiDreier ++;
+                        }
+                        //Zwei Steine diagonal rechts oben SpielerZwei
+                        if (reiheZeichenSpieler(zeichenSpielerZwei, -1, 1, i, j) == 2) {
+                            spielerZweiZweier ++;
+                        }
+                    }
+                }
+            }
+            ergebnis = spielerEinsZweier + spielerEinsDreier - spielerZweiZweier - spielerZweiDreier ;
+            return ergebnis;
+    }
+    private int reiheZeichenSpieler(char zeichenSpieler, int vorfaktorX, int vorfaktorY, int x, int y)
+    {
+        int ergebnisReihe = 0;
+        if(spielfeldTMP.getZeichenAusSpielfeld(x,y) == zeichenSpieler || spielfeldTMP.getZeichenAusSpielfeld(x,y) == 'O'
+            && spielfeldTMP.getZeichenAusSpielfeld(x + 1 * vorfaktorX,y + 1 * vorfaktorY) == zeichenSpieler || spielfeldTMP.getZeichenAusSpielfeld(x + 1 * vorfaktorX,y + 1 * vorfaktorY) == 'O'
+            && spielfeldTMP.getZeichenAusSpielfeld(x + 2 * vorfaktorX,y + 1 * vorfaktorY) == zeichenSpieler || spielfeldTMP.getZeichenAusSpielfeld(x + 2 * vorfaktorX,y + 1 * vorfaktorY) == 'O'
+            && spielfeldTMP.getZeichenAusSpielfeld(x + 3 * vorfaktorX,y + 1 * vorfaktorY) == zeichenSpieler || spielfeldTMP.getZeichenAusSpielfeld(x + 3 * vorfaktorX,y + 1 * vorfaktorY) == 'O')
+        {
+            for(int i = 0; i < 4; i ++)
+            {
+                if(spielfeldTMP.getZeichenAusSpielfeld(x + i * vorfaktorX, y + i * vorfaktorY) == zeichenSpieler)
+                {
+                    ergebnisReihe ++;
+                }
+            }
         }
-        return false;
-    }*/
+        return ergebnisReihe;
+    }
+    public void copy()
+    {
+        for(int i = 0; i<6 ; i++)
+        {
+            for(int j = 0; j < 7; j ++)
+            {
+                spielfeldTMP.setZeichenAnSpielfeld(i, j, spielfeld.getZeichenAusSpielfeld(i, j));
+            }
+        }
+    }
 }

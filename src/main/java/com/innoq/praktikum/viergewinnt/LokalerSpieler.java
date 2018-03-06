@@ -1,19 +1,22 @@
 package com.innoq.praktikum.viergewinnt;
 
+import java.util.Scanner;
+
 public class LokalerSpieler extends Spieler {
-    public void macheZug(Konsole oberflaeche, Spielfeld spielfeld)
+    Scanner scan = new Scanner(System.in);
+    public void macheZug()
     {
         int spaltenAuswahl;
-        spaltenAuswahl= oberflaeche.macheZugText(spielfeld);
+        spaltenAuswahl = scan.nextInt();
         spielfeld.setInsertPos(spaltenAuswahl);
-        if(spielfeld.legalerZug(oberflaeche) == true)
+        if(spielfeld.legalerZug() == true)
         {
             spielfeld.setInsertPos(spaltenAuswahl);
-            spielfeld.wirfSteinEin(oberflaeche, spielfeld);
+            spielfeld.wirfSteinEin();
         }
             else
             {
-                macheZug(oberflaeche, spielfeld);
+                macheZug();
             }
     }
 }

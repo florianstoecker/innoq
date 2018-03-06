@@ -1,53 +1,41 @@
 package com.innoq.praktikum.viergewinnt;
 
 public class KIGegnerStaerkeDrei extends KIGegner {
-    public void macheZug(Konsole oberflaeche, Spielfeld spielfeld)
-    {
-        int anDerReihe = spielfeld.getAnDerReihe();
-        spielfeld.setAnDerReihe(1);
-        if(kannGewinnen(spielfeld) == true)
-        {
-            spielfeld.wechseln();
-            steinWurdeAusgewaehlt(spielfeld, oberflaeche);
-            return;
-        }
-        spielfeld.setAnDerReihe(2);
-        if(kannGewinnen(spielfeld) == true)
-        {
-            steinWurdeAusgewaehlt(spielfeld, oberflaeche);
-            return;
-        }
-        spielfeld.wechseln();
-        if(zweiGleicheGewinnMöglich(0, spielfeld) == true)
-        {
-            spielfeld.wechseln();
-            steinWurdeAusgewaehlt(spielfeld, oberflaeche);
-            return;
-        }
-        spielfeld.setAnDerReihe(2);
-        if(zweiGleicheGewinnMöglich(0, spielfeld) == true)
-        {
-            steinWurdeAusgewaehlt(spielfeld, oberflaeche);
-            return;
-        }
-        spielfeld.setAnDerReihe(anDerReihe);
-            if(eigenerStein(spielfeld) == true)
-            {
-                steinWurdeAusgewaehlt(spielfeld, oberflaeche);
-                return;
-            }
+    public void macheZug(Konsole oberflaeche, Spielfeld spielfeld) {
 
-            else
-            {
-                random(spielfeld);
-                while(spielfeld.legalerZug(oberflaeche) == false)
-                {
-                    random(spielfeld);
-                }
-                int auswahlSpalte = spielfeld.getInsertPos();
-                spielfeld.wirfSteinEin(oberflaeche,spielfeld);
-                oberflaeche.kiGelegtText(auswahlSpalte + 1);
+        betrachteterSpieler = 2;
+        if (kannGewinnen() == true) {
+            steinWurdeAusgewaehlt();
+            return;
+        }
+        betrachteterSpieler = 1;
+
+        if (kannGewinnen() == true) {
+            steinWurdeAusgewaehlt();
+            return;
+        }
+        betrachteterSpieler = 1;
+        if (zweiGleicheGewinnMöglich(0 )== true) {
+            steinWurdeAusgewaehlt();
+            return;
+        }
+        betrachteterSpieler = 2;
+        if (zweiGleicheGewinnMöglich(0) == true) {
+            steinWurdeAusgewaehlt();
+            return;
+        }
+        if (eigenerStein() == true) {
+            steinWurdeAusgewaehlt();
+            return;
+        } else {
+            random();
+            while (spielfeld.legalerZug() == false) {
+                random();
             }
+            int auswahlSpalte = spielfeld.getInsertPos();
+            spielfeld.wirfSteinEin();
+            oberflaeche.kiGelegtText(auswahlSpalte + 1);
+        }
 
 
     }

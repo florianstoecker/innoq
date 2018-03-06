@@ -1,5 +1,6 @@
 package com.innoq.praktikum.viergewinnt;
 
+import java.util.Arrays;
 import java.util.Scanner;
 import java.io.PrintWriter;
 import java.io.FileWriter;
@@ -17,11 +18,30 @@ public class Spielfeld {
     private int[][] farbfeld = new int[6][7];
     private char zeichenSpieler;
     private int anDerReihe;
+    private Konsole oberflaeche;
     private int anzahlZüge = 0;
+    public ZeichneSpielfeld zeichneSpielfeld = new ZeichneSpielfeld();
+    private Config config;
     private Scanner scan = new Scanner(System.in);
 
-    public Spielfeld() {
+    public Spielfeld( Konsole oberflaeche, Config config, ZeichneSpielfeld zeichneSpielfeld) {
+    this.oberflaeche = oberflaeche;
+    this.config = config;
+    }
+
+    private Spielfeld(char[][] spielfeld, int anDerReihe, int anzahlZüge, Konsole oberflaeche) {
+        this.spielfeld = Arrays.copyOf(spielfeld, spielfeld.length);
+        this.anDerReihe = anDerReihe;
+        this.anzahlZüge = anzahlZüge;
+        this.oberflaeche = oberflaeche;
         initSpielfeld();
+    }
+    public int getAuswahlAnfänger()
+    {
+        return config.getAuswAnfänger();
+    }
+    public Spielfeld getCopy() {
+        return new Spielfeld(spielfeld, anDerReihe, anzahlZüge, oberflaeche);
     }
 
     //Felder leeren
@@ -152,43 +172,10 @@ public class Spielfeld {
         }
         return false;
     }
-    public void spiele(Konsole oberflaeche, Spieler spielerA, Spieler spielerB, Spielfeld TempInstanzSpielfeld)
-    {
-        Spieler Erster;
-        Spieler Zweiter;
-        if(oberflaeche.getBeginner() == 1)
-        {
-            Erster = spielerA;
-            Zweiter = spielerB;
-        }
-        else
-        {
-            Erster = spielerB;
-            Zweiter = spielerA;
-        }
-        while(spieleWeiter = true)
-        {
-            Erster.macheZug(oberflaeche, TempInstanzSpielfeld);
-            anzahlZüge ++;
-            if(gewinn()== true)
-            {
-                oberflaeche.gewinnText(TempInstanzSpielfeld, 1);
-                spieleWeiter = false;
-                return;
-            }
-            wechseln();
-            Zweiter.macheZug(oberflaeche, TempInstanzSpielfeld);
-            anzahlZüge ++;
-            if(gewinn()== true)
-            {
-                oberflaeche.gewinnText(TempInstanzSpielfeld, 2);
-                return;
-            }
-            wechseln();
-        }
-    }
     public  void wechseln()
     {
+
+
         if(anDerReihe == 1)
         {
             anDerReihe = 2;
@@ -198,23 +185,22 @@ public class Spielfeld {
             anDerReihe = 1;
         }
     }
-    public void wirfSteinEin(Konsole oberflaeche, Spielfeld TempInstanzSpielfeld)
+    public void wirfSteinEin()
     {
         int insertPosy = 5;
         if(insertPos >= 0 && insertPos < 7) {
 
             if (anDerReihe == 1) {
                 zeichenSpieler = 'X';
-                farbe = oberflaeche.getAuswahlFarbeEins();
+                farbe = config.getAuswahlFarbeEins();
             } else if (anDerReihe == 2) {
                 zeichenSpieler = '@';
-                farbe = oberflaeche.getAuswahlFarbeZwei();
+                farbe = config.getAuswahlFarbeZwei();
             }
 
             if (spielfeld[insertPosy][insertPos] == 'O') {
                 spielfeld[insertPosy][insertPos] = zeichenSpieler;
                 farbfeld[insertPosy][insertPos] = farbe;
-                oberflaeche.zeichneSpielfeld(TempInstanzSpielfeld);
 
             } else {
                 while (spielfeld[insertPosy][insertPos] == 'X' || spielfeld[insertPosy][insertPos] == '@') {
@@ -222,14 +208,14 @@ public class Spielfeld {
                 }
                     spielfeld[insertPosy][insertPos] = zeichenSpieler;
                     farbfeld[insertPosy][insertPos] = farbe;
-                    oberflaeche.zeichneSpielfeld(TempInstanzSpielfeld);
             }
         }
+        anzahlZüge++;
     }
 
 
     // Darf das Feld belegt werden?
-    public boolean legalerZug(Konsole oberflaeche)
+    public boolean legalerZug()
     {
         int insertPosy = 5;
 
@@ -238,10 +224,10 @@ public class Spielfeld {
 
             if (anDerReihe == 1) {
                 zeichenSpieler = 'X';
-                farbe = oberflaeche.getAuswahlFarbeEins();
+                farbe = config.getAuswahlFarbeEins();
             } else if (anDerReihe == 2) {
                 zeichenSpieler = '@';
-                farbe = oberflaeche.getAuswahlFarbeZwei();
+                farbe = config.getAuswahlFarbeZwei();
             }
             if (spielfeld[insertPosy][insertPos] == 'O')
             {
@@ -254,7 +240,7 @@ public class Spielfeld {
                 while (spielfeld[insertPosy][insertPos] == 'X' || spielfeld[insertPosy][insertPos] == '@')
                 {
                     insertPosy--;
-                    if (oberflaeche.spalteVoll(insertPosy) == true)
+                    if (spalteVoll(insertPosy) == true)
                     {
                         oberflaeche.spalteVollText(insertPos + 1);
                         return false;
@@ -293,7 +279,17 @@ public class Spielfeld {
         }
         return false;
     }
-
+    public static boolean spalteVoll(int reihe)
+    {
+        if(reihe == -1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
     // Get- & Set-Methoden
     public void setInsertPos(int spalte)
@@ -315,6 +311,10 @@ public class Spielfeld {
     public int getAnzahlZüge()
     {
         return anzahlZüge;
+    }
+    public void setZeichenAnSpielfeld(int i, int j, char zeichen)
+    {
+        spielfeld[i][j] = zeichen;
     }
     public char getZeichenAusSpielfeld(int i, int j)
     {
