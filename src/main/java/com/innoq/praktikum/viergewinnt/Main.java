@@ -8,7 +8,7 @@ public class Main {
         ZeichneSpielfeld zeichneSpielfeld = new ZeichneSpielfeld();
         Spielfeld spielfeld = new Spielfeld(oberflaeche, config, zeichneSpielfeld);
         int anfänger;
-        zeichneSpielfeld.zeichneSpielfeld(spielfeld);
+
         if(config.getBeginner() == 1);
         {
             anfänger = 1;
@@ -19,8 +19,9 @@ public class Main {
         Spieler s2 = config.spielerZweiAuswaehlen(spielfeld, '@', anfänger);
 
         Spieler s = s1;
-
-         do{
+        oberflaeche.clear();
+        zeichneSpielfeld.zeichneSpielfeld(spielfeld);
+        do{
             switch(spielfeld.getAnDerReihe()) {
                 case 1: s = s1;break;
                 case 2: s = s2;break;

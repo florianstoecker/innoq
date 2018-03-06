@@ -600,15 +600,15 @@ public class KIGegner extends Spieler {
     //KIGegnerStaerkeVier
     private boolean probeEinfügen(int insertPos)
     {
-       int insertPosy = 5;
-            if (spielfeldTMP.getZeichenAusSpielfeld(insertPosy, insertPos) == 'O') {return true;
+        int insertPosy = 5;
+        if (spielfeldTMP.getZeichenAusSpielfeld(insertPosy, insertPos) == 'O') {return true;
 
-            } else {
-                while (spielfeldTMP.getZeichenAusSpielfeld(insertPosy, insertPos) == 'X' || spielfeldTMP.getZeichenAusSpielfeld(insertPosy, insertPos) == '@') {
-                    insertPosy--;
-                    if(insertPosy == -1)
-                    {return false;}
-                }return true;
+        } else {
+            while (spielfeldTMP.getZeichenAusSpielfeld(insertPosy, insertPos) == 'X' || spielfeldTMP.getZeichenAusSpielfeld(insertPosy, insertPos) == '@') {
+                insertPosy--;
+                if(insertPosy == -1)
+                {return false;}
+            }return true;
 
         }
     }
@@ -619,28 +619,28 @@ public class KIGegner extends Spieler {
         int besterZug;
 
         spielfeldTMP = spielfeld.getCopy();
-                for(int j = 0; j < 7; j++)
-                {
-                    if(probeEinfügen(j) == true)
-                    {
-                        spielfeldTMP.setInsertPos(j);
-                        spielfeldTMP.wirfSteinEin();
-                        werteFeld[j] = berechneMiniMax(suchtiefe);
-                    }
-                }
-                besterZug = werteFeld[0];
-                for(int i = 0; i < 6; i ++ )
-                {
-                    if(werteFeld[i] == 10 ||werteFeld[i] == -10)
-                    {
-                        return besterZug;
-                    }
-                    if(werteFeld[i] >= besterZug)
-                    {
-                        besterZug = werteFeld[i];
-                    }
-                }
+        for(int j = 0; j < 7; j++)
+        {
+            if(probeEinfügen(j) == true)
+            {
+                spielfeldTMP.setInsertPos(j);
+                spielfeldTMP.wirfSteinEin();
+                werteFeld[j] = berechneMiniMax(suchtiefe);
+            }
+        }
+        besterZug = werteFeld[0];
+        for(int i = 0; i < 6; i ++ )
+        {
+            if(werteFeld[i] == 10 ||werteFeld[i] == -10)
+            {
                 return besterZug;
+            }
+            if(werteFeld[i] >= besterZug)
+            {
+                besterZug = werteFeld[i];
+            }
+        }
+        return besterZug;
     }
 
     private int berechneMiniMax(int tiefe)
@@ -665,135 +665,135 @@ public class KIGegner extends Spieler {
     }
     private int bewertung()
     {
-            int spielerEinsZweier = 0;
-            int spielerZweiZweier = 0;
-            int spielerEinsDreier = 0;
-            int spielerZweiDreier = 0;
-            int ergebnis = 0;
-            char zeichenSpielerEins = 'X';
-            char zeichenSpielerZwei = '@';
+        int spielerEinsZweier = 0;
+        int spielerZweiZweier = 0;
+        int spielerEinsDreier = 0;
+        int spielerZweiDreier = 0;
+        int ergebnis = 0;
+        char zeichenSpielerEins = 'X';
+        char zeichenSpielerZwei = '@';
 
-            for(int i = 0; i < 6; i ++)
+        for(int i = 0; i < 6; i ++)
+        {
+            for(int j = 0; j < 7 ; j++)
             {
-                for(int j = 0; j < 7 ; j++)
-                {
 
-                    if(j < 4) {
-                        //gewonnen wagerecht rechts SpielerEins
-                        if (reiheZeichenSpieler(zeichenSpielerEins, 0, 1, i, j) == 4) {
-                            return 10;
-                        }
-                        //gewonnen wagerecht rechts SpielerZwei
-                        if (reiheZeichenSpieler(zeichenSpielerZwei, 0, 1, i, j) == 4) {
-                            return -10;
-                        }
-                        //Drei Steine wagerecht rechts SpielerEins
-                        if (reiheZeichenSpieler(zeichenSpielerEins, 0, 1, i, j) == 3) {
-                            spielerEinsDreier ++;
-                        }
-                        //Drei Steine wagerecht rechts SpielerZwei
-                        if (reiheZeichenSpieler(zeichenSpielerZwei, 0, 1, i, j) == 3) {
-                            spielerZweiDreier ++;
-                        }
-                        //Zwei Steine wagerecht rechts SpielerEins
-                        if (reiheZeichenSpieler(zeichenSpielerEins, 0, 1, i, j) == 2) {
-                            spielerZweiDreier ++;
-                        }
-                        //Zwei Steine wagerecht rechts SpielerZwei
-                        if (reiheZeichenSpieler(zeichenSpielerZwei, 0, 1, i, j) == 2) {
-                           spielerZweiZweier ++;
-                        }
+                if(j < 4) {
+                    //gewonnen wagerecht rechts SpielerEins
+                    if (reiheZeichenSpieler(zeichenSpielerEins, 0, 1, i, j) == 4) {
+                        return 10;
                     }
-                    if(i > 2) {
-                        //gewonnen senkrecht rechts SpielerEins
-                        if (reiheZeichenSpieler(zeichenSpielerEins, -1, 0, i, j) == 4) {
-                            return 10;
-                        }
-                        //gewonnen senkrecht rechts SpielerZwei
-                        if (reiheZeichenSpieler(zeichenSpielerZwei, -1, 0, i, j) == 4) {
-                            return -10;
-                        }
-                        //Drei Steine senkrecht rechts SpielerEins
-                        if (reiheZeichenSpieler(zeichenSpielerEins, -1, 0, i, j) == 3) {
-                            spielerEinsDreier ++;
-                        }
-                        //Drei Steine senkrecht rechts SpielerZwei
-                        if (reiheZeichenSpieler(zeichenSpielerZwei, -1, 0, i, j) == 3) {
-                            spielerZweiDreier ++;
-                        }
-                        //Zwei Steine senkrecht rechts SpielerEins
-                        if (reiheZeichenSpieler(zeichenSpielerEins, -1, 0, i, j) == 2) {
-                            spielerZweiDreier ++;
-                        }
-                        //Zwei Steine senkrecht rechts SpielerZwei
-                        if (reiheZeichenSpieler(zeichenSpielerZwei, -1, 0, i, j) == 2) {
-                            spielerZweiZweier ++;
-                        }
+                    //gewonnen wagerecht rechts SpielerZwei
+                    if (reiheZeichenSpieler(zeichenSpielerZwei, 0, 1, i, j) == 4) {
+                        return -10;
                     }
-                    if(j < 4 && i < 3) {
-                        //gewonnen diagonal rechts unten SpielerEins
-                        if (reiheZeichenSpieler(zeichenSpielerEins, 1, 1, i, j) == 4) {
-                            return 10;
-                        }
-                        //gewonnen diagonal rechts unten SpielerZwei
-                        if (reiheZeichenSpieler(zeichenSpielerZwei, 1, 1, i, j) == 4) {
-                            return -10;
-                        }
-                        //Drei Steine diagonal rechts unten SpielerEins
-                        if (reiheZeichenSpieler(zeichenSpielerEins, 1, 1, i, j) == 3) {
-                            spielerEinsDreier ++;
-                        }
-                        //Drei Steine diagonal rechts unten SpielerZwei
-                        if (reiheZeichenSpieler(zeichenSpielerZwei, 1, 1, i, j) == 3) {
-                            spielerZweiDreier ++;
-                        }
-                        //Zwei Steine diagonal rechts unten SpielerEins
-                        if (reiheZeichenSpieler(zeichenSpielerEins, 1, 1, i, j) == 2) {
-                            spielerZweiDreier ++;
-                        }
-                        //Zwei Steine diagonal rechts unten SpielerZwei
-                        if (reiheZeichenSpieler(zeichenSpielerZwei, 1, 1, i, j) == 2) {
-                            spielerZweiZweier ++;
-                        }
+                    //Drei Steine wagerecht rechts SpielerEins
+                    if (reiheZeichenSpieler(zeichenSpielerEins, 0, 1, i, j) == 3) {
+                        spielerEinsDreier ++;
                     }
-                    if(j < 4 && i > 2) {
-                        //gewonnen diagonal rechts oben SpielerEins
-                        if (reiheZeichenSpieler(zeichenSpielerEins, -1, 1, i, j) == 4) {
-                            return 10;
-                        }
-                        //gewonnen diagonal rechts oben SpielerZwei
-                        if (reiheZeichenSpieler(zeichenSpielerZwei, -1, 1, i, j) == 4) {
-                            return -10;
-                        }
-                        //Drei Steine diagonal rechts oben SpielerEins
-                        if (reiheZeichenSpieler(zeichenSpielerEins, -1, 1, i, j) == 3) {
-                            spielerEinsDreier ++;
-                        }
-                        //Drei Steine diagonal rechts oben SpielerZwei
-                        if (reiheZeichenSpieler(zeichenSpielerZwei, -1, 1, i, j) == 3) {
-                            spielerZweiDreier ++;
-                        }
-                        //Zwei Steine diagonal rechts oben SpielerEins
-                        if (reiheZeichenSpieler(zeichenSpielerEins, -1, 1, i, j) == 2) {
-                            spielerZweiDreier ++;
-                        }
-                        //Zwei Steine diagonal rechts oben SpielerZwei
-                        if (reiheZeichenSpieler(zeichenSpielerZwei, -1, 1, i, j) == 2) {
-                            spielerZweiZweier ++;
-                        }
+                    //Drei Steine wagerecht rechts SpielerZwei
+                    if (reiheZeichenSpieler(zeichenSpielerZwei, 0, 1, i, j) == 3) {
+                        spielerZweiDreier ++;
+                    }
+                    //Zwei Steine wagerecht rechts SpielerEins
+                    if (reiheZeichenSpieler(zeichenSpielerEins, 0, 1, i, j) == 2) {
+                        spielerZweiDreier ++;
+                    }
+                    //Zwei Steine wagerecht rechts SpielerZwei
+                    if (reiheZeichenSpieler(zeichenSpielerZwei, 0, 1, i, j) == 2) {
+                        spielerZweiZweier ++;
+                    }
+                }
+                if(i > 2) {
+                    //gewonnen senkrecht rechts SpielerEins
+                    if (reiheZeichenSpieler(zeichenSpielerEins, -1, 0, i, j) == 4) {
+                        return 10;
+                    }
+                    //gewonnen senkrecht rechts SpielerZwei
+                    if (reiheZeichenSpieler(zeichenSpielerZwei, -1, 0, i, j) == 4) {
+                        return -10;
+                    }
+                    //Drei Steine senkrecht rechts SpielerEins
+                    if (reiheZeichenSpieler(zeichenSpielerEins, -1, 0, i, j) == 3) {
+                        spielerEinsDreier ++;
+                    }
+                    //Drei Steine senkrecht rechts SpielerZwei
+                    if (reiheZeichenSpieler(zeichenSpielerZwei, -1, 0, i, j) == 3) {
+                        spielerZweiDreier ++;
+                    }
+                    //Zwei Steine senkrecht rechts SpielerEins
+                    if (reiheZeichenSpieler(zeichenSpielerEins, -1, 0, i, j) == 2) {
+                        spielerZweiDreier ++;
+                    }
+                    //Zwei Steine senkrecht rechts SpielerZwei
+                    if (reiheZeichenSpieler(zeichenSpielerZwei, -1, 0, i, j) == 2) {
+                        spielerZweiZweier ++;
+                    }
+                }
+                if(j < 4 && i < 3) {
+                    //gewonnen diagonal rechts unten SpielerEins
+                    if (reiheZeichenSpieler(zeichenSpielerEins, 1, 1, i, j) == 4) {
+                        return 10;
+                    }
+                    //gewonnen diagonal rechts unten SpielerZwei
+                    if (reiheZeichenSpieler(zeichenSpielerZwei, 1, 1, i, j) == 4) {
+                        return -10;
+                    }
+                    //Drei Steine diagonal rechts unten SpielerEins
+                    if (reiheZeichenSpieler(zeichenSpielerEins, 1, 1, i, j) == 3) {
+                        spielerEinsDreier ++;
+                    }
+                    //Drei Steine diagonal rechts unten SpielerZwei
+                    if (reiheZeichenSpieler(zeichenSpielerZwei, 1, 1, i, j) == 3) {
+                        spielerZweiDreier ++;
+                    }
+                    //Zwei Steine diagonal rechts unten SpielerEins
+                    if (reiheZeichenSpieler(zeichenSpielerEins, 1, 1, i, j) == 2) {
+                        spielerZweiDreier ++;
+                    }
+                    //Zwei Steine diagonal rechts unten SpielerZwei
+                    if (reiheZeichenSpieler(zeichenSpielerZwei, 1, 1, i, j) == 2) {
+                        spielerZweiZweier ++;
+                    }
+                }
+                if(j < 4 && i > 2) {
+                    //gewonnen diagonal rechts oben SpielerEins
+                    if (reiheZeichenSpieler(zeichenSpielerEins, -1, 1, i, j) == 4) {
+                        return 10;
+                    }
+                    //gewonnen diagonal rechts oben SpielerZwei
+                    if (reiheZeichenSpieler(zeichenSpielerZwei, -1, 1, i, j) == 4) {
+                        return -10;
+                    }
+                    //Drei Steine diagonal rechts oben SpielerEins
+                    if (reiheZeichenSpieler(zeichenSpielerEins, -1, 1, i, j) == 3) {
+                        spielerEinsDreier ++;
+                    }
+                    //Drei Steine diagonal rechts oben SpielerZwei
+                    if (reiheZeichenSpieler(zeichenSpielerZwei, -1, 1, i, j) == 3) {
+                        spielerZweiDreier ++;
+                    }
+                    //Zwei Steine diagonal rechts oben SpielerEins
+                    if (reiheZeichenSpieler(zeichenSpielerEins, -1, 1, i, j) == 2) {
+                        spielerZweiDreier ++;
+                    }
+                    //Zwei Steine diagonal rechts oben SpielerZwei
+                    if (reiheZeichenSpieler(zeichenSpielerZwei, -1, 1, i, j) == 2) {
+                        spielerZweiZweier ++;
                     }
                 }
             }
-            ergebnis = spielerEinsZweier + spielerEinsDreier - spielerZweiZweier - spielerZweiDreier ;
-            return ergebnis;
+        }
+        ergebnis = spielerEinsZweier + spielerEinsDreier - spielerZweiZweier - spielerZweiDreier ;
+        return ergebnis;
     }
     private int reiheZeichenSpieler(char zeichenSpieler, int vorfaktorX, int vorfaktorY, int x, int y)
     {
         int ergebnisReihe = 0;
         if(spielfeldTMP.getZeichenAusSpielfeld(x,y) == zeichenSpieler || spielfeldTMP.getZeichenAusSpielfeld(x,y) == 'O'
-            && spielfeldTMP.getZeichenAusSpielfeld(x + 1 * vorfaktorX,y + 1 * vorfaktorY) == zeichenSpieler || spielfeldTMP.getZeichenAusSpielfeld(x + 1 * vorfaktorX,y + 1 * vorfaktorY) == 'O'
-            && spielfeldTMP.getZeichenAusSpielfeld(x + 2 * vorfaktorX,y + 1 * vorfaktorY) == zeichenSpieler || spielfeldTMP.getZeichenAusSpielfeld(x + 2 * vorfaktorX,y + 1 * vorfaktorY) == 'O'
-            && spielfeldTMP.getZeichenAusSpielfeld(x + 3 * vorfaktorX,y + 1 * vorfaktorY) == zeichenSpieler || spielfeldTMP.getZeichenAusSpielfeld(x + 3 * vorfaktorX,y + 1 * vorfaktorY) == 'O')
+                && spielfeldTMP.getZeichenAusSpielfeld(x + 1 * vorfaktorX,y + 1 * vorfaktorY) == zeichenSpieler || spielfeldTMP.getZeichenAusSpielfeld(x + 1 * vorfaktorX,y + 1 * vorfaktorY) == 'O'
+                && spielfeldTMP.getZeichenAusSpielfeld(x + 2 * vorfaktorX,y + 1 * vorfaktorY) == zeichenSpieler || spielfeldTMP.getZeichenAusSpielfeld(x + 2 * vorfaktorX,y + 1 * vorfaktorY) == 'O'
+                && spielfeldTMP.getZeichenAusSpielfeld(x + 3 * vorfaktorX,y + 1 * vorfaktorY) == zeichenSpieler || spielfeldTMP.getZeichenAusSpielfeld(x + 3 * vorfaktorX,y + 1 * vorfaktorY) == 'O')
         {
             for(int i = 0; i < 4; i ++)
             {

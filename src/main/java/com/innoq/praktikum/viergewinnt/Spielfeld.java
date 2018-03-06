@@ -25,8 +25,8 @@ public class Spielfeld {
     private Scanner scan = new Scanner(System.in);
 
     public Spielfeld( Konsole oberflaeche, Config config, ZeichneSpielfeld zeichneSpielfeld) {
-    this.oberflaeche = oberflaeche;
-    this.config = config;
+        this.oberflaeche = oberflaeche;
+        this.config = config;
         initSpielfeld();
     }
 
@@ -189,6 +189,7 @@ public class Spielfeld {
     }
     public void wirfSteinEin()
     {
+        oberflaeche.clear();
         int insertPosy = 5;
         if(insertPos >= 0 && insertPos < 7) {
 
@@ -208,8 +209,8 @@ public class Spielfeld {
                 while (spielfeld[insertPosy][insertPos] == 'X' || spielfeld[insertPosy][insertPos] == '@') {
                     insertPosy--;
                 }
-                    spielfeld[insertPosy][insertPos] = zeichenSpieler;
-                    farbfeld[insertPosy][insertPos] = farbe;
+                spielfeld[insertPosy][insertPos] = zeichenSpieler;
+                farbfeld[insertPosy][insertPos] = farbe;
             }
         }
         anzahlZüge++;
@@ -250,7 +251,7 @@ public class Spielfeld {
                     }
 
                 }
-                    return true;
+                return true;
             }
         }
         else
