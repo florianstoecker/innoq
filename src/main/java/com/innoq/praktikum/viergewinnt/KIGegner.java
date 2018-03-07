@@ -665,7 +665,20 @@ public class KIGegner extends Spieler {
             return minimax;
         }*/
     }
+    /*private int min(int tiefe)
+    {
+        int besterWert;
 
+        for (int j = 0; j < 7; j++) {
+            spielfeldTMPZurücksetzen();
+            if (probeEinfügen(j) == true) {
+                spielfeldTMP.setInsertPos(j);
+                spielfeldTMP.wirfSteinEinKI('@');
+                werteFeld[j] = berechneMiniMax(suchtiefe, alpha, beta);
+            }
+        }
+        return besterWert;
+    }*/
     private int bewertung() {
         int spielerEinsZweier = 0;
         int spielerZweiZweier = 0;
