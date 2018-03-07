@@ -159,6 +159,5 @@ public class Config {
         auswahlBeginn();
         farbeAuswaehlen();
         oberflaeche.clear();
-        oberflaeche.spielBeginnText();
     }
 }

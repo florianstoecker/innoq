@@ -8,7 +8,7 @@ public class KIGegnerStaerkeVier extends KIGegner {
     public void macheZug()
     {
         spielfeld.setInsertPos(findeBestenZug());
-        steinWurdeAusgewaehlt();
+        spielfeld.wirfSteinEin();
         return;
     }
 }

@@ -26,10 +26,10 @@ public class Konsole {
         System.out.println("1: Ja!");
         System.out.println("2: Nein!");
     }
-    public static void kiGelegtText(int KIAuswahl)
+    public void gelegtText(int spaltenauswahl)
     {
         clear();
-        System.out.println("Die KI nahm" + BLACK_BOLD + " Spalte " + KIAuswahl + COLOR_RESET);
+        System.out.println("Gewählt wurde" + BLACK_BOLD + " Spalte " + spaltenauswahl + COLOR_RESET);
 
     }
     public static void spalteVollText(int spalte)

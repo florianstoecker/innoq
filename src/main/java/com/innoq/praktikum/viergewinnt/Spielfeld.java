@@ -23,11 +23,13 @@ public class Spielfeld {
     public ZeichneSpielfeld zeichneSpielfeld = new ZeichneSpielfeld();
     private Config config;
     private Scanner scan = new Scanner(System.in);
-
+    public Spielfeld()
+    {}
     public Spielfeld( Konsole oberflaeche, Config config, ZeichneSpielfeld zeichneSpielfeld) {
         this.oberflaeche = oberflaeche;
         this.config = config;
         initSpielfeld();
+        initFarbfeld();
     }
 
     private Spielfeld(char[][] spielfeld, int anDerReihe, int anzahlZüge, Konsole oberflaeche) {
@@ -35,7 +37,6 @@ public class Spielfeld {
         this.anDerReihe = anDerReihe;
         this.anzahlZüge = anzahlZüge;
         this.oberflaeche = oberflaeche;
-
     }
     public int getAuswahlAnfänger()
     {
@@ -214,10 +215,36 @@ public class Spielfeld {
             }
         }
         anzahlZüge++;
+        oberflaeche.gelegtText(insertPos);
 
     }
 
+    public void wirfSteinEinKI(char zeichen)
+    {
+        int insertPosy = 5;
+        if(insertPos >= 0 && insertPos < 7) {
 
+            if (anDerReihe == 1) {
+                zeichenSpieler = 'X';
+                farbe = config.getAuswahlFarbeEins();
+            } else if (anDerReihe == 2) {
+                zeichenSpieler = '@';
+                farbe = config.getAuswahlFarbeZwei();
+            }
+
+            if (spielfeld[insertPosy][insertPos] == 'O') {
+                spielfeld[insertPosy][insertPos] = zeichen;
+                farbfeld[insertPosy][insertPos] = farbe;
+
+            } else {
+                while (spielfeld[insertPosy][insertPos] == 'X' || spielfeld[insertPosy][insertPos] == '@') {
+                    insertPosy--;
+                }
+                spielfeld[insertPosy][insertPos] = zeichen;
+                farbfeld[insertPosy][insertPos] = farbe;
+            }
+        }
+    }
     // Darf das Feld belegt werden?
     public boolean legalerZug()
     {

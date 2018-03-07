@@ -8,7 +8,7 @@ public class KIGegner extends Spieler {
     }
     public static char[][] hilfsfeld;
     public static int entscheidung;
-    private  Spielfeld spielfeldTMP;
+    private  Spielfeld spielfeldTMP = new Spielfeld();
     public int betrachteterSpieler = spielfeld.getAuswahlAnfänger();
 
     public void macheZug()
@@ -616,33 +616,60 @@ public class KIGegner extends Spieler {
     {
         int[] werteFeld = new int [7];
         int suchtiefe = 2;
+        int besterWert;
         int besterZug;
-
-        spielfeldTMP = spielfeld.getCopy();
         for(int j = 0; j < 7; j++)
         {
+            spielfeldTMPZurücksetzen();
             if(probeEinfügen(j) == true)
             {
                 spielfeldTMP.setInsertPos(j);
-                spielfeldTMP.wirfSteinEin();
+                spielfeldTMP.wirfSteinEinKI('@');
                 werteFeld[j] = berechneMiniMax(suchtiefe);
+
+               for(int i = 0; i<6; i++)
+                {
+                    for(int k = 0; k < 7; k++)
+                    {
+                        System.out.print(spielfeldTMP.getZeichenAusSpielfeld(i,k));
+                    }
+                    System.out.println("");
+                }
+                System.out.println(werteFeld[j]);
+                System.out.println("");
             }
         }
-        besterZug = werteFeld[0];
-        for(int i = 0; i < 6; i ++ )
+        besterWert = werteFeld[0];
+       besterZug = 0;
+        for(int i = 0; i < 7; i ++ )
         {
             if(werteFeld[i] == 10 ||werteFeld[i] == -10)
             {
+                besterZug = findeSpalte(besterWert, werteFeld);
                 return besterZug;
             }
-            if(werteFeld[i] >= besterZug)
+            else if(werteFeld[i] >= besterZug)
             {
-                besterZug = werteFeld[i];
+                besterWert = werteFeld[i];
             }
         }
+        besterZug = findeSpalte(besterZug, werteFeld);
         return besterZug;
     }
 
+    public int findeSpalte(int besterZug, int[] wertefeld)
+    {
+        int spalte = 0;
+        for(int i = 0; i < 7; i++)
+        {
+            if(wertefeld[i] == besterZug)
+            {
+                spalte = i;
+            }
+        }
+
+        return spalte;
+    }
     private int berechneMiniMax(int tiefe)
     {
         int minimax;
@@ -669,9 +696,8 @@ public class KIGegner extends Spieler {
         int spielerZweiZweier = 0;
         int spielerEinsDreier = 0;
         int spielerZweiDreier = 0;
-        int ergebnis = 0;
-        char zeichenSpielerEins = 'X';
-        char zeichenSpielerZwei = '@';
+        char zeichenSpielerEins = '@';
+        char zeichenSpielerZwei = 'X';
 
         for(int i = 0; i < 6; i ++)
         {
@@ -697,7 +723,7 @@ public class KIGegner extends Spieler {
                     }
                     //Zwei Steine wagerecht rechts SpielerEins
                     if (reiheZeichenSpieler(zeichenSpielerEins, 0, 1, i, j) == 2) {
-                        spielerZweiDreier ++;
+                        spielerEinsZweier ++;
                     }
                     //Zwei Steine wagerecht rechts SpielerZwei
                     if (reiheZeichenSpieler(zeichenSpielerZwei, 0, 1, i, j) == 2) {
@@ -705,27 +731,27 @@ public class KIGegner extends Spieler {
                     }
                 }
                 if(i > 2) {
-                    //gewonnen senkrecht rechts SpielerEins
+                    //gewonnen senkrecht SpielerEins
                     if (reiheZeichenSpieler(zeichenSpielerEins, -1, 0, i, j) == 4) {
                         return 10;
                     }
-                    //gewonnen senkrecht rechts SpielerZwei
+                    //gewonnen senkrecht SpielerZwei
                     if (reiheZeichenSpieler(zeichenSpielerZwei, -1, 0, i, j) == 4) {
                         return -10;
                     }
-                    //Drei Steine senkrecht rechts SpielerEins
+                    //Drei Steine senkrecht SpielerEins
                     if (reiheZeichenSpieler(zeichenSpielerEins, -1, 0, i, j) == 3) {
                         spielerEinsDreier ++;
                     }
-                    //Drei Steine senkrecht rechts SpielerZwei
+                    //Drei Steine senkrecht SpielerZwei
                     if (reiheZeichenSpieler(zeichenSpielerZwei, -1, 0, i, j) == 3) {
                         spielerZweiDreier ++;
                     }
-                    //Zwei Steine senkrecht rechts SpielerEins
+                    //Zwei Steine senkrecht SpielerEins
                     if (reiheZeichenSpieler(zeichenSpielerEins, -1, 0, i, j) == 2) {
-                        spielerZweiDreier ++;
+                        spielerEinsZweier ++;
                     }
-                    //Zwei Steine senkrecht rechts SpielerZwei
+                    //Zwei Steine senkrecht SpielerZwei
                     if (reiheZeichenSpieler(zeichenSpielerZwei, -1, 0, i, j) == 2) {
                         spielerZweiZweier ++;
                     }
@@ -749,7 +775,7 @@ public class KIGegner extends Spieler {
                     }
                     //Zwei Steine diagonal rechts unten SpielerEins
                     if (reiheZeichenSpieler(zeichenSpielerEins, 1, 1, i, j) == 2) {
-                        spielerZweiDreier ++;
+                        spielerEinsZweier ++;
                     }
                     //Zwei Steine diagonal rechts unten SpielerZwei
                     if (reiheZeichenSpieler(zeichenSpielerZwei, 1, 1, i, j) == 2) {
@@ -775,7 +801,7 @@ public class KIGegner extends Spieler {
                     }
                     //Zwei Steine diagonal rechts oben SpielerEins
                     if (reiheZeichenSpieler(zeichenSpielerEins, -1, 1, i, j) == 2) {
-                        spielerZweiDreier ++;
+                        spielerEinsZweier ++;
                     }
                     //Zwei Steine diagonal rechts oben SpielerZwei
                     if (reiheZeichenSpieler(zeichenSpielerZwei, -1, 1, i, j) == 2) {
@@ -784,16 +810,27 @@ public class KIGegner extends Spieler {
                 }
             }
         }
-        ergebnis = spielerEinsZweier + spielerEinsDreier - spielerZweiZweier - spielerZweiDreier ;
+        System.out.println("anfang" + spielerEinsZweier + spielerEinsDreier + spielerZweiZweier + spielerZweiDreier + "ende");
+        int ergebnis = spielerEinsZweier * 1 + spielerEinsDreier * 2 - spielerZweiZweier * 1 - spielerZweiDreier * 3 ;
         return ergebnis;
+    }
+    private void spielfeldTMPZurücksetzen()
+    {
+        for(int i = 0; i < 7; i++)
+        {
+            for(int j = 0; j<6;j++)
+            {
+                spielfeldTMP.setZeichenAnSpielfeld(j,i, spielfeld.getZeichenAusSpielfeld(j,i));
+            }
+        }
     }
     private int reiheZeichenSpieler(char zeichenSpieler, int vorfaktorX, int vorfaktorY, int x, int y)
     {
         int ergebnisReihe = 0;
         if(spielfeldTMP.getZeichenAusSpielfeld(x,y) == zeichenSpieler || spielfeldTMP.getZeichenAusSpielfeld(x,y) == 'O'
                 && spielfeldTMP.getZeichenAusSpielfeld(x + 1 * vorfaktorX,y + 1 * vorfaktorY) == zeichenSpieler || spielfeldTMP.getZeichenAusSpielfeld(x + 1 * vorfaktorX,y + 1 * vorfaktorY) == 'O'
-                && spielfeldTMP.getZeichenAusSpielfeld(x + 2 * vorfaktorX,y + 1 * vorfaktorY) == zeichenSpieler || spielfeldTMP.getZeichenAusSpielfeld(x + 2 * vorfaktorX,y + 1 * vorfaktorY) == 'O'
-                && spielfeldTMP.getZeichenAusSpielfeld(x + 3 * vorfaktorX,y + 1 * vorfaktorY) == zeichenSpieler || spielfeldTMP.getZeichenAusSpielfeld(x + 3 * vorfaktorX,y + 1 * vorfaktorY) == 'O')
+                && spielfeldTMP.getZeichenAusSpielfeld(x + 2 * vorfaktorX,y + 2 * vorfaktorY) == zeichenSpieler || spielfeldTMP.getZeichenAusSpielfeld(x + 2 * vorfaktorX,y + 2 * vorfaktorY) == 'O'
+                && spielfeldTMP.getZeichenAusSpielfeld(x + 3 * vorfaktorX,y + 3 * vorfaktorY) == zeichenSpieler || spielfeldTMP.getZeichenAusSpielfeld(x + 3 * vorfaktorX,y + 3 * vorfaktorY) == 'O')
         {
             for(int i = 0; i < 4; i ++)
             {
@@ -804,15 +841,5 @@ public class KIGegner extends Spieler {
             }
         }
         return ergebnisReihe;
-    }
-    public void copy()
-    {
-        for(int i = 0; i<6 ; i++)
-        {
-            for(int j = 0; j < 7; j ++)
-            {
-                spielfeldTMP.setZeichenAnSpielfeld(i, j, spielfeld.getZeichenAusSpielfeld(i, j));
-            }
-        }
     }
 }

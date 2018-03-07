@@ -13,13 +13,14 @@ public class Main {
         {
             anfänger = 1;
         }
-        spielfeld.initFarbfeld();
         spielfeld.setAnDerReihe(config.getBeginner());
         Spieler s1 =  new LokalerSpieler(spielfeld, 'X', anfänger);
         Spieler s2 = config.spielerZweiAuswaehlen(spielfeld, '@', anfänger);
 
         Spieler s = s1;
         oberflaeche.clear();
+
+        oberflaeche.spielBeginnText();
         zeichneSpielfeld.zeichneSpielfeld(spielfeld);
         do{
             switch(spielfeld.getAnDerReihe()) {

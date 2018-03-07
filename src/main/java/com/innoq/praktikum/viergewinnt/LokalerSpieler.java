@@ -11,8 +11,7 @@ public class LokalerSpieler extends Spieler {
     public void macheZug()
     {
         int spaltenAuswahl;
-        spaltenAuswahl = scan.nextInt()-1;
-
+        spaltenAuswahl = scan.nextInt() - 1;
         spielfeld.setInsertPos(spaltenAuswahl);
         if(spielfeld.legalerZug() == true)
         {
