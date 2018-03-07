@@ -215,7 +215,6 @@ public class Spielfeld {
             }
         }
         anzahlZüge++;
-        oberflaeche.gelegtText(insertPos);
 
     }
 

@@ -132,6 +132,10 @@ public class Config {
             auswAnfänger = 1;
         }
     }
+    public static int getAuswahlGegner()
+    {
+        return auswahlGegner;
+    }
     public static void setAuswAnfänger(int choose)
     {
         auswAnfänger = choose;

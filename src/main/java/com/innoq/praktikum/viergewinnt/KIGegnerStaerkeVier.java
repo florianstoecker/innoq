@@ -7,6 +7,17 @@ public class KIGegnerStaerkeVier extends KIGegner {
     }
     public void macheZug()
     {
+        betrachteterSpieler = 2;
+        if (kannGewinnen() == true) {
+            steinWurdeAusgewaehlt();
+            return;
+        }
+        betrachteterSpieler = 1;
+
+        if (kannGewinnen() == true) {
+            steinWurdeAusgewaehlt();
+            return;
+        }
         spielfeld.setInsertPos(findeBestenZug());
         spielfeld.wirfSteinEin();
         return;

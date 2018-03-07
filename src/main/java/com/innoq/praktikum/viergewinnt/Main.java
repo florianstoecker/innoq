@@ -24,10 +24,11 @@ public class Main {
         zeichneSpielfeld.zeichneSpielfeld(spielfeld);
         do{
             switch(spielfeld.getAnDerReihe()) {
-                case 1: s = s1;break;
-                case 2: s = s2;break;
+                case 1: s = s1;oberflaeche.macheZugText(spielfeld.getAnDerReihe(),2);break;
+                case 2: s = s2; if(config.getAuswahlGegner() == 1){oberflaeche.macheZugText(spielfeld.getAnDerReihe(), 2);}break;
             }
             s.macheZug();
+            oberflaeche.gelegtText(spielfeld.getInsertPos() + 1);
             zeichneSpielfeld.zeichneSpielfeld(spielfeld);
         }while(spielfeld.gewinn() == false);
 
