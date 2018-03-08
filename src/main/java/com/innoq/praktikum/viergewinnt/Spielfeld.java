@@ -217,8 +217,10 @@ public class Spielfeld {
         if(insertPos >= 0 && insertPos < 7) {
 
             if (anDerReihe == 1) {
+                zeichenSpieler = 'X';
                 farbe = config.getAuswahlFarbeEins();
             } else if (anDerReihe == 2) {
+                zeichenSpieler = '@';
                 farbe = config.getAuswahlFarbeZwei();
             }
 

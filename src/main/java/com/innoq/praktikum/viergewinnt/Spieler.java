@@ -1,8 +1,8 @@
 package com.innoq.praktikum.viergewinnt;
 
 public class Spieler {
-    public static int fEins;
-    public static int fZwei;
+    public int fEins;
+    public int fZwei;
     public Spielfeld spielfeld;
     public char spielerZeichen;
     public int anfänger;

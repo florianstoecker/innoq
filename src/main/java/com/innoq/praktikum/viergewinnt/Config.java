@@ -144,15 +144,15 @@ public class Config {
     {
         return auswAnfänger;
     }
-    public static int getAuswAnfänger()
+    public int getAuswAnfänger()
     {
         return auswAnfänger;
     }
-    public static int getAuswahlGegner()
+    public int getAuswahlGegner()
     {
         return auswahlGegner;
     }
-    public static void setAuswAnfänger(int choose)
+    public void setAuswAnfänger(int choose)
     {
         auswAnfänger = choose;
     }

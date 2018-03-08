@@ -593,6 +593,7 @@ public class KIGegner extends Spieler {
                 }
             }
             return true;
+
         }
     }
     public int findeBestenZug(Spielfeld spiel) {

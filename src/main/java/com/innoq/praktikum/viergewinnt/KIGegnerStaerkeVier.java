@@ -8,8 +8,6 @@ public class KIGegnerStaerkeVier extends KIGegner {
         super(spielfeld, sign, anfänger);
     }
 
-
-
     //Methoden
     public void macheZug()
     {

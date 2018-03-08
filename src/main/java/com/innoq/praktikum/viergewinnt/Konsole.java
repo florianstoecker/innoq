@@ -1,8 +1,8 @@
 package com.innoq.praktikum.viergewinnt;
 
 public class Konsole {
-    public static final String BLACK_BOLD = "\033[1;30m";
-    public static final String COLOR_RESET = "\u001B[0m";
+    private static final String BLACK_BOLD = "\033[1;30m";
+    private static final String COLOR_RESET = "\u001B[0m";
 
     //Konstruktor
     public Konsole()
@@ -17,14 +17,14 @@ public class Konsole {
         System.out.println(BLACK_BOLD + "Der Gewinner ist Spieler " + amZug);
         System.out.println("Das Spiel ist vorbei !");
     }
-    public static void clear()
+    public void clear()
     {
         for(int i = 0; i<10;i++)    // Konsole um 10 Einheiten leer ausgeben
         {
             System.out.println("\n");
         }
     }
-    public static void nochmalText()
+    public void nochmalText()
     {
         System.out.println("Möchten Sie noch einmal spielen ?");
         System.out.println("1: Ja!");
@@ -36,32 +36,32 @@ public class Konsole {
         System.out.println("Gewählt wurde" + BLACK_BOLD + " Spalte " + spaltenauswahl + COLOR_RESET);
 
     }
-    public static void spalteVollText(int spalte)
+    public void spalteVollText(int spalte)
     {
         System.out.println("Spalte " + spalte + " ist voll!");
     }
-    public static void auswahlBeginnText()
+    public void auswahlBeginnText()
     {
         System.out.println("Wer Soll anfangen ?");
         System.out.println("1: Spieler 1");
         System.out.println("2: Spieler 2");
     }
-    public static void gegnerAuswahlText()
+    public void gegnerAuswahlText()
     {
         System.out.println(BLACK_BOLD + "\n\n           4 Gewinnt!\n\n");
         System.out.println("Wählen Sie gegen wen Sie spielen möchten(Spieler 2):\n\n");
         System.out.println("1: Weiterer lokaler Spieler\n");
         System.out.println("2: Künstliche Intelligenz");
     }
-    public static void falscheEingabeText()
+    public void falscheEingabeText()
     {
         System.out.println(BLACK_BOLD + "Falsche Eingabe!" + COLOR_RESET);
     }
-    public static void spielBeginnText()
+    public void spielBeginnText()
     {
         System.out.println("Das Spiel beginnt !  ");
     }
-    public static void auswahlFarbeText(int zahlSpieler)
+    public void auswahlFarbeText(int zahlSpieler)
     {
         System.out.println("Wählen sie eine Farbe für Spieler " + zahlSpieler);
         System.out.println("1: Grün");
@@ -71,12 +71,12 @@ public class Konsole {
         System.out.println("5: Lila");
         System.out.println("6: Cyan");
     }
-    public static void macheZugText(int AnDerReihe, int anzZugEinz)
+    public void macheZugText(int AnDerReihe, int anzZugEinz)
     {
         System.out.println("In welcher Spalte wollen Sie Ihren " + anzZugEinz + ". Stein fallen lassen ? (Spieler " + AnDerReihe + ")");
 
     }
-    public static void staerkeAuswahlText()
+    public void staerkeAuswahlText()
     {
         System.out.println("Wählen Sie die Stärke der KI:");
         System.out.println("1: Zufallszug");
@@ -84,7 +84,7 @@ public class Konsole {
         System.out.println("3: Mittel(kann gewinnen?/2 Felder in Verbindung zueinander?)");
         System.out.println("4: Schwer (MinMax");
     }
-    public static void gewinnText(int anDerReihe)
+    public void gewinnText(int anDerReihe)
     {
         Animation.an_Gewinn();
         System.out.println(BLACK_BOLD + "Der Gewinner ist Spieler " + anDerReihe + "!");
