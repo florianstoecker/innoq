@@ -12,17 +12,15 @@ public class Spielfeld {
 
     private int farbe;
     public int insertPos;
-    public int posxGewinn;
-    public boolean spieleWeiter = true;
     private char[][] spielfeld = new char[6][7];
     private int[][] farbfeld = new int[6][7];
     private char zeichenSpieler;
     private int anDerReihe;
     private Konsole oberflaeche;
     private int anzahlZüge = 0;
-    public ZeichneSpielfeld zeichneSpielfeld = new ZeichneSpielfeld();
     private Config config;
-    private Scanner scan = new Scanner(System.in);
+
+    //Konstruktor
     public Spielfeld()
     {}
     public Spielfeld( Konsole oberflaeche, Config config, ZeichneSpielfeld zeichneSpielfeld) {
@@ -38,13 +36,8 @@ public class Spielfeld {
         this.anzahlZüge = anzahlZüge;
         this.oberflaeche = oberflaeche;
     }
-    public int getAuswahlAnfänger()
-    {
-        return config.getAuswAnfänger();
-    }
-    public Spielfeld getCopy() {
-        return new Spielfeld(spielfeld, anDerReihe, anzahlZüge, oberflaeche);
-    }
+
+    //Methoden
 
     //Felder leeren
     private void initSpielfeld()
@@ -68,6 +61,7 @@ public class Spielfeld {
             }
         }
     }
+
 
     //Spielmethoden
     public boolean gewinn()
@@ -172,7 +166,6 @@ public class Spielfeld {
                 }
             }
         }
-        wechseln();
         return false;
     }
     public  void wechseln()
@@ -215,19 +208,17 @@ public class Spielfeld {
             }
         }
         anzahlZüge++;
+        wechseln();
 
     }
-
     public void wirfSteinEinKI(char zeichen)
     {
         int insertPosy = 5;
         if(insertPos >= 0 && insertPos < 7) {
 
             if (anDerReihe == 1) {
-                zeichenSpieler = 'X';
                 farbe = config.getAuswahlFarbeEins();
             } else if (anDerReihe == 2) {
-                zeichenSpieler = '@';
                 farbe = config.getAuswahlFarbeZwei();
             }
 
@@ -244,6 +235,8 @@ public class Spielfeld {
             }
         }
     }
+
+
     // Darf das Feld belegt werden?
     public boolean legalerZug()
     {
@@ -286,7 +279,6 @@ public class Spielfeld {
             return false;
         }
     }
-
     public boolean feldLegbar(int Stellex, int Stelley)
     {
         boolean feldBelegbar = false;
@@ -321,7 +313,15 @@ public class Spielfeld {
         }
     }
 
+
     // Get- & Set-Methoden
+    public int getAuswahlAnfänger()
+    {
+        return config.getAuswAnfänger();
+    }
+    public Spielfeld getCopy() {
+        return new Spielfeld(spielfeld, anDerReihe, anzahlZüge, oberflaeche);
+    }
     public void setInsertPos(int spalte)
     {
         insertPos = spalte;

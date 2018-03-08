@@ -4,15 +4,19 @@ public class Konsole {
     public static final String BLACK_BOLD = "\033[1;30m";
     public static final String COLOR_RESET = "\u001B[0m";
 
+    //Konstruktor
+    public Konsole()
+    {
 
+    }
+
+    //Methoden
+    // Ausgabetexte
     public void gewonnen(int amZug)
     {
         System.out.println(BLACK_BOLD + "Der Gewinner ist Spieler " + amZug);
         System.out.println("Das Spiel ist vorbei !");
     }
-
-
-    // Ausgabetexte
     public static void clear()
     {
         for(int i = 0; i<10;i++)    // Konsole um 10 Einheiten leer ausgeben
@@ -80,7 +84,6 @@ public class Konsole {
         System.out.println("3: Mittel(kann gewinnen?/2 Felder in Verbindung zueinander?)");
         System.out.println("4: Schwer (MinMax");
     }
-
     public static void gewinnText(int anDerReihe)
     {
         Animation.an_Gewinn();

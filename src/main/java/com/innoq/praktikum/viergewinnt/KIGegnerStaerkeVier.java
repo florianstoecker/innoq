@@ -1,24 +1,19 @@
 package com.innoq.praktikum.viergewinnt;
 
 public class KIGegnerStaerkeVier extends KIGegner {
+
+    //Konstruktor
     public KIGegnerStaerkeVier(Spielfeld spielfeld, char sign, int anfänger)
     {
         super(spielfeld, sign, anfänger);
     }
+
+
+
+    //Methoden
     public void macheZug()
     {
-        betrachteterSpieler = 2;
-        if (kannGewinnen() == true) {
-            steinWurdeAusgewaehlt();
-            return;
-        }
-        betrachteterSpieler = 1;
-
-        if (kannGewinnen() == true) {
-            steinWurdeAusgewaehlt();
-            return;
-        }
-        spielfeld.setInsertPos(findeBestenZug());
+        spielfeld.setInsertPos(findeBestenZug(spielfeld));
         spielfeld.wirfSteinEin();
         return;
     }

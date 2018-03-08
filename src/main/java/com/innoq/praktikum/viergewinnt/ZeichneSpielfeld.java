@@ -11,14 +11,15 @@ public class ZeichneSpielfeld {
     public static final String PURPLE = "\u001B[35m";
     public static final String CYAN = "\u001B[36m";
     public static final String WHITE = "\033[0;97m";
-    private Spielfeld spielfeld;
+
+    //Konstruktor
     public ZeichneSpielfeld()
     {
 
     }
+    //Methoden
     public void zeichneSpielfeld(Spielfeld spielfeld)
     {
-        this.spielfeld = spielfeld;
         System.out.println(BLACK + "|---------------------------|");
         System.out.println("| 1 | 2 | 3 | 4 | 5 | 6 | 7 |");
         for(int i = 0; i<6; i++)

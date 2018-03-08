@@ -1,10 +1,14 @@
 package com.innoq.praktikum.viergewinnt;
 
 public class KIGegnerStaerkeDrei extends KIGegner {
+
+    //Konstruktor
     public KIGegnerStaerkeDrei(Spielfeld spielfeld, char sign, int anfänger)
     {
         super(spielfeld, sign, anfänger);
     }
+
+    //Methoden
     public void macheZug() {
 
         betrachteterSpieler = 2;

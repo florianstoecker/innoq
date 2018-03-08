@@ -7,21 +7,20 @@ public class Config {
     private static int auswahlGegner;
     private static int auswAnfänger;
     private static int amZug;
-    private static int anzZugEinz;
-    private static char zeichenSpielerEins;
-    private static char zeichenSpielerZwei;
     private static int auswahlFarbeZwei;
     private static int auswahlFarbeEins;
     private Konsole oberflaeche;
     public static Scanner scan = new Scanner(System.in);
 
-
+    //Konstruktor
     public Config(Konsole oberflaeche){
         this.oberflaeche = oberflaeche;
         auswahlGegner = gegnerAuswahl();
         andereAbfragen();
 
     }
+
+    //Methoden
     public int gegnerAuswahl()   // Menü - Gegnerauswahl
     {
 
@@ -50,10 +49,6 @@ public class Config {
             return;
         }
         oberflaeche.clear();
-    }
-    public static int getBeginner()
-    {
-        return auswAnfänger;
     }
     public void farbeAuswaehlen()
     {
@@ -116,10 +111,21 @@ public class Config {
         }
         return false;
     }
-
-    public static int getAuswAnfänger()
+    public int staerkeAuswahl() // KI - Stärkeauswahl
     {
-        return auswAnfänger;
+        oberflaeche.staerkeAuswahlText();
+        int dif = scan.nextInt();
+        if(dif>0 && dif <5)
+        {
+            return dif;
+        }
+        return staerkeAuswahl();
+    }
+    public void andereAbfragen()
+    {
+        auswahlBeginn();
+        farbeAuswaehlen();
+        oberflaeche.clear();
     }
     public static void wechsleAuswAnfänger()
     {
@@ -131,6 +137,16 @@ public class Config {
         {
             auswAnfänger = 1;
         }
+    }
+
+    //Get und Set Methoden
+    public int getBeginner()
+    {
+        return auswAnfänger;
+    }
+    public static int getAuswAnfänger()
+    {
+        return auswAnfänger;
     }
     public static int getAuswahlGegner()
     {
@@ -148,20 +164,5 @@ public class Config {
     {
         return auswahlFarbeEins;
     }
-    public int staerkeAuswahl() // KI - Stärkeauswahl
-    {
-        oberflaeche.staerkeAuswahlText();
-        int dif = scan.nextInt();
-        if(dif>0 && dif <5)
-        {
-            return dif;
-        }
-        return staerkeAuswahl();
-    }
-    public void andereAbfragen()
-    {
-        auswahlBeginn();
-        farbeAuswaehlen();
-        oberflaeche.clear();
-    }
+
 }

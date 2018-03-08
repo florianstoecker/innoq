@@ -2,6 +2,7 @@ package com.innoq.praktikum.viergewinnt;
 
 public class Main {
 
+    //Main-Methode
     public static void main(String[] args) {
         Konsole oberflaeche = new Konsole();
         Config config = new Config(oberflaeche);
