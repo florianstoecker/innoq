@@ -3,15 +3,15 @@ package com.innoq.praktikum.viergewinnt;
 public class KIGegner extends Spieler {
     private static final int positivUnendlich = (int) Double.POSITIVE_INFINITY;
     private static final int negativUnendlich = (int) Double.NEGATIVE_INFINITY;
+    private Spielfeld spielfeldTMP = new Spielfeld();
+    public int betrachteterSpieler = spielfeld.getAuswahlAnfänger();
+    private int ergebnisReihe;
 
     //Konstruktor
     public KIGegner(Spielfeld spielfeld, char sign, int anfänger) {
         super(spielfeld, sign, anfänger);
     }
     public static int entscheidung;
-    private Spielfeld spielfeldTMP = new Spielfeld();
-    public int betrachteterSpieler = spielfeld.getAuswahlAnfänger();
-    private int ergebnisReihe;
 
     //Methoden
     public void macheZug() {
@@ -596,36 +596,32 @@ public class KIGegner extends Spieler {
 
         }
     }
-    public int findeBestenZug(Spielfeld spiel) {
-
+    public int findeBestenZug(Spielfeld spielfeld,  int tiefe ) {
 
         int[] werteFeld = new int[7];
-        Spielfeld spielTMP;
-        int suchtiefe = 2;
-        int besterWert;
-        int besterZug;
-        for (int j = 0; j < 7; j++) {
-            if (probeEinfügen(spiel, j) == true) {
-                spielTMP = kopieAnlegen(spiel);
-                spielTMP.setInsertPos(j);
-                spielTMP.wirfSteinEinKI(spielerZeichen);
-                werteFeld[j] = berechneMiniMax(spielTMP,suchtiefe, negativUnendlich, positivUnendlich);
+        Spielfeld spielfeldTMP;
+        for(int i = 0; i < 7; i++)
+        {
+            if(probeEinfügen(spielfeld, i) == true)
+            {
+                spielfeldTMP = kopieAnlegen(spielfeld);
+                spielfeldTMP.setInsertPos(i);
+                spielfeldTMP.wirfSteinEin();
+                spielfeldTMP.wechseln();
+                werteFeld[i] = berechneMiniMax(spielfeldTMP, tiefe, negativUnendlich, positivUnendlich);
             }
         }
-        besterWert = werteFeld[0];
-        besterZug = 0;
-        for (int i = 0; i < 7; i++) {
-            if (werteFeld[i] == 10 || werteFeld[i] == -10) {
-                besterZug = findeSpalte(besterWert, werteFeld);
-                return besterZug;
-            } else if (werteFeld[i] >= besterZug) {
-                besterWert = werteFeld[i];
-            }
-        }
-        besterZug = findeSpalte(besterZug, werteFeld);
-        System.out.println("1:" + werteFeld[0] + " 2:" + werteFeld[1] + " 3:" + werteFeld[2] + " 4:" + werteFeld[3] + " 5:" + werteFeld[4]+ " 6:" + werteFeld[5] + " 7:"+ werteFeld[6]);
-        return besterZug;
 
+        int besterZug = werteFeld[0];
+        for(int i = 0; i < 7; i++)
+        {
+            if(werteFeld[i] >= besterZug)
+            {
+                besterZug = werteFeld[i];
+            }
+        }
+
+        return findeSpalte(besterZug, werteFeld);
     }
     public int findeSpalte(int besterZug, int[] wertefeld) {
         int spalte = 0;
@@ -634,43 +630,57 @@ public class KIGegner extends Spieler {
                 spalte = i;
             }
         }
-
         return spalte;
     }
-    private int berechneMiniMax(Spielfeld spiel, int tiefe, int alpha, int beta) {
+    private int berechneMiniMax(Spielfeld spielfeld, int tiefe, int alpha, int beta) {
 
-        Spielfeld spiel_tmp;
-        int minimax_tmp;
-        int minimax_lokal;
-
-        if (spiel.getAnDerReihe() == 2) {
-            minimax_lokal = alpha;
-        }
-        else {
-            minimax_lokal = beta;
-        }
-        if (tiefe==0) {
-            return bewertung(spiel);
-        }
-        else {
-            for (int spalte=0; spalte<7; spalte++) {
-                spiel_tmp = kopieAnlegen(spiel);
-                if (probeEinfügen(spiel_tmp, spalte) == true) {
-                    minimax_tmp = berechneMiniMax(spiel_tmp,tiefe-1, alpha, beta);
-                    if (spielfeld.getAnDerReihe() == 2) {
-                        minimax_lokal = java.lang.Math.max(minimax_tmp, minimax_lokal);
-                        alpha = minimax_lokal;
-                        if (alpha>=beta) return beta;
-                    }
-                    else {
-                        minimax_lokal = java.lang.Math.min(minimax_tmp, minimax_lokal);
-                        beta = minimax_lokal;
-                        if (beta<=alpha) return alpha;
-                    }
-                }
-            }
-            return minimax_lokal;
-        }
+      Spielfeld spielfeldTMP;
+      int minimax;
+      int minimaxTMP;
+      if(spielfeld.getAnDerReihe() == 2)
+      {
+          minimax = alpha;
+      }
+      else {
+          minimax = beta;
+      }
+      if(tiefe == 0)
+      {
+          return bewertung(spielfeld);
+      }
+      else
+      {
+          for(int i = 0; i < 7; i++)
+          {
+              spielfeldTMP = kopieAnlegen(spielfeld);
+              if(probeEinfügen(spielfeldTMP, i))
+              {
+                  spielfeldTMP.setInsertPos(i);
+                  spielfeldTMP.wirfSteinEin();
+                  spielfeldTMP.wechseln();
+                  minimaxTMP = berechneMiniMax(spielfeldTMP, tiefe - 1, alpha, beta);
+                  if(spielfeld.getAnDerReihe() == 2)
+                  {
+                      minimax = java.lang.Math.max(minimaxTMP, minimax);
+                      alpha = minimax;
+                      if(alpha >= beta)
+                      {
+                          return beta;
+                      }
+                  }
+                  else
+                  {
+                      minimax = java.lang.Math.min(minimaxTMP, minimax);
+                      beta = minimax;
+                      if( beta<= alpha)
+                      {
+                          return alpha;
+                      }
+                  }
+              }
+          }
+        return minimax;
+      }
     }
     private int bewertung(Spielfeld spiel) {
         int spielerEinsZweier = 0;

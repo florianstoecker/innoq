@@ -170,8 +170,6 @@ public class Spielfeld {
     }
     public  void wechseln()
     {
-
-
         if(anDerReihe == 1)
         {
             anDerReihe = 2;
@@ -183,7 +181,6 @@ public class Spielfeld {
     }
     public void wirfSteinEin()
     {
-        oberflaeche.clear();
         int insertPosy = 5;
         if(insertPos >= 0 && insertPos < 7) {
 
