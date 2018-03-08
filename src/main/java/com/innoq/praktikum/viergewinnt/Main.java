@@ -30,5 +30,6 @@ public class Main {
         }while(!spielfeld.gewinn());
 
         oberflaeche.gewinnText(spielfeld.getAnDerReihe());
+        zeichneSpielfeld.zeichneSpielfeld(spielfeld);
     }
 }

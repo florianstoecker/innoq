@@ -586,9 +586,9 @@ public class KIGegner extends Spieler {
             return true;
 
         } else {
-            while (spielfeld_tmp.getZeichenAusSpielfeld(insertPosy, insertPos) == 'X' || spielfeldTMP.getZeichenAusSpielfeld(insertPosy, insertPos) == '@') {
+            while (spielfeld_tmp.getZeichenAusSpielfeld(insertPosy, insertPos)!= 'O') {
                 insertPosy--;
-                if (insertPosy == -1) {
+                if (insertPosy == - 1) {
                     return false;
                 }
             }
@@ -607,7 +607,6 @@ public class KIGegner extends Spieler {
                 spielfeldTMP = kopieAnlegen(spielfeld);
                 spielfeldTMP.setInsertPos(i);
                 spielfeldTMP.wirfSteinEin();
-                spielfeldTMP.wechseln();
                 werteFeld[i] = berechneMiniMax(spielfeldTMP, tiefe, negativUnendlich, positivUnendlich);
             }
         }
@@ -657,7 +656,25 @@ public class KIGegner extends Spieler {
               {
                   spielfeldTMP.setInsertPos(i);
                   spielfeldTMP.wirfSteinEin();
-                  spielfeldTMP.wechseln();
+
+                  //TEST
+                  for(int k = 0; k<6; k++)
+                  {
+                      for(int l = 0; l<7; l++) {
+                          System.out.print(spielfeldTMP.getZeichenAusSpielfeld(k,l));
+                      }
+                      System.out.println("");
+                      }
+                  System.out.println("");
+                  for(int k = 0; k<6; k++)
+                  {
+                      for(int l = 0; l<7; l++) {
+                          System.out.print(spielfeld.getZeichenAusSpielfeld(k,l));
+                      }
+                      System.out.println("");
+                  }
+                  System.out.println("");
+                  //TEST
                   minimaxTMP = berechneMiniMax(spielfeldTMP, tiefe - 1, alpha, beta);
                   if(spielfeld.getAnDerReihe() == 2)
                   {
