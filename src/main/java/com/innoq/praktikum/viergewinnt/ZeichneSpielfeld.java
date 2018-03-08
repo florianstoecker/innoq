@@ -1,5 +1,9 @@
 package com.innoq.praktikum.viergewinnt;
 
+import java.io.StringWriter;
+import java.util.HashMap;
+import java.util.Map;
+
 public class ZeichneSpielfeld {
     private boolean ersterZug = true;
     public final String COLOR_RESET = "\u001B[0m";
@@ -12,6 +16,20 @@ public class ZeichneSpielfeld {
     public final String CYAN = "\u001B[36m";
     public final String WHITE = "\033[0;97m";
 
+    private static final Map colours = new HashMap<Integer, String>();
+
+    static {
+
+        colours.put(1, "\u001B[30m");
+        colours.put(1, "\u001B[30m");
+        colours.put(1, "\u001B[30m");
+        colours.put(1, "\u001B[30m");
+        colours.put(1, "\u001B[30m");
+        colours.put(1, "\u001B[30m");
+        colours.put(1, "\u001B[30m");
+    }
+
+
     //Konstruktor
     public ZeichneSpielfeld()
     {
@@ -20,7 +38,8 @@ public class ZeichneSpielfeld {
     //Methoden
     public void zeichneSpielfeld(Spielfeld spielfeld)
     {
-        System.out.println(BLACK + "|---------------------------|");
+        StringWriter strWriter = new StringWriter();
+        strWriter.append(BLACK + "|---------------------------|\n");
         System.out.println("| 1 | 2 | 3 | 4 | 5 | 6 | 7 |");
         for(int i = 0; i<6; i++)
         {
@@ -44,7 +63,9 @@ public class ZeichneSpielfeld {
                     {
                         case 0:
                             System.out.printf(WHITE + " %c ", spielfeld.getZeichenAusSpielfeld(i,j));
-                            System.out.print(BLACK + "|");break;
+                            System.out.print(BLACK + "|"); break;
+                           // strWriter.append(String.format(WHITE + " %c ", spielfeld.getZeichenAusSpielfeld(i,j)));
+                            //strWriter.append(BLACK + "|");break;
                         case 1:
                             System.out.printf(GREEN + " %c ", spielfeld.getZeichenAusSpielfeld(i,j));
                             System.out.print(BLACK + "|"); break;
@@ -79,5 +100,10 @@ public class ZeichneSpielfeld {
         System.out.println("|---------------------------|" + COLOR_RESET);
         ersterZug = false;
 
+    }
+
+    private void draw(int colour, StringWriter strWriter, char zeichen) {
+        strWriter.append(String.format(colours.get(colour) + " %c ", zeichen));
+        strWriter.append(BLACK + "|");
     }
 }

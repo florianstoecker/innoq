@@ -1,6 +1,8 @@
 package com.innoq.praktikum.viergewinnt;
 
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 import java.io.PrintWriter;
 import java.io.FileWriter;
@@ -20,6 +22,8 @@ public class Spielfeld {
     private int anzahlZüge = 0;
     private Config config;
 
+    private Queue<Character> userQueue = new LinkedList<>();
+
     //Konstruktor
     public Spielfeld()
     {}
@@ -28,6 +32,9 @@ public class Spielfeld {
         this.config = config;
         initSpielfeld();
         initFarbfeld();
+
+        userQueue.add('X');
+        userQueue.add('@');
     }
 
     private Spielfeld(char[][] spielfeld, int anDerReihe, int anzahlZüge, Konsole oberflaeche) {
@@ -60,6 +67,19 @@ public class Spielfeld {
                 farbfeld[i][j] = 0;
             }
         }
+    }
+
+    private void changeUser() {
+        Character currentUser = userQueue.poll();
+        userQueue.add(currentUser);
+    }
+
+    private Character getCurrentUser() {
+        return userQueue.peek();
+    }
+
+    private boolean checkWin(int i, int j, int factor) {
+        return spielfeld[i][j + 1] == zeichenSpieler && spielfeld[i][j + 2] == zeichenSpieler && spielfeld[i][j + 3] == zeichenSpieler;
     }
 
 
