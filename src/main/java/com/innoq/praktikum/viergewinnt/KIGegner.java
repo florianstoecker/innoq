@@ -656,7 +656,7 @@ public class KIGegner extends Spieler {
                     spielfeldTMP.setInsertPos(i);
                     spielfeldTMP.wirfSteinEin();
 
-                  /*//TEST
+                  //TEST
                   for(int k = 0; k<6; k++)
                   {
                       for(int l = 0; l<7; l++) {
@@ -673,7 +673,7 @@ public class KIGegner extends Spieler {
                       System.out.println("");
                   }
                   System.out.println("");
-                  //TEST*/
+                  //TEST
                     minimaxTMP = berechneMiniMax(spielfeldTMP, tiefe - 1, alpha, beta);
                     if(spielfeld.getAnDerReihe() == 2)
                     {
