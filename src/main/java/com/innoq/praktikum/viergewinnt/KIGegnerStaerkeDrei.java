@@ -3,44 +3,43 @@ package com.innoq.praktikum.viergewinnt;
 public class KIGegnerStaerkeDrei extends KIGegner {
 
     //Konstruktor
-    public KIGegnerStaerkeDrei(Spielfeld spielfeld, char sign, int anfänger)
+    public KIGegnerStaerkeDrei(Spielfeld spielfeld, char sign, int farbe)
     {
-        super(spielfeld, sign, anfänger);
+        super(spielfeld, sign, farbe);
     }
 
     //Methoden
     public void macheZug() {
 
         betrachteterSpieler = 2;
-        if (kannGewinnen() == true) {
+        if (kannGewinnen()) {
             steinWurdeAusgewaehlt();
             return;
         }
         betrachteterSpieler = 1;
 
-        if (kannGewinnen() == true) {
+        if (kannGewinnen()) {
             steinWurdeAusgewaehlt();
             return;
         }
         betrachteterSpieler = 1;
-        if (zweiGleicheGewinnMöglich(0 )== true) {
+        if (zweiGleicheGewinnMöglich(0 )) {
             steinWurdeAusgewaehlt();
             return;
         }
         betrachteterSpieler = 2;
-        if (zweiGleicheGewinnMöglich(0) == true) {
+        if (zweiGleicheGewinnMöglich(0)) {
             steinWurdeAusgewaehlt();
             return;
         }
-        if (eigenerStein() == true) {
+        if (eigenerStein()) {
             steinWurdeAusgewaehlt();
             return;
         } else {
             random();
-            while (spielfeld.legalerZug() == false) {
+            while (!spielfeld.probeEinfügen(spielfeld.getInsertPos())) {
                 random();
             }
-            int auswahlSpalte = spielfeld.getInsertPos();
             spielfeld.wirfSteinEin();
         }
 

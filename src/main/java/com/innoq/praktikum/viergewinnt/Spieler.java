@@ -5,18 +5,18 @@ public class Spieler {
     public int fZwei;
     public Spielfeld spielfeld;
     public char spielerZeichen;
-    public int anfänger;
+    public int farbe;
 
     //Konstruktor
     public Spieler()
     {
 
     }
-    public Spieler(Spielfeld spielfeld, char spielerZeichen, int anfänger)
+    public Spieler(Spielfeld spielfeld, char spielerZeichen, int farbe)
     {
         this.spielfeld = spielfeld;
         this.spielerZeichen = spielerZeichen;
-        this.anfänger = anfänger;
+        this.farbe = farbe;
     }
 
     //Methoden

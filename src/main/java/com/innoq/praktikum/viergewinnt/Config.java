@@ -3,10 +3,8 @@ package com.innoq.praktikum.viergewinnt;
 import java.util.Scanner;
 
 public class Config {
-    private static boolean ersterZug = true;
     private static int auswahlGegner;
-    private static int auswAnfänger;
-    private static int amZug;
+    private static int beginner;
     private static int auswahlFarbeZwei;
     private static int auswahlFarbeEins;
     private Konsole oberflaeche;
@@ -39,8 +37,8 @@ public class Config {
     {
         oberflaeche.clear();
         oberflaeche.auswahlBeginnText();
-        auswAnfänger = scan.nextInt();
-        if(auswAnfänger != 2 && auswAnfänger != 1 )
+        beginner = scan.nextInt();
+        if(beginner != 2 && beginner != 1 )
         {
             oberflaeche.clear();
             oberflaeche.falscheEingabeText();
@@ -127,34 +125,15 @@ public class Config {
         farbeAuswaehlen();
         oberflaeche.clear();
     }
-    public static void wechsleAuswAnfänger()
-    {
-        if(auswAnfänger == 1)
-        {
-            auswAnfänger = 2;
-        }
-        else if(auswAnfänger == 2)
-        {
-            auswAnfänger = 1;
-        }
-    }
 
     //Get und Set Methoden
     public int getBeginner()
     {
-        return auswAnfänger;
-    }
-    public int getAuswAnfänger()
-    {
-        return auswAnfänger;
+        return beginner;
     }
     public int getAuswahlGegner()
     {
         return auswahlGegner;
-    }
-    public void setAuswAnfänger(int choose)
-    {
-        auswAnfänger = choose;
     }
     public static int getAuswahlFarbeZwei()
     {

@@ -1,5 +1,7 @@
 package com.innoq.praktikum.viergewinnt;
 
+import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
+
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -18,6 +20,8 @@ public class Spielfeld {
     private int[][] farbfeld = new int[6][7];
     private char zeichenSpieler;
     private int anDerReihe;
+    private int UserOne = 1;
+    private int UserTwo = 1;
     private Konsole oberflaeche;
     private int anzahlZüge = 0;
     private Config config;
@@ -32,9 +36,16 @@ public class Spielfeld {
         this.config = config;
         initSpielfeld();
         initFarbfeld();
-
-        userQueue.add('X');
-        userQueue.add('@');
+        if(config.getBeginner() == 1)
+        {
+            userQueue.add('X');
+            userQueue.add('@');
+        }
+        else if(config.getBeginner() == 2)
+        {
+            userQueue.add('@');
+            userQueue.add('X');
+        }
     }
 
     private Spielfeld(char[][] spielfeld, int anDerReihe, int anzahlZüge, Konsole oberflaeche) {
@@ -69,19 +80,80 @@ public class Spielfeld {
         }
     }
 
-    private void changeUser() {
+    public void changeUser() {
         Character currentUser = userQueue.poll();
         userQueue.add(currentUser);
     }
 
-    private Character getCurrentUser() {
+    public Character getCurrentUser() {
         return userQueue.peek();
     }
 
-    private boolean checkWin(int i, int j, int factor) {
-        return spielfeld[i][j + 1] == zeichenSpieler && spielfeld[i][j + 2] == zeichenSpieler && spielfeld[i][j + 3] == zeichenSpieler;
+    private boolean checkWin() {
+        int counter = 0;
+        char checkSign = 'X';
+        //wagerecht
+        for(int i = 5;i>=0; i--)
+        {
+                for(int j = 0; j<7; j++)
+                {
+                    if(spielfeld[i][j] == checkSign)
+                    {
+                        counter ++;
+                    }
+                    else {
+                        counter = 0;
+                        if (spielfeld[i][j] != 'O') {
+                            checkSign = spielfeld[i][j];
+                        }
+                    }
+                    if(counter == 4)
+                    {
+                        return true;
+                    }
+                }
+            counter = 0;
+        }
+        //senkrecht
+        for(int j = 0; j < 7; j++)
+        {
+            for(int i = 5; i>= 0; i--)
+            {
+                if(spielfeld[i][j] == checkSign)
+                {
+                    counter ++;
+                }
+                else {
+                    counter = 0;
+                    if (spielfeld[i][j] != 'O') {
+                        checkSign = spielfeld[i][j];
+                    }
+                }
+                if(counter == 4)
+                {
+                    return true;
+                }
+            }
+            counter = 0;
+        }
+        return false;
     }
 
+    private int countSign(char sign)
+    {
+        int counter = 0;
+        for(int i = 0; i < 7; i++)
+        {
+            for(int j = 0; j < 6; j++)
+            {
+                if(spielfeld[j][i] == sign)
+                {
+                    counter ++;
+                }
+            }
+        }
+        return counter;
+    }
 
     //Spielmethoden
     public boolean gewinn()
@@ -203,13 +275,12 @@ public class Spielfeld {
     {
         int insertPosy = 5;
         if(insertPos >= 0 && insertPos < 7) {
-
-            if (anDerReihe == 1) {
-                zeichenSpieler = 'X';
+            if (getAnDerReihe() == 1) {
                 farbe = config.getAuswahlFarbeEins();
-            } else if (anDerReihe == 2) {
-                zeichenSpieler = '@';
+                zeichenSpieler = 'X';
+            } else  {
                 farbe = config.getAuswahlFarbeZwei();
+                zeichenSpieler = '@';
             }
 
             if (spielfeld[insertPosy][insertPos] == 'O') {
@@ -225,79 +296,17 @@ public class Spielfeld {
             }
         }
         anzahlZüge++;
+        /*int signs = countSign(getCurrentUser());
+        changeUser();
+        if(signs > countSign(getCurrentUser()))
+        {
+            changeUser();
+        }*/
+      //  changeUser();
         wechseln();
-
     }
-    public void wirfSteinEinKI(char zeichen)
-    {
-        int insertPosy = 5;
-        if(insertPos >= 0 && insertPos < 7) {
-
-            if (anDerReihe == 1) {
-                zeichenSpieler = 'X';
-                farbe = config.getAuswahlFarbeEins();
-            } else if (anDerReihe == 2) {
-                zeichenSpieler = '@';
-                farbe = config.getAuswahlFarbeZwei();
-            }
-
-            if (spielfeld[insertPosy][insertPos] == 'O') {
-                spielfeld[insertPosy][insertPos] = zeichen;
-                farbfeld[insertPosy][insertPos] = farbe;
-
-            } else {
-                while (spielfeld[insertPosy][insertPos] == 'X' || spielfeld[insertPosy][insertPos] == '@') {
-                    insertPosy--;
-                }
-                spielfeld[insertPosy][insertPos] = zeichen;
-                farbfeld[insertPosy][insertPos] = farbe;
-            }
-        }
-    }
-
 
     // Darf das Feld belegt werden?
-    public boolean legalerZug()
-    {
-        int insertPosy = 5;
-
-        if(insertPos >= 0 && insertPos < 7)
-        {
-
-            if (anDerReihe == 1) {
-                zeichenSpieler = 'X';
-                farbe = config.getAuswahlFarbeEins();
-            } else if (anDerReihe == 2) {
-                zeichenSpieler = '@';
-                farbe = config.getAuswahlFarbeZwei();
-            }
-            if (spielfeld[insertPosy][insertPos] == 'O')
-            {
-                return true;
-
-            }
-
-            else
-            {
-                while (spielfeld[insertPosy][insertPos] == 'X' || spielfeld[insertPosy][insertPos] == '@')
-                {
-                    insertPosy--;
-                    if (spalteVoll(insertPosy) == true)
-                    {
-                        oberflaeche.spalteVollText(insertPos + 1);
-                        return false;
-                    }
-
-                }
-                return true;
-            }
-        }
-        else
-        {
-            oberflaeche.falscheEingabeText();
-            return false;
-        }
-    }
     public boolean feldLegbar(int Stellex, int Stelley)
     {
         boolean feldBelegbar = false;
@@ -331,12 +340,43 @@ public class Spielfeld {
             return false;
         }
     }
+    public boolean probeEinfügen(int insertPos) {
+        int insertPosy = 5;
+        if (spielfeld[insertPosy][insertPos] == 'O') {
+            return true;
 
+        } else {
+            while (spielfeld[insertPosy][insertPos]!= 'O') {
+                insertPosy--;
+                if (insertPosy <= - 1) {
+                    return false;
+                }
+            }
+            return true;
+
+        }
+    }
 
     // Get- & Set-Methoden
+    public Queue getUserQueue()
+    {
+        return userQueue;
+    }
+    public void setUserQueue(Queue userQueue)
+    {
+        this.userQueue = userQueue;
+    }
+    public int getUserOne()
+    {
+        return UserOne;
+    }
+    public int getUserTwo()
+    {
+        return UserTwo;
+    }
     public int getAuswahlAnfänger()
     {
-        return config.getAuswAnfänger();
+        return config.getBeginner();
     }
     public Spielfeld getCopy() {
         return new Spielfeld(spielfeld, anDerReihe, anzahlZüge, oberflaeche);

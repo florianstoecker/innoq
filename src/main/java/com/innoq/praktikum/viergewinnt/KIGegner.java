@@ -611,10 +611,10 @@ public class KIGegner extends Spieler {
             }
         }
 
-        int besterZug = werteFeld[0];
+        int besterZug = negativUnendlich;
         for(int i = 0; i < 7; i++)
         {
-            if(werteFeld[i] >= besterZug)
+            if(werteFeld[i] >= besterZug && probeEinfügen(spielfeld, i) == true)
             {
                 besterZug = werteFeld[i];
             }
@@ -633,29 +633,29 @@ public class KIGegner extends Spieler {
     }
     private int berechneMiniMax(Spielfeld spielfeld, int tiefe, int alpha, int beta) {
 
-      Spielfeld spielfeldTMP;
-      int minimax;
-      int minimaxTMP;
-      if(spielfeld.getAnDerReihe() == 2)
-      {
-          minimax = alpha;
-      }
-      else {
-          minimax = beta;
-      }
-      if(tiefe == 0)
-      {
-          return bewertung(spielfeld);
-      }
-      else
-      {
-          for(int i = 0; i < 7; i++)
-          {
-              spielfeldTMP = kopieAnlegen(spielfeld);
-              if(probeEinfügen(spielfeldTMP, i))
-              {
-                  spielfeldTMP.setInsertPos(i);
-                  spielfeldTMP.wirfSteinEin();
+        Spielfeld spielfeldTMP;
+        int minimax;
+        int minimaxTMP;
+        if(spielfeld.getAnDerReihe() == 2)
+        {
+            minimax = alpha;
+        }
+        else {
+            minimax = beta;
+        }
+        if(tiefe == 0)
+        {
+            return bewertung(spielfeld);
+        }
+        else
+        {
+            for(int i = 0; i < 7; i++)
+            {
+                spielfeldTMP = kopieAnlegen(spielfeld);
+                if(probeEinfügen(spielfeldTMP, i))
+                {
+                    spielfeldTMP.setInsertPos(i);
+                    spielfeldTMP.wirfSteinEin();
 
                   /*//TEST
                   for(int k = 0; k<6; k++)
@@ -675,29 +675,29 @@ public class KIGegner extends Spieler {
                   }
                   System.out.println("");
                   //TEST*/
-                  minimaxTMP = berechneMiniMax(spielfeldTMP, tiefe - 1, alpha, beta);
-                  if(spielfeld.getAnDerReihe() == 2)
-                  {
-                      minimax = java.lang.Math.max(minimaxTMP, minimax);
-                      alpha = minimax;
-                      if(alpha >= beta)
-                      {
-                          return beta;
-                      }
-                  }
-                  else
-                  {
-                      minimax = java.lang.Math.min(minimaxTMP, minimax);
-                      beta = minimax;
-                      if( beta<= alpha)
-                      {
-                          return alpha;
-                      }
-                  }
-              }
-          }
-        return minimax;
-      }
+                    minimaxTMP = berechneMiniMax(spielfeldTMP, tiefe - 1, alpha, beta);
+                    if(spielfeld.getAnDerReihe() == 2)
+                    {
+                        minimax = java.lang.Math.max(minimaxTMP, minimax);
+                        alpha = minimax;
+                        if(alpha >= beta)
+                        {
+                            return beta;
+                        }
+                    }
+                    else
+                    {
+                        minimax = java.lang.Math.min(minimaxTMP, minimax);
+                        beta = minimax;
+                        if( beta<= alpha)
+                        {
+                            return alpha;
+                        }
+                    }
+                }
+            }
+            return minimax;
+        }
     }
     private int bewertung(Spielfeld spiel) {
         int spielerEinsZweier = 0;

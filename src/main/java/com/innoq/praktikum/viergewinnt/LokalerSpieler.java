@@ -7,19 +7,18 @@ public class LokalerSpieler extends Spieler {
     private int anzZugEinz;
 
     //Konstruktor
-    public LokalerSpieler(Spielfeld spielfeld, char sign, int anfänger)
+    public LokalerSpieler(Spielfeld spielfeld, char sign, int farbe)
     {
-      super(spielfeld, sign, anfänger);
+      super(spielfeld, sign, farbe);
       anzZugEinz = 0;
     }
     //Methoden
     public void macheZug()
     {
-        int anDerReihe = spielfeld.getAnDerReihe();
         int spaltenAuswahl;
         spaltenAuswahl = scan.nextInt() - 1;
         spielfeld.setInsertPos(spaltenAuswahl);
-        if(spielfeld.legalerZug() == true)
+        if(spielfeld.probeEinfügen(spaltenAuswahl) == true)
         {
             spielfeld.setInsertPos(spaltenAuswahl);
             spielfeld.wirfSteinEin();
@@ -29,9 +28,5 @@ public class LokalerSpieler extends Spieler {
                 macheZug();
             }
             anzZugEinz ++;
-    }
-    public int getAnzZugEinz()
-    {
-        return anzZugEinz;
     }
 }

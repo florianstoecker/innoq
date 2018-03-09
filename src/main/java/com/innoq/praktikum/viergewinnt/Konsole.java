@@ -71,9 +71,9 @@ public class Konsole {
         System.out.println("5: Lila");
         System.out.println("6: Cyan");
     }
-    public void macheZugText(int AnDerReihe, int anzZugEinz)
+    public void macheZugText(int currentUser, int anzZugEinz)
     {
-        System.out.println("In welcher Spalte wollen Sie Ihren " + anzZugEinz + ". Stein fallen lassen ? (Spieler " + AnDerReihe + ")");
+        System.out.println("In welcher Spalte wollen Sie Ihren " + anzZugEinz + ". Stein fallen lassen ? (Spieler " + currentUser + ")");
 
     }
     public void staerkeAuswahlText()

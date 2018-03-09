@@ -11,8 +11,8 @@ public class Main {
         int anfänger = 1;
 
         spielfeld.setAnDerReihe(config.getBeginner());
-        Spieler s1 =  new LokalerSpieler(spielfeld, 'X', anfänger);
-        Spieler s2 = config.spielerZweiAuswaehlen(spielfeld, '@', anfänger);
+        Spieler s1 =  new LokalerSpieler(spielfeld, 'X', config.getAuswahlFarbeEins());
+        Spieler s2 = config.spielerZweiAuswaehlen(spielfeld, '@', config.getAuswahlFarbeZwei());
 
         Spieler s = s1;
         oberflaeche.clear();
@@ -21,8 +21,8 @@ public class Main {
         zeichneSpielfeld.zeichneSpielfeld(spielfeld);
         do{
             switch(spielfeld.getAnDerReihe()) {
-                case 1: s = s1;oberflaeche.macheZugText(spielfeld.getAnDerReihe(),2);break;
-                case 2: s = s2; if(config.getAuswahlGegner() == 1){oberflaeche.macheZugText(spielfeld.getAnDerReihe(), 2);}break;
+                case 1: s = s1;oberflaeche.macheZugText(spielfeld.getAnDerReihe(),spielfeld.getUserOne());break;
+                case 2: s = s2; if(config.getAuswahlGegner() == 1){oberflaeche.macheZugText(spielfeld.getAnDerReihe(), spielfeld.getUserTwo());}break;
             }
             s.macheZug();
             oberflaeche.gelegtText(spielfeld.getInsertPos() + 1);
