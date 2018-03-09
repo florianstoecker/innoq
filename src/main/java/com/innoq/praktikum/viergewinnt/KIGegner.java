@@ -5,7 +5,6 @@ public class KIGegner extends Spieler {
     private static final int negativUnendlich = (int) Double.NEGATIVE_INFINITY;
     private Spielfeld spielfeldTMP = new Spielfeld();
     public int betrachteterSpieler = spielfeld.getAuswahlAnfänger();
-    private int ergebnisReihe;
 
     //Konstruktor
     public KIGegner(Spielfeld spielfeld, char sign, int anfänger) {
@@ -596,7 +595,7 @@ public class KIGegner extends Spieler {
 
         }
     }
-    public int findeBestenZug(Spielfeld spielfeld,  int tiefe ) {
+    public int findeBestenZug(Spielfeld spielfeld,  int tiefe) {
 
         int[] werteFeld = new int[7];
         Spielfeld spielfeldTMP;
@@ -706,11 +705,12 @@ public class KIGegner extends Spieler {
         int spielerZweiDreier = 0;
         char zeichenSpielerEins = '@';
         char zeichenSpielerZwei = 'X';
+        int ergebnisReihe;
 
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 7; j++) {
                 if (j < 4) {
-                    reiheZeichenSpieler(spiel, zeichenSpielerEins, 0, 1, i, j);
+                    ergebnisReihe = reiheZeichenSpieler(spiel, zeichenSpielerEins, 0, 1, i, j);
                     //gewonnen wagerecht rechts SpielerEins
                     if (ergebnisReihe == 4) {
                         return positivUnendlich;
@@ -723,7 +723,7 @@ public class KIGegner extends Spieler {
                     else if (ergebnisReihe == 2) {
                         spielerEinsZweier++;
                     }
-                    reiheZeichenSpieler(spiel, zeichenSpielerZwei, 0, 1, i, j);
+                    ergebnisReihe = reiheZeichenSpieler(spiel, zeichenSpielerZwei, 0, 1, i, j);
                     //gewonnen wagerecht rechts SpielerZwei
                     if (ergebnisReihe == 4) {
                         return negativUnendlich;
@@ -739,7 +739,7 @@ public class KIGegner extends Spieler {
                     }
                 }
                 if (i > 2) {
-                    reiheZeichenSpieler(spiel, zeichenSpielerEins, -1, 0, i, j);
+                    ergebnisReihe = reiheZeichenSpieler(spiel, zeichenSpielerEins, -1, 0, i, j);
                     //gewonnen senkrecht SpielerEins
                     if (ergebnisReihe == 4) {
                         return positivUnendlich;
@@ -752,7 +752,7 @@ public class KIGegner extends Spieler {
                     else if (ergebnisReihe == 2) {
                         spielerEinsZweier++;
                     }
-                    reiheZeichenSpieler(spiel, zeichenSpielerZwei, -1, 0, i, j);
+                   ergebnisReihe = reiheZeichenSpieler(spiel, zeichenSpielerZwei, -1, 0, i, j);
                     //gewonnen senkrecht SpielerZwei
                     if (ergebnisReihe == 4) {
                         return negativUnendlich;
@@ -767,7 +767,7 @@ public class KIGegner extends Spieler {
                     }
                 }
                 if (j < 4 && i < 3) {
-                    reiheZeichenSpieler(spiel, zeichenSpielerEins, 1, 1, i, j);
+                    ergebnisReihe = reiheZeichenSpieler(spiel, zeichenSpielerEins, 1, 1, i, j);
                     //gewonnen diagonal rechts unten SpielerEins
                     if (ergebnisReihe == 4) {
                         return positivUnendlich;
@@ -780,7 +780,7 @@ public class KIGegner extends Spieler {
                     else if (ergebnisReihe == 2) {
                         spielerEinsZweier++;
                     }
-                    reiheZeichenSpieler(spiel, zeichenSpielerZwei, 1, 1, i, j);
+                    ergebnisReihe = reiheZeichenSpieler(spiel, zeichenSpielerZwei, 1, 1, i, j);
                     //gewonnen diagonal rechts unten SpielerZwei
                     if (ergebnisReihe == 4) {
                         return negativUnendlich;
@@ -795,7 +795,7 @@ public class KIGegner extends Spieler {
                     }
                 }
                 if (j < 4 && i > 2) {
-                    reiheZeichenSpieler(spiel, zeichenSpielerEins, -1, 1, i, j);
+                   ergebnisReihe = reiheZeichenSpieler(spiel, zeichenSpielerEins, -1, 1, i, j);
                     //gewonnen diagonal rechts oben SpielerEins
                     if (ergebnisReihe == 4) {
                         return positivUnendlich;
@@ -808,7 +808,7 @@ public class KIGegner extends Spieler {
                     if (ergebnisReihe == 2) {
                         spielerEinsZweier++;
                     }
-                    reiheZeichenSpieler(spiel, zeichenSpielerZwei, -1, 1, i, j);
+                    ergebnisReihe = reiheZeichenSpieler(spiel, zeichenSpielerZwei, -1, 1, i, j);
                     //gewonnen diagonal rechts oben SpielerZwei
                     if (ergebnisReihe == 4) {
                         return negativUnendlich;
@@ -826,7 +826,7 @@ public class KIGegner extends Spieler {
                 }
             }
         }
-        int ergebnis = spielerEinsZweier * 1 + spielerEinsDreier * 2 - spielerZweiZweier * 2 - spielerZweiDreier * 3;
+        int ergebnis = spielerEinsZweier * 1 + spielerEinsDreier * 2 - spielerZweiZweier * 6 - spielerZweiDreier * 20;
         return ergebnis;
     }
     private Spielfeld kopieAnlegen(Spielfeld spiel) {
@@ -847,8 +847,8 @@ public class KIGegner extends Spieler {
             }
         }
     }
-    private void reiheZeichenSpieler(Spielfeld spiel, char zeichenSpieler, int vorfaktorX, int vorfaktorY, int x, int y) {
-        ergebnisReihe = 0;
+    private int reiheZeichenSpieler(Spielfeld spiel, char zeichenSpieler, int vorfaktorX, int vorfaktorY, int x, int y) {
+        int ergebnisReihe = 0;
         if ((spiel.getZeichenAusSpielfeld(x, y) == zeichenSpieler || spiel.getZeichenAusSpielfeld(x, y) == 'O')
                 && (spiel.getZeichenAusSpielfeld(x + 1 * vorfaktorX, y + 1 * vorfaktorY) == zeichenSpieler || spiel.getZeichenAusSpielfeld(x + 1 * vorfaktorX, y + 1 * vorfaktorY) == 'O')
                 && (spiel.getZeichenAusSpielfeld(x + 2 * vorfaktorX, y + 2 * vorfaktorY) == zeichenSpieler || spiel.getZeichenAusSpielfeld(x + 2 * vorfaktorX, y + 2 * vorfaktorY) == 'O')
@@ -860,5 +860,6 @@ public class KIGegner extends Spieler {
             }
 
         }
+        return ergebnisReihe;
     }
 }

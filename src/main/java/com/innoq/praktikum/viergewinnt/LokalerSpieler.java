@@ -13,20 +13,23 @@ public class LokalerSpieler extends Spieler {
       anzZugEinz = 0;
     }
     //Methoden
-    public void macheZug()
-    {
+    public void macheZug() {
         int spaltenAuswahl;
         spaltenAuswahl = scan.nextInt() - 1;
-        spielfeld.setInsertPos(spaltenAuswahl);
-        if(spielfeld.probeEinfügen(spaltenAuswahl) == true)
-        {
+        if (spaltenAuswahl >= 0 && spaltenAuswahl < 7) {
             spielfeld.setInsertPos(spaltenAuswahl);
-            spielfeld.wirfSteinEin();
-        }
-            else
-            {
+            if (spielfeld.probeEinfügen(spaltenAuswahl) == true) {
+                spielfeld.setInsertPos(spaltenAuswahl);
+                spielfeld.wirfSteinEin();
+            } else {
                 macheZug();
             }
-            anzZugEinz ++;
+            anzZugEinz++;
+        }
+        else
+        {
+            macheZug();
+        }
     }
+
 }

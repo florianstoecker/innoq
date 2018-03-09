@@ -9,7 +9,6 @@ public class ZeichneSpielfeld {
     private static final Map colours = new HashMap<Integer, String>();
 
     static {
-
         colours.put(1, "\033[0;97m"); //WHITE
         colours.put(2, "\u001B[0m"); //COLOR_RESET
         colours.put(3, "\u001B[32m"); //GREEN
