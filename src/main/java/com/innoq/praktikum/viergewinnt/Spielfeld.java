@@ -79,7 +79,7 @@ public class Spielfeld {
     }
 
     public Character getCurrentUser() {
-        return userQueue.peek();
+        return userQueue.element();
     }
     public boolean voll()
     {
@@ -183,25 +183,6 @@ public class Spielfeld {
     }
 
     //Spielmethoden
-    private int gewinnHelp(char zeichenSpieler, int vorfaktorX, int vorfaktorY, int x, int y)
-    {
-        int ergebnisReihe = 0;
-        if ((spielfeld[x][y] == zeichenSpieler)
-                && (spielfeld[x + 1 * vorfaktorX][y + 1 * vorfaktorY] == zeichenSpieler)
-                && (spielfeld[x + 2 * vorfaktorX][y + 2 * vorfaktorY] == zeichenSpieler)
-                && (spielfeld[x + 3 * vorfaktorX][y + 3 * vorfaktorY] == zeichenSpieler))
-        {
-            for (int i = 0; i < 4; i++)
-            {
-                if (spielfeld[x + i * vorfaktorX][y + i * vorfaktorY] == zeichenSpieler)
-                {
-                    ergebnisReihe++;
-                }
-            }
-
-        }
-        return ergebnisReihe;
-    }
     public  void wechseln()
     {
         if(anDerReihe == 1)
@@ -217,38 +198,29 @@ public class Spielfeld {
     {
         int insertPosy = 5;
         if(insertPos >= 0 && insertPos < 7) {
-            if (getAnDerReihe() == 1) {
+            if (getCurrentUser() == 'X') {
                 farbe = config.getAuswahlFarbeEins();
-                zeichenSpieler = 'X';
                 UserOne ++;
             } else  {
                 farbe = config.getAuswahlFarbeZwei();
-                zeichenSpieler = '@';
                 UserTwo++;
             }
 
             if (spielfeld[insertPosy][insertPos] == 'O') {
-                spielfeld[insertPosy][insertPos] = zeichenSpieler;
+                spielfeld[insertPosy][insertPos] = getCurrentUser();
                 farbfeld[insertPosy][insertPos] = farbe;
 
             } else {
                 while (spielfeld[insertPosy][insertPos] == 'X' || spielfeld[insertPosy][insertPos] == '@') {
                     insertPosy--;
                 }
-                spielfeld[insertPosy][insertPos] = zeichenSpieler;
+                spielfeld[insertPosy][insertPos] = getCurrentUser();
                 farbfeld[insertPosy][insertPos] = farbe;
             }
         }
-/*        int signs = countSign(getCurrentUser());
-        changeUser();
-        if(signs > countSign(getCurrentUser()))
-        {
+
             changeUser();
-        }
-        else
-        {
-            changeUser();
-        }*/
+
         wechseln();
     }
 

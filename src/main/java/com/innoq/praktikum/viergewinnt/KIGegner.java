@@ -634,13 +634,15 @@ public class KIGegner extends Spieler {
         Spielfeld spielfeldTMP;
         int minimax;
         int minimaxTMP;
-        if(spielfeld.getAnDerReihe() == 2)
+        System.out.println(spielfeld.getCurrentUser());
+        if(spielfeld.getCurrentUser() == '@')
         {
             minimax = alpha;
         }
         else {
             minimax = beta;
         }
+        System.out.println(minimax);
         if(tiefe == 0)
         {
             return bewertung(spielfeld);
@@ -674,7 +676,7 @@ public class KIGegner extends Spieler {
                   System.out.println("");
                   //TEST*/
                     minimaxTMP = berechneMiniMax(spielfeldTMP, tiefe - 1, alpha, beta);
-                    if(spielfeld.getAnDerReihe() == 2)
+                    if(spielfeld.getCurrentUser() == '@')
                     {
                         minimax = java.lang.Math.max(minimaxTMP, minimax);
                         alpha = minimax;
@@ -697,6 +699,7 @@ public class KIGegner extends Spieler {
             return minimax;
         }
     }
+    
     private int bewertung(Spielfeld spiel) {
         int spielerEinsZweier = 0;
         int spielerZweiZweier = 0;
@@ -830,7 +833,7 @@ public class KIGegner extends Spieler {
     }
     private Spielfeld kopieAnlegen(Spielfeld spiel) {
         Spielfeld spielfeldTmp = new Spielfeld();
-        spielfeldTmp.setAnDerReihe(spiel.getAnDerReihe());
+        spielfeldTmp.setUserQueue(spielfeld.getUserQueue());
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 6; j++) {
                 spielfeldTmp.setZeichenAnSpielfeld(j, i, spiel.getZeichenAusSpielfeld(j, i));

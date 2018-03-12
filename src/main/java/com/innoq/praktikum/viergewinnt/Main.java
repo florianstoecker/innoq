@@ -19,9 +19,9 @@ public class Main {
         oberflaeche.spielBeginnText();
         zeichneSpielfeld.zeichneSpielfeld(spielfeld);
         while(weiter == true){
-            switch(spielfeld.getAnDerReihe()) {
-                case 1: s = s1;oberflaeche.macheZugText(spielfeld.getCurrentUser(),spielfeld.getUserOne());break;
-                case 2: s = s2; if(config.getAuswahlGegner() == 1){oberflaeche.macheZugText(spielfeld.getCurrentUser(), spielfeld.getUserTwo());}break;
+            switch(spielfeld.getCurrentUser()) {
+                case 'X': s = s1;oberflaeche.macheZugText(spielfeld.getCurrentUser(),spielfeld.getUserOne());break;
+                case '@': s = s2; if(config.getAuswahlGegner() == 1){oberflaeche.macheZugText(spielfeld.getCurrentUser(), spielfeld.getUserTwo());}break;
             }
             s.macheZug();
             oberflaeche.gelegtText(spielfeld.getInsertPos() + 1);
