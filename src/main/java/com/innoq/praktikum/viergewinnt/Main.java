@@ -26,7 +26,7 @@ public class Main {
             s.macheZug();
             oberflaeche.gelegtText(spielfeld.getInsertPos() + 1);
             zeichneSpielfeld.zeichneSpielfeld(spielfeld);
-
+            spielfeld.anzZügeHoch();
             if(spielfeld.checkWin())
             {
                oberflaeche.gewinnText(spielfeld.getAnDerReihe());

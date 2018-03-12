@@ -3,7 +3,6 @@ package com.innoq.praktikum.viergewinnt;
 public class KIGegner extends Spieler {
     private static final int positivUnendlich = (int) Double.POSITIVE_INFINITY;
     private static final int negativUnendlich = (int) Double.NEGATIVE_INFINITY;
-    private Spielfeld spielfeldTMP = new Spielfeld();
     public int betrachteterSpieler = spielfeld.getAuswahlAnfänger();
 
     //Konstruktor
@@ -838,14 +837,6 @@ public class KIGegner extends Spieler {
             }
         }
         return spielfeldTmp;
-    }
-    private void spielfeldTMPZurücksetzen() {
-        spielfeldTMP.setAnDerReihe(spielfeld.getAnDerReihe());
-        for (int i = 0; i < 7; i++) {
-            for (int j = 0; j < 6; j++) {
-                spielfeldTMP.setZeichenAnSpielfeld(j, i, spielfeld.getZeichenAusSpielfeld(j, i));
-            }
-        }
     }
     private int reiheZeichenSpieler(Spielfeld spiel, char zeichenSpieler, int vorfaktorX, int vorfaktorY, int x, int y) {
         int ergebnisReihe = 0;

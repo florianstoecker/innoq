@@ -40,6 +40,10 @@ public class Konsole {
     {
         System.out.println(BLACK_BOLD +"Das Feld ist voll!"+COLOR_RESET);
     }
+    public void spalteVollText(int spalte)
+    {
+        System.out.println(BLACK_BOLD +"Spalte " + spalte + " ist voll!"+COLOR_RESET);
+    }
     public void auswahlBeginnText()
     {
         System.out.println(BLACK_BOLD +"Wer Soll anfangen ?");

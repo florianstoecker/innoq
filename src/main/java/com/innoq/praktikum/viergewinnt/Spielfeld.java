@@ -96,7 +96,45 @@ public class Spielfeld {
         }
         return true;
     }
-    public boolean checkWin() {
+    private boolean checkWinDiagonal()
+    {
+        Counter winCounter = new Counter();
+
+        for(int i = 0; i<7; i ++)
+        {
+            int iHelp = i;
+            for(int j = 0; j<6; j++)
+            {
+                while(i < 7)
+                {
+                if(winCounter.checkWin(spielfeld[j][i]))
+                {
+                    return true;
+                }
+                i++;
+                }
+            }
+            i = iHelp;
+        }
+
+        for(int i = 6; i>= 0; i --)
+        {
+            int iHelp = i;
+            for(int j = 0; j<6; j++)
+            {
+                while(i >= 0) {
+                    if (winCounter.checkWin(spielfeld[j][i])) {
+                        return true;
+                    }
+                    i--;
+                }
+            }
+            i = iHelp;
+        }
+        return false;
+    }
+    private boolean checkWinWagerecht()
+    {
         Counter winCounter = new Counter();
         for (int i = 5; i >= 0; i--)
         {
@@ -108,6 +146,11 @@ public class Spielfeld {
                 }
             }
         }
+        return false;
+    }
+    private boolean checkWinSenkrecht()
+    {
+        Counter winCounter = new Counter();
         for(int i = 0; i<7; i++)
         {
             for(int j = 5; j >=0; j--)
@@ -116,40 +159,27 @@ public class Spielfeld {
                 {return true;}
             }
         }
-
-        int ergebnisReihe = 0;
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 7; j++) {
-                if (j < 4 && i < 3) {
-                    ergebnisReihe = gewinnHelp(zeichenSpieler, 1, 1, i, j);
-                    //gewonnen diagonal rechts unten
-                    if (ergebnisReihe == 4) {
-                        return true;
-                    }
-                    if (j < 4 && i > 2) {
-                        ergebnisReihe = gewinnHelp(zeichenSpieler, -1, 1, i, j);
-                        //gewonnen diagonal rechts oben
-                        if (ergebnisReihe == 4) {
-                            return true;
-                        }
-
-                    }
-                }
+        return false;
+    }
+    public boolean checkWin() {
+        if(anzahlZüge >=16) {
+            if (checkWinDiagonal() || checkWinSenkrecht() || checkWinWagerecht()) {
+                return true;
+            } else {
+                return false;
             }
         }
         return false;
     }
 
     private int countSign(char sign) {
-        int counter = 0;
-        for (int i = 0; i < 7; i++) {
-            for (int j = 0; j < 6; j++) {
-                if (spielfeld[j][i] == sign) {
-                    counter++;
-                }
+        Counter counter = new Counter();
+        for (int i = 5; i >= 0; i--) {
+            for (int j = 0; j < 7; j++) {
+                counter.countSign(sign, spielfeld[i][j]);
             }
         }
-        return counter;
+        return counter.getCounter();
     }
 
     //Spielmethoden
@@ -209,13 +239,16 @@ public class Spielfeld {
                 farbfeld[insertPosy][insertPos] = farbe;
             }
         }
-        /*int signs = countSign(getCurrentUser());
+/*        int signs = countSign(getCurrentUser());
         changeUser();
         if(signs > countSign(getCurrentUser()))
         {
             changeUser();
+        }
+        else
+        {
+            changeUser();
         }*/
-      //  changeUser();
         wechseln();
     }
 
@@ -242,17 +275,6 @@ public class Spielfeld {
         }
         return false;
     }
-    public static boolean spalteVoll(int reihe)
-    {
-        if(reihe == -1)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
     public boolean probeEinfügen(int insertPos) {
         int insertPosy = 5;
         if (spielfeld[insertPosy][insertPos] == 'O') {
@@ -262,6 +284,7 @@ public class Spielfeld {
             while (spielfeld[insertPosy][insertPos]!= 'O') {
                 insertPosy--;
                 if (insertPosy <= - 1) {
+                    oberflaeche.spalteVollText(insertPos);
                     return false;
                 }
             }
@@ -271,6 +294,10 @@ public class Spielfeld {
     }
 
     // Get- & Set-Methoden
+    public void anzZügeHoch()
+    {
+        anzahlZüge ++;
+    }
     public Queue getUserQueue()
     {
         return userQueue;

@@ -1,28 +1,44 @@
 package com.innoq.praktikum.viergewinnt;
 
 public class Counter {
-    private int counter = 0;
+
+    private int counter;
     private char checkSign = 'X';
 
     public Counter() {
+        this.counter = 1;
 
     }
 
     public boolean checkWin(char zeichen) {
 
-
-        if (zeichen == checkSign) {
+        if (zeichen == checkSign)
+        {
             counter++;
-        } else {
-            counter = 0;
-            if (zeichen != 'O') {
+        }
+        else
+        {
+            if (zeichen != 'O')
+            {
                 checkSign = zeichen;
-                if (counter == 4) {
-                    return true;
-                }
+                counter = 1;
             }
-            counter = 0;
+        }
+        if (counter == 4) {
+            return true;
         }
         return false;
+    }
+    public void countSign(char spielerZeichen, char feldZeichen)
+    {
+        if(spielerZeichen == feldZeichen)
+        {
+            counter ++;
+        }
+
+    }
+    public int getCounter()
+    {
+        return counter;
     }
 }
