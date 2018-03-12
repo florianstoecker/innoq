@@ -4,12 +4,11 @@ public class KIGegner extends Spieler {
     private static final int positivUnendlich = (int) Double.POSITIVE_INFINITY;
     private static final int negativUnendlich = (int) Double.NEGATIVE_INFINITY;
     public int betrachteterSpieler = spielfeld.getAuswahlAnfänger();
-
+    public static int entscheidung;
     //Konstruktor
     public KIGegner(Spielfeld spielfeld, char sign, int anfänger) {
         super(spielfeld, sign, anfänger);
     }
-    public static int entscheidung;
 
     //Methoden
     public void macheZug() {
@@ -578,15 +577,16 @@ public class KIGegner extends Spieler {
 
 
     //KIGegnerStaerkeVier
-    private boolean probeEinfügen(Spielfeld spielfeld_tmp,  int insertPos) {
+    private boolean probeEinfügen(Spielfeld spielfeldTmp,  int insertPos) {
         int insertPosy = 5;
-        if (spielfeld_tmp.getZeichenAusSpielfeld(insertPosy, insertPos) == 'O') {
+        if (spielfeldTmp.getZeichenAusSpielfeld(insertPosy, insertPos) == 'O') {
             return true;
 
         } else {
-            while (spielfeld_tmp.getZeichenAusSpielfeld(insertPosy, insertPos)!= 'O') {
+            while (spielfeldTmp.getZeichenAusSpielfeld(insertPosy, insertPos)!= 'O') {
                 insertPosy--;
-                if (insertPosy == - 1) {
+                if (insertPosy == - 1)
+                {
                     return false;
                 }
             }
@@ -598,12 +598,17 @@ public class KIGegner extends Spieler {
 
         int[] werteFeld = new int[7];
         Spielfeld spielfeldTMP;
+        char zeichenTmp = spielfeld.getCurrentUser();
         for(int i = 0; i < 7; i++)
         {
             if(probeEinfügen(spielfeld, i) == true)
             {
                 spielfeldTMP = kopieAnlegen(spielfeld);
                 spielfeldTMP.setInsertPos(i);
+                if(spielfeldTMP.getCurrentUser() != zeichenTmp)
+                {
+                    spielfeldTMP.changeUser();
+                }
                 spielfeldTMP.wirfSteinEin();
                 werteFeld[i] = berechneMiniMax(spielfeldTMP, tiefe, negativUnendlich, positivUnendlich);
             }
@@ -612,6 +617,7 @@ public class KIGegner extends Spieler {
         int besterZug = negativUnendlich;
         for(int i = 0; i < 7; i++)
         {
+            System.out.println(werteFeld[i]);
             if(werteFeld[i] >= besterZug && probeEinfügen(spielfeld, i) == true)
             {
                 besterZug = werteFeld[i];
@@ -630,76 +636,67 @@ public class KIGegner extends Spieler {
         return spalte;
     }
     private int berechneMiniMax(Spielfeld spielfeld, int tiefe, int alpha, int beta) {
-
-        Spielfeld spielfeldTMP;
+        Spielfeld spielfeldTmp;
+        int minimaxTmp;
         int minimax;
-        int minimaxTMP;
-        System.out.println(spielfeld.getCurrentUser());
-        if(spielfeld.getCurrentUser() == '@')
+
+        if (spielfeld.getCurrentUser() == '@')
         {
             minimax = alpha;
         }
         else {
             minimax = beta;
         }
-        System.out.println(minimax);
-        if(tiefe == 0)
-        {
+        if (tiefe==0) {
             return bewertung(spielfeld);
         }
         else
-        {
-            for(int i = 0; i < 7; i++)
             {
-                spielfeldTMP = kopieAnlegen(spielfeld);
-                if(probeEinfügen(spielfeldTMP, i))
+            for (int spalte=0; spalte<7; spalte++)
+            {
+                spielfeldTmp = kopieAnlegen(spielfeld);
+                if (probeEinfügen(spielfeldTmp, spalte))
                 {
-                    spielfeldTMP.setInsertPos(i);
-                    spielfeldTMP.wirfSteinEin();
+                    spielfeldTmp.setInsertPos(spalte);
+                    spielfeldTmp.wirfSteinEin();
 
-                  /*//TEST
-                  for(int k = 0; k<6; k++)
-                  {
-                      for(int l = 0; l<7; l++) {
-                          System.out.print(spielfeldTMP.getZeichenAusSpielfeld(k,l));
-                      }
-                      System.out.println("");
-                      }
-                  System.out.println("");
-                  for(int k = 0; k<6; k++)
-                  {
-                      for(int l = 0; l<7; l++) {
-                          System.out.print(spielfeld.getZeichenAusSpielfeld(k,l));
-                      }
-                      System.out.println("");
-                  }
-                  System.out.println("");
-                  //TEST*/
-                    minimaxTMP = berechneMiniMax(spielfeldTMP, tiefe - 1, alpha, beta);
-                    if(spielfeld.getCurrentUser() == '@')
+
+                    /*//TEST
+                    for(int k = 0; k<6; k++)
                     {
-                        minimax = java.lang.Math.max(minimaxTMP, minimax);
+                        for(int l = 0; l<7; l++) {
+                            System.out.print(spielfeldTmp.getZeichenAusSpielfeld(k,l));
+                        }
+                        System.out.println("");
+                    }
+                    System.out.println("");
+                    //TEST*/
+
+                    minimaxTmp = berechneMiniMax(spielfeldTmp, tiefe-1, alpha, beta);
+                    spielfeld.changeUser();
+                    if (spielfeld.getCurrentUser() == '@')
+                    {
+                        minimax = java.lang.Math.max(minimaxTmp, minimax);
                         alpha = minimax;
-                        if(alpha >= beta)
+                        if (alpha > beta)
                         {
                             return beta;
                         }
                     }
                     else
-                    {
-                        minimax = java.lang.Math.min(minimaxTMP, minimax);
+                        {
+                        minimax = java.lang.Math.min(minimaxTmp, minimax);
                         beta = minimax;
-                        if( beta<= alpha)
+                        if (beta < alpha)
                         {
                             return alpha;
                         }
-                    }
+                        }
                 }
             }
             return minimax;
         }
     }
-    
     private int bewertung(Spielfeld spiel) {
         int spielerEinsZweier = 0;
         int spielerZweiZweier = 0;
@@ -707,21 +704,21 @@ public class KIGegner extends Spieler {
         int spielerZweiDreier = 0;
         char zeichenSpielerEins = '@';
         char zeichenSpielerZwei = 'X';
-        int ergebnisReihe;
+        int ergebnisReihe = 0;
 
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 7; j++) {
                 if (j < 4) {
                     ergebnisReihe = reiheZeichenSpieler(spiel, zeichenSpielerEins, 0, 1, i, j);
-                    //gewonnen wagerecht rechts SpielerEins
+                    //gewonnen wagerecht rechts KI
                     if (ergebnisReihe == 4) {
                         return positivUnendlich;
                     }
-                    //Drei Steine wagerecht rechts SpielerEins
+                    //Drei Steine wagerecht rechts KI
                     else if (ergebnisReihe == 3) {
                         spielerEinsDreier++;
                     }
-                    //Zwei Steine wagerecht rechts SpielerEins
+                    //Zwei Steine wagerecht rechts KI
                     else if (ergebnisReihe == 2) {
                         spielerEinsZweier++;
                     }
@@ -742,15 +739,15 @@ public class KIGegner extends Spieler {
                 }
                 if (i > 2) {
                     ergebnisReihe = reiheZeichenSpieler(spiel, zeichenSpielerEins, -1, 0, i, j);
-                    //gewonnen senkrecht SpielerEins
+                    //gewonnen senkrecht KI
                     if (ergebnisReihe == 4) {
                         return positivUnendlich;
                     }
-                    //Drei Steine senkrecht SpielerEins
+                    //Drei Steine senkrecht KI
                     else if (ergebnisReihe == 3) {
                         spielerEinsDreier++;
                     }
-                    //Zwei Steine senkrecht SpielerEins
+                    //Zwei Steine senkrecht KI
                     else if (ergebnisReihe == 2) {
                         spielerEinsZweier++;
                     }
@@ -770,15 +767,15 @@ public class KIGegner extends Spieler {
                 }
                 if (j < 4 && i < 3) {
                     ergebnisReihe = reiheZeichenSpieler(spiel, zeichenSpielerEins, 1, 1, i, j);
-                    //gewonnen diagonal rechts unten SpielerEins
+                    //gewonnen diagonal rechts unten KI
                     if (ergebnisReihe == 4) {
                         return positivUnendlich;
                     }
-                    //Drei Steine diagonal rechts unten SpielerEins
+                    //Drei Steine diagonal rechts unten KI
                     else if (ergebnisReihe == 3) {
                         spielerEinsDreier++;
                     }
-                    //Zwei Steine diagonal rechts unten SpielerEins
+                    //Zwei Steine diagonal rechts unten KI
                     else if (ergebnisReihe == 2) {
                         spielerEinsZweier++;
                     }
@@ -798,15 +795,15 @@ public class KIGegner extends Spieler {
                 }
                 if (j < 4 && i > 2) {
                    ergebnisReihe = reiheZeichenSpieler(spiel, zeichenSpielerEins, -1, 1, i, j);
-                    //gewonnen diagonal rechts oben SpielerEins
+                    //gewonnen diagonal rechts oben KI
                     if (ergebnisReihe == 4) {
                         return positivUnendlich;
                     }
-                    //Drei Steine diagonal rechts oben SpielerEins
+                    //Drei Steine diagonal rechts oben KI
                     if (ergebnisReihe == 3) {
                         spielerEinsDreier++;
                     }
-                    //Zwei Steine diagonal rechts oben SpielerEins
+                    //Zwei Steine diagonal rechts oben KI
                     if (ergebnisReihe == 2) {
                         spielerEinsZweier++;
                     }
@@ -828,12 +825,14 @@ public class KIGegner extends Spieler {
                 }
             }
         }
-        int ergebnis = spielerEinsZweier * 1 + spielerEinsDreier * 2 - spielerZweiZweier * 6 - spielerZweiDreier * 20;
+        int ergebnis = spielerEinsZweier * 2 + spielerEinsDreier * 4 - spielerZweiZweier * 10 - spielerZweiDreier * 50;
+        System.out.println(ergebnis);
+        System.out.println("");
         return ergebnis;
     }
     private Spielfeld kopieAnlegen(Spielfeld spiel) {
         Spielfeld spielfeldTmp = new Spielfeld();
-        spielfeldTmp.setUserQueue(spielfeld.getUserQueue());
+        spielfeldTmp.setUserQueue(spiel.getUserQueue());
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 6; j++) {
                 spielfeldTmp.setZeichenAnSpielfeld(j, i, spiel.getZeichenAusSpielfeld(j, i));

@@ -13,11 +13,10 @@ public class KIGegnerStaerkeVier extends KIGegner {
         char sign = spielfeld.getCurrentUser();
         spielfeld.setInsertPos(findeBestenZug(spielfeld, 5));
         char signTwo = spielfeld.getCurrentUser();
-      /*  if(sign != signTwo)
+        if(sign != signTwo)
         {
             spielfeld.changeUser();
         }
-        */
         spielfeld.wirfSteinEin();
     }
 }

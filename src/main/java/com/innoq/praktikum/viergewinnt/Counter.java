@@ -6,7 +6,7 @@ public class Counter {
     private char checkSign = 'X';
 
     public Counter() {
-        this.counter = 1;
+        this.counter = 0;
 
     }
 
@@ -23,11 +23,18 @@ public class Counter {
                 checkSign = zeichen;
                 counter = 1;
             }
+            else
+            {
+                counter = 0;
+            }
         }
         if (counter == 4) {
             return true;
         }
-        return false;
+        else
+        {
+            return false;
+        }
     }
     public void countSign(char spielerZeichen, char feldZeichen)
     {
