@@ -36,9 +36,9 @@ public class Konsole {
         System.out.println("Gewählt wurde" + BLACK_BOLD + " Spalte " + spaltenauswahl + COLOR_RESET);
 
     }
-    public void spalteVollText(int spalte)
+    public void feldVollText()
     {
-        System.out.println(BLACK_BOLD +"Spalte " + spalte + " ist voll!"+COLOR_RESET);
+        System.out.println(BLACK_BOLD +"Das Feld ist voll!"+COLOR_RESET);
     }
     public void auswahlBeginnText()
     {

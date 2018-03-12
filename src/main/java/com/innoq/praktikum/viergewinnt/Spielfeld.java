@@ -81,43 +81,61 @@ public class Spielfeld {
     public Character getCurrentUser() {
         return userQueue.peek();
     }
+    public boolean voll()
+    {
+        for (int i = 0; i < 6; i++)
+        {
+            for (int j = 0; j < 7; j++)
+            {
+                if(spielfeld[i][j] == 'O')
+                {
+                    return false;
+                }
+            }
 
-    private boolean checkWin() {
-        int counter = 0;
-        char checkSign = 'X';
-        //wagerecht
-        for (int i = 5; i >= 0; i--) {
-            for (int j = 0; j < 7; j++) {
-                if (spielfeld[i][j] == checkSign) {
-                    counter++;
-                } else {
-                    counter = 0;
-                    if (spielfeld[i][j] != 'O') {
-                        checkSign = spielfeld[i][j];
-                    }
-                }
-                if (counter == 4) {
-                    return true;
-                }
-            }
-            counter = 0;
         }
-        //senkrecht
-        for (int j = 0; j < 7; j++) {
-            for (int i = 5; i >= 0; i--) {
-                if (spielfeld[i][j] == checkSign) {
-                    counter++;
-                } else {
-                    counter = 0;
-                    if (spielfeld[i][j] != 'O') {
-                        checkSign = spielfeld[i][j];
-                    }
-                }
-                if (counter == 4) {
+        return true;
+    }
+    public boolean checkWin() {
+        Counter winCounter = new Counter();
+        for (int i = 5; i >= 0; i--)
+        {
+            for (int j = 0; j < 7; j++)
+            {
+                if(winCounter.checkWin(spielfeld[i][j]) == true)
+                {
                     return true;
                 }
             }
-            counter = 0;
+        }
+        for(int i = 0; i<7; i++)
+        {
+            for(int j = 5; j >=0; j--)
+            {
+                if(winCounter.checkWin(spielfeld[j][i]))
+                {return true;}
+            }
+        }
+
+        int ergebnisReihe = 0;
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 7; j++) {
+                if (j < 4 && i < 3) {
+                    ergebnisReihe = gewinnHelp(zeichenSpieler, 1, 1, i, j);
+                    //gewonnen diagonal rechts unten
+                    if (ergebnisReihe == 4) {
+                        return true;
+                    }
+                    if (j < 4 && i > 2) {
+                        ergebnisReihe = gewinnHelp(zeichenSpieler, -1, 1, i, j);
+                        //gewonnen diagonal rechts oben
+                        if (ergebnisReihe == 4) {
+                            return true;
+                        }
+
+                    }
+                }
+            }
         }
         return false;
     }
@@ -150,59 +168,9 @@ public class Spielfeld {
                     ergebnisReihe++;
                 }
             }
+
         }
         return ergebnisReihe;
-    }
-    public boolean gewinn()
-    {
-        anzahlZüge++;
-        if(anzahlZüge>=8) {
-            char zeichenSpieler;
-            if (anDerReihe == 2) {
-                zeichenSpieler = 'X';
-            } else {
-                zeichenSpieler = '@';
-            }
-            int ergebnisReihe;
-            for (int i = 0; i < 6; i++) {
-                for (int j = 0; j < 7; j++) {
-                    if (j < 4) {
-                        ergebnisReihe = gewinnHelp(zeichenSpieler, 0, 1, i, j);
-                        //gewonnen wagerecht rechts
-                        if (ergebnisReihe == 4) {
-                            return true;
-                        }
-                    }
-                    if (i > 2) {
-
-                        ergebnisReihe = gewinnHelp(zeichenSpieler, -1, 0, i, j);
-                        //gewonnen senkrecht
-                        if (ergebnisReihe == 4) {
-                            return true;
-                        }
-                    }
-                    if (j < 4 && i < 3) {
-                        ergebnisReihe = gewinnHelp(zeichenSpieler, 1, 1, i, j);
-                        //gewonnen diagonal rechts unten
-                        if (ergebnisReihe == 4) {
-                            return true;
-                        }
-                        if (j < 4 && i > 2) {
-                            ergebnisReihe = gewinnHelp(zeichenSpieler, -1, 1, i, j);
-                            //gewonnen diagonal rechts oben
-                            if (ergebnisReihe == 4) {
-                                return true;
-                            }
-
-                        }
-                    }
-                }
-            }
-            return false;
-        }
-        else{
-            return false;
-        }
     }
     public  void wechseln()
     {

@@ -73,13 +73,13 @@ public class Config {
     {
         switch(kiStaerke)
         {
-            case 1: return new KIGegnerStaerkeEins(spielfeld, '@', anfänger);
+            case 1: oberflaeche.clear();return new KIGegnerStaerkeEins(spielfeld, '@', anfänger);
 
-            case 2: return new KIGegnerStaerkeZwei(spielfeld, '@', anfänger);
+            case 2: oberflaeche.clear();return new KIGegnerStaerkeZwei(spielfeld, '@', anfänger);
 
-            case 3: return new KIGegnerStaerkeDrei(spielfeld, '@', anfänger);
+            case 3: oberflaeche.clear();return new KIGegnerStaerkeDrei(spielfeld, '@', anfänger);
 
-            case 4: return new KIGegnerStaerkeVier(spielfeld, '@', anfänger);
+            case 4: oberflaeche.clear();return new KIGegnerStaerkeVier(spielfeld, '@', anfänger);
 
         }
         return null;
@@ -92,6 +92,7 @@ public class Config {
         }
         if(auswahlGegner == 1)
         {
+            oberflaeche.clear();
             return new LokalerSpieler(spielfeld, sign, anfänger);
         }
         return null;
