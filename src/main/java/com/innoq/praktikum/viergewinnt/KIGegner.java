@@ -617,7 +617,7 @@ public class KIGegner extends Spieler {
         int besterZug = negativUnendlich;
         for(int i = 0; i < 7; i++)
         {
-            System.out.println(werteFeld[i]);
+
             if(werteFeld[i] >= besterZug && probeEinfügen(spielfeld, i) == true)
             {
                 besterZug = werteFeld[i];
@@ -673,12 +673,13 @@ public class KIGegner extends Spieler {
                     //TEST*/
 
                     minimaxTmp = berechneMiniMax(spielfeldTmp, tiefe-1, alpha, beta);
+                    System.out.println(minimaxTmp + "und " + minimax);
                     spielfeld.changeUser();
                     if (spielfeld.getCurrentUser() == '@')
                     {
                         minimax = java.lang.Math.max(minimaxTmp, minimax);
                         alpha = minimax;
-                        if (alpha > beta)
+                        if (alpha >= beta)
                         {
                             return beta;
                         }
@@ -687,7 +688,7 @@ public class KIGegner extends Spieler {
                         {
                         minimax = java.lang.Math.min(minimaxTmp, minimax);
                         beta = minimax;
-                        if (beta < alpha)
+                        if (beta <= alpha)
                         {
                             return alpha;
                         }
@@ -825,8 +826,8 @@ public class KIGegner extends Spieler {
                 }
             }
         }
-        int ergebnis = spielerEinsZweier * 2 + spielerEinsDreier * 4 - spielerZweiZweier * 10 - spielerZweiDreier * 50;
-        System.out.println(ergebnis);
+        int ergebnis = spielerEinsZweier * 1 + spielerEinsDreier * 2 - spielerZweiZweier * 3 - spielerZweiDreier * 5;
+       // System.out.println(ergebnis);
         System.out.println("");
         return ergebnis;
     }

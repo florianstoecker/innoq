@@ -27,13 +27,13 @@ public class Main {
             oberflaeche.gelegtText(spielfeld.getInsertPos() + 1);
             zeichneSpielfeld.zeichneSpielfeld(spielfeld);
             spielfeld.anzZügeHoch();
-           /* if(spielfeld.checkWin())
+            if(spielfeld.checkWin())
             {
                oberflaeche.gewinnText(spielfeld.getAnDerReihe());
                zeichneSpielfeld.zeichneSpielfeld(spielfeld);
                weiter = false;
             }
-            else*/ if(spielfeld.voll() == true)
+            else if(spielfeld.voll() == true)
             {
                 zeichneSpielfeld.zeichneSpielfeld(spielfeld);
                 oberflaeche.feldVollText();
