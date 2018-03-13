@@ -2,50 +2,22 @@ package com.innoq.praktikum.viergewinnt;
 
 public class Counter {
 
-    private int counter;
-    private char checkSign = 'X';
+    private int counter = 0;
+    private Character checkSign = new Character('?');
 
-    public Counter() {
-        this.counter = 0;
+    public boolean checkWin(Character zeichen) {
 
-    }
-
-    public boolean checkWin(char zeichen) {
-
-        if (zeichen == checkSign)
-        {
-            counter++;
-        }
-        else
-        {
-            if (zeichen != 'O')
-            {
-                checkSign = zeichen;
-                counter = 1;
-            }
-            else
-            {
-                counter = 0;
-            }
-        }
-        if (counter == 4) {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-    public void countSign(char spielerZeichen, char feldZeichen)
-    {
-        if(spielerZeichen == feldZeichen)
-        {
-            counter ++;
+        boolean signChanged = checkSign != null && !checkSign.equals(zeichen);
+        if (signChanged) {
+            this.counter = 0;
         }
 
-    }
-    public int getCounter()
-    {
-        return counter;
+        boolean isNotEmptyField = zeichen != 'O';
+        if (isNotEmptyField) {
+            this.checkSign = zeichen;
+        }
+
+        this.counter++;
+        return counter == 4;
     }
 }

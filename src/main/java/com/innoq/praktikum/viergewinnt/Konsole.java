@@ -75,9 +75,18 @@ public class Konsole {
         System.out.println("5: Lila");
         System.out.println("6: Cyan"+COLOR_RESET);
     }
-    public void macheZugText(int currentUser, int anzZugEinz)
+    public void macheZugText(char currentUser, int anzZugEinz)
     {
-        System.out.println(BLACK_BOLD +"In welcher Spalte wollen Sie Ihren " + anzZugEinz + ". Stein fallen lassen ? (Spieler " + currentUser + ")"+COLOR_RESET);
+        int spieler;
+        if(currentUser == '@')
+        {
+            spieler = 2;
+        }
+        else
+            {
+                spieler = 1;
+            }
+        System.out.println(BLACK_BOLD +"In welcher Spalte wollen Sie Ihren " + anzZugEinz + ". Stein fallen lassen ? (Spieler " + spieler + ")"+COLOR_RESET);
 
     }
     public void staerkeAuswahlText()
@@ -88,10 +97,19 @@ public class Konsole {
         System.out.println("3: Mittel(kann gewinnen?/2 Felder in Verbindung zueinander?)");
         System.out.println("4: Schwer (MinMax"+COLOR_RESET);
     }
-    public void gewinnText(int anDerReihe)
+    public void gewinnText(char currentUser)
     {
+        int spieler;
+        if(currentUser == '@')
+        {
+            spieler = 2;
+        }
+        else
+        {
+            spieler = 1;
+        }
         Animation.an_Gewinn();
-        System.out.println(BLACK_BOLD + "Der Gewinner ist Spieler " + anDerReihe + "!");
+        System.out.println(BLACK_BOLD + "Der Gewinner ist Spieler " + spieler + "!");
         System.out.println("Das Spiel ist zu Ende!"+COLOR_RESET);
     }
 }

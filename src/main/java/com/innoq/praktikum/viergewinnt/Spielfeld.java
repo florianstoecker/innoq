@@ -32,11 +32,10 @@ public class Spielfeld {
     public Spielfeld() {
     }
 
-    public Spielfeld(Konsole oberflaeche, Config config, ZeichneSpielfeld zeichneSpielfeld) {
+    public Spielfeld(Konsole oberflaeche, Config config) {
         this.oberflaeche = oberflaeche;
         this.config = config;
-        initSpielfeld();
-        initFarbfeld();
+        initFelder();
         if (config.getBeginner() == 1) {
             userQueue.add('X');
             userQueue.add('@');
@@ -46,7 +45,7 @@ public class Spielfeld {
         }
     }
 
-    private Spielfeld(char[][] spielfeld, int anDerReihe, int anzahlZüge, Konsole oberflaeche) {
+    private Spielfeld(char[][] spielfeld,int anzahlZüge, Konsole oberflaeche) {
         this.spielfeld = Arrays.copyOf(spielfeld, spielfeld.length);
         this.anDerReihe = anDerReihe;
         this.anzahlZüge = anzahlZüge;
@@ -56,31 +55,21 @@ public class Spielfeld {
     //Methoden
 
     //Felder leeren
-    private void initSpielfeld() {
+    private void initFelder() {
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 7; j++) {
                 spielfeld[i][j] = 'O';
-            }
-        }
-    }
-
-    public void initFarbfeld() {
-
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 7; j++) {
                 farbfeld[i][j] = 0;
             }
         }
     }
 
+    //Spielmethoden
     public void changeUser() {
         char currentUser = userQueue.poll();
         userQueue.add(currentUser);
     }
 
-    public Character getCurrentUser() {
-        return userQueue.element();
-    }
     public boolean voll()
     {
         for (int i = 0; i < 6; i++)
@@ -100,53 +89,55 @@ public class Spielfeld {
     {
         Counter winCounter = new Counter();
 
-        for(int i = 0; i<7; i ++)
+        for(int spalte = 0; spalte<7; spalte++)
         {
-            int iHelp = i;
-            for(int j = 0; j<6; j++)
+            int spalteHelp = spalte;
+            for(int reihe = 0; reihe<6; reihe++)
             {
-                while(i < 7)
+                while(spalte < 7)
                 {
-                if(winCounter.checkWin(spielfeld[j][i]))
+                if(winCounter.checkWin(spielfeld[reihe][spalte]))
                 {
+                    System.out.println("Diagonal rechts unten");
                     return true;
                 }
                 else
                     {
-                        i++;
+                        spalte++;
                     }
                 }
             }
-            i = iHelp;
+            spalte = spalteHelp;
         }
         Counter winCounterZwei = new Counter();
-        for(int i = 6; i>= 0; i --)
+        for(int spalte = 6; spalte>= 0; spalte --)
         {
-            int iHelp = i;
-            for(int j = 0; j<6; j++)
+            int spalteHelp = spalte;
+            for(int reihe = 0; reihe<6; reihe++)
             {
-                while(i >= 0) {
-                    if (winCounterZwei.checkWin(spielfeld[j][i])) {
+                while(spalte >= 0) {
+                    if (winCounterZwei.checkWin(spielfeld[reihe][spalte])) {
+                        System.out.println("Diagonal rechts oben");
                         return true;
                     }
                     else
                     {
-                        i--;
+                        spalte--;
                     }
                 }
             }
-            i = iHelp;
+            spalte = spalteHelp;
         }
         return false;
     }
     private boolean checkWinWagerecht()
     {
         Counter winCounter = new Counter();
-        for (int i = 5; i >= 0; i--)
+        for (int reihe = 5; reihe >= 0; reihe--)
         {
-            for (int j = 0; j < 7; j++)
+            for (int spalte = 0; spalte < 7; spalte++)
             {
-                if(winCounter.checkWin(spielfeld[i][j]) == true)
+                if(winCounter.checkWin(spielfeld[reihe][spalte]))
                 {
                     return true;
                 }
@@ -157,48 +148,26 @@ public class Spielfeld {
     private boolean checkWinSenkrecht()
     {
         Counter winCounter = new Counter();
-        for(int i = 0; i<7; i++)
+        for(int spalte = 0; spalte<7; spalte++)
         {
-            for(int j = 5; j >=0; j--)
+            for(int reihe = 5; reihe >=0; reihe--)
             {
-                if(winCounter.checkWin(spielfeld[j][i]))
-                {return true;}
+                if(winCounter.checkWin(spielfeld[reihe][spalte]))
+                {
+                    return true;
+                }
             }
         }
         return false;
     }
     public boolean checkWin() {
-        if(anzahlZüge >=10) {
-            if (checkWinDiagonal() || checkWinSenkrecht() || checkWinWagerecht()) {
-                return true;
-            } else {
-                return false;
-            }
+        if(anzahlZüge >=8) {
+                if(checkWinSenkrecht() || checkWinWagerecht() /*||checkWinDiagonal() */)
+                {
+                    return true;
+                }
         }
         return false;
-    }
-
-    private int countSign(char sign) {
-        Counter counter = new Counter();
-        for (int i = 5; i >= 0; i--) {
-            for (int j = 0; j < 7; j++) {
-                counter.countSign(sign, spielfeld[i][j]);
-            }
-        }
-        return counter.getCounter();
-    }
-
-    //Spielmethoden
-    public  void wechseln()
-    {
-        if(anDerReihe == 1)
-        {
-            anDerReihe = 2;
-        }
-        else if(anDerReihe == 2)
-        {
-            anDerReihe = 1;
-        }
     }
     public void wirfSteinEin()
     {
@@ -228,8 +197,6 @@ public class Spielfeld {
         }
 
             changeUser();
-
-        wechseln();
     }
 
     // Darf das Feld belegt werden?
@@ -274,6 +241,9 @@ public class Spielfeld {
     }
 
     // Get- & Set-Methoden
+    public Character getCurrentUser() {
+        return userQueue.element();
+    }
     public void anzZügeHoch()
     {
         anzahlZüge ++;
@@ -298,9 +268,6 @@ public class Spielfeld {
     {
         return config.getBeginner();
     }
-    public Spielfeld getCopy() {
-        return new Spielfeld(spielfeld, anDerReihe, anzahlZüge, oberflaeche);
-    }
     public void setInsertPos(int spalte)
     {
         insertPos = spalte;
@@ -308,13 +275,6 @@ public class Spielfeld {
     public int getInsertPos()
     {
         return insertPos;
-    }
-    public void setAnDerReihe(int anDerReihe) {
-        this.anDerReihe = anDerReihe;
-    }
-    public int getAnDerReihe()
-    {
-        return anDerReihe;
     }
     public int getAnzahlZüge()
     {

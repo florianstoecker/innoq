@@ -8,9 +8,8 @@ public class Main {
         Config config = new Config(oberflaeche);
         ZeichneSpielfeld zeichneSpielfeld = new ZeichneSpielfeld();
         boolean weiter = true;
-        Spielfeld spielfeld = new Spielfeld(oberflaeche, config, zeichneSpielfeld);
+        Spielfeld spielfeld = new Spielfeld(oberflaeche, config);
 
-        spielfeld.setAnDerReihe(config.getBeginner());
         Spieler s1 =  new LokalerSpieler(spielfeld, 'X', config.getAuswahlFarbeEins());
         Spieler s2 = config.spielerZweiAuswaehlen(spielfeld, '@', config.getAuswahlFarbeZwei());
 
@@ -29,7 +28,7 @@ public class Main {
             spielfeld.anzZügeHoch();
             if(spielfeld.checkWin())
             {
-               oberflaeche.gewinnText(spielfeld.getAnDerReihe());
+               oberflaeche.gewinnText(spielfeld.getCurrentUser());
                zeichneSpielfeld.zeichneSpielfeld(spielfeld);
                weiter = false;
             }
