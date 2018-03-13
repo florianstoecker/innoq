@@ -1,4 +1,6 @@
-package com.innoq.praktikum.viergewinnt;
+
+
+        package com.innoq.praktikum.viergewinnt;
 
 public class KIGegner extends Spieler {
     private static final int positivUnendlich = (int) Double.POSITIVE_INFINITY;
@@ -611,6 +613,7 @@ public class KIGegner extends Spieler {
                 }
                 spielfeldTMP.wirfSteinEin();
                 werteFeld[i] = berechneMiniMax(spielfeldTMP, tiefe, negativUnendlich, positivUnendlich);
+                System.out.println("Wert:" + werteFeld[i] + " für Stelle:" + i);
             }
         }
 
@@ -625,16 +628,6 @@ public class KIGegner extends Spieler {
         }
 
         return findeSpalte(besterZug, werteFeld);
-    }
-    private Spielfeld kopieAnlegen(Spielfeld spiel) {
-        Spielfeld spielfeldTmp = new Spielfeld();
-        spielfeldTmp.setUserQueue(spiel.getUserQueue());
-        for (int i = 0; i < 7; i++) {
-            for (int j = 0; j < 6; j++) {
-                spielfeldTmp.setZeichenAnSpielfeld(j, i, spiel.getZeichenAusSpielfeld(j, i));
-            }
-        }
-        return spielfeldTmp;
     }
     public int findeSpalte(int besterZug, int[] wertefeld) {
         int spalte = 0;
@@ -658,10 +651,21 @@ public class KIGegner extends Spieler {
             minimax = beta;
         }
         if (tiefe==0) {
+            //TEST
+            for(int k = 0; k<6; k++)
+            {
+                for(int l = 0; l<7; l++) {
+                    System.out.print(spielfeld.getZeichenAusSpielfeld(k,l));
+                }
+                System.out.println("");
+            }
+            System.out.println("Die Tiefe:" + tiefe + "   Spieler ist dran:" + spielfeld.getCurrentUser() + "   Bewertung:" + bewertung(spielfeld));
+            //TEST
+
             return bewertung(spielfeld);
         }
         else
-            {
+        {
             for (int spalte=0; spalte<7; spalte++)
             {
                 spielfeldTmp = kopieAnlegen(spielfeld);
@@ -669,26 +673,48 @@ public class KIGegner extends Spieler {
                 {
                     spielfeldTmp.setInsertPos(spalte);
                     spielfeldTmp.wirfSteinEin();
+
+
+
+
                     minimaxTmp = berechneMiniMax(spielfeldTmp, tiefe-1, alpha, beta);
                     spielfeld.changeUser();
+                    //TEST
+                    for(int k = 0; k<6; k++)
+                    {
+                        for(int l = 0; l<7; l++) {
+                            System.out.print(spielfeld.getZeichenAusSpielfeld(k,l));
+                        }
+                        System.out.println("");
+                    }
+
+                    System.out.println("Die Tiefe:" + tiefe + "   Spieler ist dran:" + spielfeld.getCurrentUser() + " Minimax:" + minimaxTmp + "    Die Spalte:" + spalte );
+                    //TEST
+
                     if (spielfeld.getCurrentUser() == '@')
                     {
                         minimax = java.lang.Math.max(minimaxTmp, minimax);
+                        System.out.println("max:" +minimax);
+                        System.out.println("");
                         alpha = minimax;
+                        System.out.println(alpha + " und " + beta);
                         if (alpha > beta)
                         {
                             return beta;
                         }
                     }
                     else if (spielfeld.getCurrentUser() == 'X')
-                        {
+                    {
                         minimax = java.lang.Math.min(minimaxTmp, minimax);
+                        System.out.println("min:" +minimax);
+                        System.out.println("");
                         beta = minimax;
+                        System.out.println(beta + " und " + alpha);
                         if (beta < alpha)
                         {
                             return alpha;
                         }
-                        }
+                    }
                 }
             }
             return minimax;
@@ -703,10 +729,10 @@ public class KIGegner extends Spieler {
         char zeichenSpielerZwei = 'X';
         int ergebnisReihe = 0;
 
-        for (int reihe = 0; reihe < 6; reihe++) {
-            for (int spalte = 0; spalte < 7; spalte++) {
-                if (spalte < 4) {
-                    ergebnisReihe = reiheZeichenSpieler(spiel, zeichenSpielerEins, 0, 1, reihe, spalte);
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 7; j++) {
+                if (j < 4) {
+                    ergebnisReihe = reiheZeichenSpieler(spiel, zeichenSpielerEins, 0, 1, i, j);
                     //gewonnen wagerecht rechts KI
                     if (ergebnisReihe == 4) {
                         return positivUnendlich;
@@ -719,7 +745,7 @@ public class KIGegner extends Spieler {
                     else if (ergebnisReihe == 2) {
                         spielerEinsZweier++;
                     }
-                    ergebnisReihe = reiheZeichenSpieler(spiel, zeichenSpielerZwei, 0, 1, reihe, spalte);
+                    ergebnisReihe = reiheZeichenSpieler(spiel, zeichenSpielerZwei, 0, 1, i, j);
                     //gewonnen wagerecht rechts SpielerZwei
                     if (ergebnisReihe == 4) {
                         return negativUnendlich;
@@ -734,8 +760,8 @@ public class KIGegner extends Spieler {
                         spielerZweiZweier++;
                     }
                 }
-                if (reihe > 2) {
-                    ergebnisReihe = reiheZeichenSpieler(spiel, zeichenSpielerEins, -1, 0, reihe, spalte);
+                if (i > 2) {
+                    ergebnisReihe = reiheZeichenSpieler(spiel, zeichenSpielerEins, -1, 0, i, j);
                     //gewonnen senkrecht KI
                     if (ergebnisReihe == 4) {
                         return positivUnendlich;
@@ -748,7 +774,7 @@ public class KIGegner extends Spieler {
                     else if (ergebnisReihe == 2) {
                         spielerEinsZweier++;
                     }
-                   ergebnisReihe = reiheZeichenSpieler(spiel, zeichenSpielerZwei, -1, 0, reihe, spalte);
+                    ergebnisReihe = reiheZeichenSpieler(spiel, zeichenSpielerZwei, -1, 0, i, j);
                     //gewonnen senkrecht SpielerZwei
                     if (ergebnisReihe == 4) {
                         return negativUnendlich;
@@ -762,8 +788,8 @@ public class KIGegner extends Spieler {
                         spielerZweiZweier++;
                     }
                 }
-                if (spalte < 4 && reihe < 3) {
-                    ergebnisReihe = reiheZeichenSpieler(spiel, zeichenSpielerEins, 1, 1, reihe, spalte);
+                if (j < 4 && i < 3) {
+                    ergebnisReihe = reiheZeichenSpieler(spiel, zeichenSpielerEins, 1, 1, i, j);
                     //gewonnen diagonal rechts unten KI
                     if (ergebnisReihe == 4) {
                         return positivUnendlich;
@@ -776,7 +802,7 @@ public class KIGegner extends Spieler {
                     else if (ergebnisReihe == 2) {
                         spielerEinsZweier++;
                     }
-                    ergebnisReihe = reiheZeichenSpieler(spiel, zeichenSpielerZwei, 1, 1, reihe, spalte);
+                    ergebnisReihe = reiheZeichenSpieler(spiel, zeichenSpielerZwei, 1, 1, i, j);
                     //gewonnen diagonal rechts unten SpielerZwei
                     if (ergebnisReihe == 4) {
                         return negativUnendlich;
@@ -790,8 +816,8 @@ public class KIGegner extends Spieler {
                         spielerZweiZweier++;
                     }
                 }
-                if (spalte < 4 && reihe > 2) {
-                   ergebnisReihe = reiheZeichenSpieler(spiel, zeichenSpielerEins, -1, 1, reihe, spalte);
+                if (j < 4 && i > 2) {
+                    ergebnisReihe = reiheZeichenSpieler(spiel, zeichenSpielerEins, -1, 1, i, j);
                     //gewonnen diagonal rechts oben KI
                     if (ergebnisReihe == 4) {
                         return positivUnendlich;
@@ -804,7 +830,7 @@ public class KIGegner extends Spieler {
                     if (ergebnisReihe == 2) {
                         spielerEinsZweier++;
                     }
-                    ergebnisReihe = reiheZeichenSpieler(spiel, zeichenSpielerZwei, -1, 1, reihe, spalte);
+                    ergebnisReihe = reiheZeichenSpieler(spiel, zeichenSpielerZwei, -1, 1, i, j);
                     //gewonnen diagonal rechts oben SpielerZwei
                     if (ergebnisReihe == 4) {
                         return negativUnendlich;
@@ -823,9 +849,20 @@ public class KIGegner extends Spieler {
             }
         }
         int ergebnis = spielerEinsZweier * 1 + spielerEinsDreier * 2 - spielerZweiZweier * 3 - spielerZweiDreier * 5;
+        // System.out.println(ergebnis);
+        System.out.println("");
         return ergebnis;
     }
-
+    private Spielfeld kopieAnlegen(Spielfeld spiel) {
+        Spielfeld spielfeldTmp = new Spielfeld();
+        spielfeldTmp.setUserQueue(spiel.getUserQueue());
+        for (int i = 0; i < 7; i++) {
+            for (int j = 0; j < 6; j++) {
+                spielfeldTmp.setZeichenAnSpielfeld(j, i, spiel.getZeichenAusSpielfeld(j, i));
+            }
+        }
+        return spielfeldTmp;
+    }
     private int reiheZeichenSpieler(Spielfeld spiel, char zeichenSpieler, int vorfaktorX, int vorfaktorY, int x, int y) {
         int ergebnisReihe = 0;
         if ((spiel.getZeichenAusSpielfeld(x, y) == zeichenSpieler || spiel.getZeichenAusSpielfeld(x, y) == 'O')
@@ -842,3 +879,4 @@ public class KIGegner extends Spieler {
         return ergebnisReihe;
     }
 }
+

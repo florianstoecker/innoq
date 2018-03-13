@@ -42,7 +42,7 @@ public class Konsole {
     }
     public void spalteVollText(int spalte)
     {
-        System.out.println(BLACK_BOLD +"Spalte " + spalte + " ist voll!"+COLOR_RESET);
+        System.out.println(BLACK_BOLD +"Spalte " + spalte+1 + " ist voll!"+COLOR_RESET);
     }
     public void auswahlBeginnText()
     {
