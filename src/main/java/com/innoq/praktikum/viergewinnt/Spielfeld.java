@@ -101,18 +101,37 @@ public class Spielfeld {
             }
         }
     }
+    private void errechnePaareZwei(int diagonalErgebnis)
+    {
+
+        for(int spalte = 6; spalte >=0; spalte --)
+        {
+            for(int reihe = 0; reihe < 6; reihe ++)
+            {
+                if(reihe + spalte == diagonalErgebnis)
+                {
+                    Pair<Integer, Integer> coordinate = new Pair<>(reihe, spalte);
+                    coordinates.add(coordinate);
+                    System.out.println(coordinate);
+                }
+            }
+        }
+
+    }
     private void errechnePaare()
     {
         for (int i = 3; i<9; i++)
         {
             errechnePaare(i);
             coordinatesList.add(coordinates);
+            errechnePaareZwei(i);
+            coordinatesList.add(coordinates);
         }
     }
     private boolean checkWinDiagonal()
     {
         errechnePaare();
-        for(int i = 0; i<6; i++)
+        for(int i = 0; i<12; i++)
         {
             coordinates= coordinatesList.get(i);
             Counter winCounter = new Counter();
@@ -121,7 +140,6 @@ public class Spielfeld {
                 Pair pair = coordinates.get(j);
                 if(winCounter.checkWin(spielfeld[(int)pair.getKey()][(int)pair.getValue()]))
                 {
-                    System.out.println("Diagonal");
                     return true;
                 }
             }
