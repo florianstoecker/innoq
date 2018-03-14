@@ -3,8 +3,7 @@ package com.innoq.praktikum.viergewinnt;
 public class KIGegnerStaerkeDrei extends KIGegner {
 
     //Konstruktor
-    public KIGegnerStaerkeDrei(Spielfeld spielfeld, char sign, int farbe)
-    {
+    public KIGegnerStaerkeDrei(Spielfeld spielfeld, char sign, int farbe) {
         super(spielfeld, sign, farbe);
     }
 
@@ -13,27 +12,27 @@ public class KIGegnerStaerkeDrei extends KIGegner {
 
         betrachteterSpieler = 2;
         if (kannGewinnen()) {
-            steinWurdeAusgewaehlt();
+            spielfeld.wirfSteinEin();
             return;
         }
         betrachteterSpieler = 1;
 
         if (kannGewinnen()) {
-            steinWurdeAusgewaehlt();
+            spielfeld.wirfSteinEin();
             return;
         }
         betrachteterSpieler = 1;
-        if (zweiGleicheGewinnMöglich(0 )) {
-            steinWurdeAusgewaehlt();
+        if (zweiGleicheGewinnMöglich(0)) {
+            spielfeld.wirfSteinEin();
             return;
         }
         betrachteterSpieler = 2;
         if (zweiGleicheGewinnMöglich(0)) {
-            steinWurdeAusgewaehlt();
+            spielfeld.wirfSteinEin();
             return;
         }
         if (eigenerStein()) {
-            steinWurdeAusgewaehlt();
+            spielfeld.wirfSteinEin();
             return;
         } else {
             random();
@@ -41,6 +40,7 @@ public class KIGegnerStaerkeDrei extends KIGegner {
                 random();
             }
             spielfeld.wirfSteinEin();
+            return;
         }
 
 

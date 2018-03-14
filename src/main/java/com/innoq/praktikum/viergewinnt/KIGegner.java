@@ -1,12 +1,13 @@
 
 
-        package com.innoq.praktikum.viergewinnt;
+package com.innoq.praktikum.viergewinnt;
 
 public class KIGegner extends Spieler {
     private static final int positivUnendlich = (int) Double.POSITIVE_INFINITY;
     private static final int negativUnendlich = (int) Double.NEGATIVE_INFINITY;
     public int betrachteterSpieler = spielfeld.getAuswahlAnfänger();
     public static int entscheidung;
+
     //Konstruktor
     public KIGegner(Spielfeld spielfeld, char sign, int anfänger) {
         super(spielfeld, sign, anfänger);
@@ -177,7 +178,7 @@ public class KIGegner extends Spieler {
         return false;
     }
 
-    public static int dreiGleich(char xEins, char xZwei, char xDrei, char xVier, char zeichenSpieler) {
+    private static int dreiGleich(char xEins, char xZwei, char xDrei, char xVier, char zeichenSpieler) {
 
         if (xVier == xZwei && xZwei == xDrei && xDrei == zeichenSpieler) {
             return 1;
@@ -191,7 +192,7 @@ public class KIGegner extends Spieler {
         return 0;
     }
 
-    public static void zweiGleichHilfe(char xEins, char xZwei, char xDrei, char xVier, char zeichenSpieler, int schonGecheckt) {
+    private static void zweiGleichHilfe(char xEins, char xZwei, char xDrei, char xVier, char zeichenSpieler, int schonGecheckt) {
         if (schonGecheckt < 1) {
             if (xEins == xZwei && xZwei == zeichenSpieler && xDrei == 'O' && xDrei == xVier) {
                 entscheidung = 1;
@@ -577,18 +578,16 @@ public class KIGegner extends Spieler {
     }
 
 
-
     //KIGegnerStaerkeVier
-    private boolean probeEinfügen(Spielfeld spielfeldTmp,  int insertPos) {
+    private boolean probeEinfügen(Spielfeld spielfeldTmp, int insertPos) {
         int insertPosy = 5;
         if (spielfeldTmp.getZeichenAusSpielfeld(insertPosy, insertPos) == 'O') {
             return true;
 
         } else {
-            while (spielfeldTmp.getZeichenAusSpielfeld(insertPosy, insertPos)!= 'O') {
+            while (spielfeldTmp.getZeichenAusSpielfeld(insertPosy, insertPos) != 'O') {
                 insertPosy--;
-                if (insertPosy == - 1)
-                {
+                if (insertPosy == -1) {
                     return false;
                 }
             }
@@ -596,19 +595,17 @@ public class KIGegner extends Spieler {
 
         }
     }
-    public int findeBestenZug(Spielfeld spielfeld,  int tiefe) {
+
+    public int findeBestenZug(Spielfeld spielfeld, int tiefe) {
 
         int[] werteFeld = new int[7];
         Spielfeld spielfeldTMP;
         char zeichenTmp = spielfeld.getCurrentUser();
-        for(int i = 0; i < 7; i++)
-        {
-            if(probeEinfügen(spielfeld, i) == true)
-            {
+        for (int i = 0; i < 7; i++) {
+            if (probeEinfügen(spielfeld, i) == true) {
                 spielfeldTMP = kopieAnlegen(spielfeld);
                 spielfeldTMP.setInsertPos(i);
-                if(spielfeldTMP.getCurrentUser() != zeichenTmp)
-                {
+                if (spielfeldTMP.getCurrentUser() != zeichenTmp) {
                     spielfeldTMP.changeUser();
                 }
                 spielfeldTMP.wirfSteinEin();
@@ -618,18 +615,17 @@ public class KIGegner extends Spieler {
         }
 
         int besterZug = negativUnendlich;
-        for(int i = 0; i < 7; i++)
-        {
+        for (int i = 0; i < 7; i++) {
 
-            if(werteFeld[i] >= besterZug && probeEinfügen(spielfeld, i) == true)
-            {
+            if (werteFeld[i] >= besterZug && probeEinfügen(spielfeld, i) == true) {
                 besterZug = werteFeld[i];
             }
         }
 
         return findeSpalte(besterZug, werteFeld);
     }
-    public int findeSpalte(int besterZug, int[] wertefeld) {
+
+    private int findeSpalte(int besterZug, int[] wertefeld) {
         int spalte = 0;
         for (int i = 0; i < 7; i++) {
             if (wertefeld[i] == besterZug) {
@@ -638,19 +634,18 @@ public class KIGegner extends Spieler {
         }
         return spalte;
     }
+
     private int berechneMiniMax(Spielfeld spielfeld, int tiefe, int alpha, int beta) {
         Spielfeld spielfeldTmp;
         int minimaxTmp;
         int minimax;
 
-        if (spielfeld.getCurrentUser() == '@')
-        {
+        if (spielfeld.getCurrentUser() == '@') {
             minimax = alpha;
-        }
-        else {
+        } else {
             minimax = beta;
         }
-        if (tiefe==0) {
+        if (tiefe == 0) {
             /*//TEST
             for(int k = 0; k<6; k++)
             {
@@ -663,21 +658,15 @@ public class KIGegner extends Spieler {
             //TEST*/
 
             return bewertung(spielfeld);
-        }
-        else
-        {
-            for (int spalte=0; spalte<7; spalte++)
-            {
+        } else {
+            for (int spalte = 0; spalte < 7; spalte++) {
                 spielfeldTmp = kopieAnlegen(spielfeld);
-                if (probeEinfügen(spielfeldTmp, spalte))
-                {
+                if (probeEinfügen(spielfeldTmp, spalte)) {
                     spielfeldTmp.setInsertPos(spalte);
                     spielfeldTmp.wirfSteinEin();
 
 
-
-
-                    minimaxTmp = berechneMiniMax(spielfeldTmp, tiefe-1, alpha, beta);
+                    minimaxTmp = berechneMiniMax(spielfeldTmp, tiefe - 1, alpha, beta);
                     spielfeld.changeUser();
                     /*//TEST
                     for(int k = 0; k<6; k++)
@@ -691,27 +680,22 @@ public class KIGegner extends Spieler {
                     System.out.println("Die Tiefe:" + tiefe + "   Spieler ist dran:" + spielfeld.getCurrentUser() + " Minimax:" + minimaxTmp + "    Die Spalte:" + spalte );
                     //TEST*/
 
-                    if (spielfeld.getCurrentUser() == '@')
-                    {
+                    if (spielfeld.getCurrentUser() == '@') {
                         minimax = java.lang.Math.max(minimaxTmp, minimax);
                         //System.out.println("max:" +minimax);
                         //System.out.println("");
                         alpha = minimax;
                         //System.out.println(alpha + " und " + beta);
-                        if (alpha > beta)
-                        {
+                        if (alpha > beta) {
                             return beta;
                         }
-                    }
-                    else if (spielfeld.getCurrentUser() == 'X')
-                    {
+                    } else if (spielfeld.getCurrentUser() == 'X') {
                         minimax = java.lang.Math.min(minimaxTmp, minimax);
                         //System.out.println("min:" +minimax);
                         //System.out.println("");
                         beta = minimax;
                         //System.out.println(beta + " und " + alpha);
-                        if (beta < alpha)
-                        {
+                        if (beta < alpha) {
                             return alpha;
                         }
                     }
@@ -720,6 +704,7 @@ public class KIGegner extends Spieler {
             return minimax;
         }
     }
+
     private int bewertung(Spielfeld spiel) {
         int spielerEinsZweier = 0;
         int spielerZweiZweier = 0;
@@ -850,9 +835,10 @@ public class KIGegner extends Spieler {
         }
         int ergebnis = spielerEinsZweier * 1 + spielerEinsDreier * 2 - spielerZweiZweier * 3 - spielerZweiDreier * 5;
         // System.out.println(ergebnis);
-       // System.out.println("");
+        // System.out.println("");
         return ergebnis;
     }
+
     private Spielfeld kopieAnlegen(Spielfeld spiel) {
         Spielfeld spielfeldTmp = new Spielfeld();
         spielfeldTmp.setUserQueue(spiel.getUserQueue());
@@ -863,6 +849,7 @@ public class KIGegner extends Spieler {
         }
         return spielfeldTmp;
     }
+
     private int reiheZeichenSpieler(Spielfeld spiel, char zeichenSpieler, int vorfaktorX, int vorfaktorY, int x, int y) {
         int ergebnisReihe = 0;
         if ((spiel.getZeichenAusSpielfeld(x, y) == zeichenSpieler || spiel.getZeichenAusSpielfeld(x, y) == 'O')

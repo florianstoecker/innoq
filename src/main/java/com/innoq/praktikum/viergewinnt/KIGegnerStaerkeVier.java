@@ -3,8 +3,7 @@ package com.innoq.praktikum.viergewinnt;
 public class KIGegnerStaerkeVier extends KIGegner {
 
     //Konstruktor
-    public KIGegnerStaerkeVier(Spielfeld spielfeld, char sign, int farbe)
-    {
+    public KIGegnerStaerkeVier(Spielfeld spielfeld, char sign, int farbe) {
         super(spielfeld, sign, farbe);
     }
 
@@ -20,9 +19,7 @@ public class KIGegnerStaerkeVier extends KIGegner {
         if (kannGewinnen()) {
             spielfeld.wirfSteinEin();
             return;
-        }
-
-        else {
+        } else {
             char sign = spielfeld.getCurrentUser();
             spielfeld.setInsertPos(findeBestenZug(spielfeld, 5));
             char signTwo = spielfeld.getCurrentUser();

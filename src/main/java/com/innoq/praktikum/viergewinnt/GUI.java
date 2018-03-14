@@ -5,19 +5,19 @@ import java.awt.*;
 //Event brauchen wir für das Ereigniss, wenn ein Button geklickt wird
 import java.awt.event.*;
 
-public class GUI extends JFrame{
+public class GUI extends JFrame {
 
-    private JButton button1,button2,  button3, button4, button5, button6, button7;
+    private JButton button1, button2, button3, button4, button5, button6, button7;
     private JPanel panelButton, panelField;
     private JLabel title;
     JFrame window;
     Graphics g;
 
-    public GUI(){
+    public GUI() {
         window = new JFrame("vierGewinnt v_1.01");
-        window.setSize(520,600);
-        window.setMinimumSize(new Dimension(600,500));
-        window.setLocation(500,300);
+        window.setSize(520, 600);
+        window.setMinimumSize(new Dimension(600, 500));
+        window.setLocation(500, 300);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Buttons erzeugen
