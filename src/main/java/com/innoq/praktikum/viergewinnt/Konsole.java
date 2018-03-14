@@ -97,19 +97,10 @@ public class Konsole {
         System.out.println("3: Mittel(kann gewinnen?/2 Felder in Verbindung zueinander?)");
         System.out.println("4: Schwer (MinMax"+COLOR_RESET);
     }
-    public void gewinnText(char currentUser)
+    public void gewinnText(int currentUser)
     {
-        int spieler;
-        if(currentUser == '@')
-        {
-            spieler = 2;
-        }
-        else
-        {
-            spieler = 1;
-        }
         Animation.an_Gewinn();
-        System.out.println(BLACK_BOLD + "Der Gewinner ist Spieler " + spieler + "!");
+        System.out.println(BLACK_BOLD + "Der Gewinner ist Spieler " + currentUser + "!");
         System.out.println("Das Spiel ist zu Ende!"+COLOR_RESET);
     }
 }

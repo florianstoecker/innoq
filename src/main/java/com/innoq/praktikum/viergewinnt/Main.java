@@ -5,9 +5,11 @@ public class Main {
     //Main-Methode
     public static void main(String[] args) {
         Konsole oberflaeche = new Konsole();
+        //GUI gui = new GUI();
         Config config = new Config(oberflaeche);
         ZeichneSpielfeld zeichneSpielfeld = new ZeichneSpielfeld();
         boolean weiter = true;
+        int anDerReihe = 0;
         Spielfeld spielfeld = new Spielfeld(oberflaeche, config);
 
         Spieler s1 =  new LokalerSpieler(spielfeld, 'X', config.getAuswahlFarbeEins());
@@ -19,8 +21,8 @@ public class Main {
         zeichneSpielfeld.zeichneSpielfeld(spielfeld);
         while(weiter == true){
             switch(spielfeld.getCurrentUser()) {
-                case 'X': s = s1;oberflaeche.macheZugText(spielfeld.getCurrentUser(),spielfeld.getUserOne());break;
-                case '@': s = s2; if(config.getAuswahlGegner() == 1){oberflaeche.macheZugText(spielfeld.getCurrentUser(), spielfeld.getUserTwo());}break;
+                case 'X': s = s1;oberflaeche.macheZugText(spielfeld.getCurrentUser(),spielfeld.getUserOne());anDerReihe = 1;break;
+                case '@': s = s2; if(config.getAuswahlGegner() == 1){oberflaeche.macheZugText(spielfeld.getCurrentUser(), spielfeld.getUserTwo());}anDerReihe = 2;break;
             }
             s.macheZug();
             oberflaeche.gelegtText(spielfeld.getInsertPos() + 1);
@@ -28,7 +30,7 @@ public class Main {
             spielfeld.anzZügeHoch();
             if(spielfeld.checkWin())
             {
-               oberflaeche.gewinnText(spielfeld.getCurrentUser());
+               oberflaeche.gewinnText(anDerReihe);
                zeichneSpielfeld.zeichneSpielfeld(spielfeld);
                weiter = false;
             }
