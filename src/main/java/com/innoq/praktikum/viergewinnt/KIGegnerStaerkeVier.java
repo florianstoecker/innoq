@@ -13,11 +13,13 @@ public class KIGegnerStaerkeVier extends KIGegner {
         betrachteterSpieler = 2;
         if (kannGewinnen()) {
             spielfeld.wirfSteinEin();
+            return;
         }
         betrachteterSpieler = 1;
 
         if (kannGewinnen()) {
             spielfeld.wirfSteinEin();
+            return;
         }
 
         else {
@@ -28,6 +30,7 @@ public class KIGegnerStaerkeVier extends KIGegner {
                 spielfeld.changeUser();
             }
             spielfeld.wirfSteinEin();
+            return;
         }
     }
 }

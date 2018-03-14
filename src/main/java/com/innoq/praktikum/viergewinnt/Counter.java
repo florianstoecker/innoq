@@ -10,6 +10,7 @@ public class Counter {
         boolean signChanged = checkSign != null && !checkSign.equals(zeichen);
         if (signChanged) {
             this.counter = 0;
+            this.checkSign = '?';
         }
 
         boolean isNotEmptyField = zeichen != 'O';

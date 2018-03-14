@@ -24,7 +24,6 @@ public class Spielfeld {
     private int anzahlZüge = 0;
     private Config config;
     private int[] diagonalErgebnisse = new int[6];
-    private List<Pair> coordinates = new ArrayList<>();
     private List<List<Pair>> coordinatesList = new ArrayList<>();
     private Queue<Character> userQueue = new LinkedList<>();
 
@@ -89,6 +88,7 @@ public class Spielfeld {
 
     private void errechnePaare(int diagonalErgebnis)
     {
+        List<Pair> coordinates = new ArrayList<>();
         for(int reihe = 5; reihe >=0; reihe --)
         {
             for(int spalte = 0; spalte < 7; spalte ++)
@@ -100,10 +100,11 @@ public class Spielfeld {
                 }
             }
         }
+        coordinatesList.add(coordinates);
     }
     private void errechnePaareZwei(int diagonalErgebnis)
     {
-
+        List<Pair> coordinates = new ArrayList<>();
         for(int spalte = 6; spalte >=0; spalte --)
         {
             for(int reihe = 0; reihe < 6; reihe ++)
@@ -112,10 +113,10 @@ public class Spielfeld {
                 {
                     Pair<Integer, Integer> coordinate = new Pair<>(reihe, spalte);
                     coordinates.add(coordinate);
-                    System.out.println(coordinate);
                 }
             }
         }
+        coordinatesList.add(coordinates);
 
     }
     private void errechnePaare()
@@ -123,14 +124,13 @@ public class Spielfeld {
         for (int i = 3; i<9; i++)
         {
             errechnePaare(i);
-            coordinatesList.add(coordinates);
             errechnePaareZwei(i);
-            coordinatesList.add(coordinates);
         }
     }
     private boolean checkWinDiagonal()
     {
         errechnePaare();
+        List<Pair> coordinates;
         for(int i = 0; i<12; i++)
         {
             coordinates= coordinatesList.get(i);
