@@ -124,11 +124,11 @@ public class Config {
         return auswahlGegner;
     }
 
-    public int getAuswahlFarbeZwei() {
+    public static int getAuswahlFarbeZwei() {
         return auswahlFarbeZwei;
     }
 
-    public int getAuswahlFarbeEins() {
+    public static int getAuswahlFarbeEins() {
         return auswahlFarbeEins;
     }
 
