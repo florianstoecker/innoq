@@ -18,7 +18,7 @@ public class Main {
         oberflaeche.spielBeginnText();
         //gui.fillField(spielfeld);
         zeichneSpielfeld.zeichneSpielfeld(spielfeld);
-        while (weiter == true) {
+        while (weiter) {
             switch (spielfeld.getCurrentUser()) {
                 case 'X':
                     s = s1;
@@ -40,7 +40,7 @@ public class Main {
                 oberflaeche.gewinnText(spielfeld.getCurrentUser(), spielfeld.getWinPosition());
                 zeichneSpielfeld.zeichneSpielfeld(spielfeld);
                 weiter = false;
-            } else if (spielfeld.voll() == true) {
+            } else if (spielfeld.voll()) {
                 zeichneSpielfeld.zeichneSpielfeld(spielfeld);
                 oberflaeche.feldVollText();
                 weiter = false;

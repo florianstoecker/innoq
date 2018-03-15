@@ -1,6 +1,7 @@
 package com.innoq.praktikum.viergewinnt;
 
 public class KIGegnerStaerkeZwei extends KIGegner {
+
     public KIGegnerStaerkeZwei(Spielfeld spielfeld, char sign, int farbe) {
         super(spielfeld, sign, farbe);
     }
@@ -27,7 +28,6 @@ public class KIGegnerStaerkeZwei extends KIGegner {
                 random();
             }
             spielfeld.wirfSteinEin();
-            return;
         }
     }
 }

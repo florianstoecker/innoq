@@ -8,20 +8,18 @@ public class Spieler {
     public int farbe;
 
     //Konstruktor
-    public Spieler()
-    {
+    public Spieler() {
 
     }
-    public Spieler(Spielfeld spielfeld, char spielerZeichen, int farbe)
-    {
+
+    public Spieler(Spielfeld spielfeld, char spielerZeichen, int farbe) {
         this.spielfeld = spielfeld;
         this.spielerZeichen = spielerZeichen;
         this.farbe = farbe;
     }
 
     //Methoden
-    public void macheZug()
-    {
+    public void macheZug() {
 
     }
 }

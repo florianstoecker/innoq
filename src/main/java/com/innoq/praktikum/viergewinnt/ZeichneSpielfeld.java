@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ZeichneSpielfeld {
+
     private boolean ersterZug = true;
     private static final Map colours = new HashMap<Integer, String>();
 
@@ -22,47 +23,47 @@ public class ZeichneSpielfeld {
 
 
     //Konstruktor
-    public ZeichneSpielfeld()
-    {
+    public ZeichneSpielfeld() {
 
     }
+
     //Methoden
-    public void zeichneSpielfeld(Spielfeld spielfeld)
-    {
+    public void zeichneSpielfeld(Spielfeld spielfeld) {
         StringWriter strWriter = new StringWriter();
         strWriter.append(colours.get(9) + "|---------------------------|\n");
         strWriter.append(colours.get(9) + "| 1 | 2 | 3 | 4 | 5 | 6 | 7 |\n");
         strWriter.append(colours.get(9) + "|---------------------------|");
-        for(int i = 0; i<6; i++)
-        {
-           strWriter.append("\n|");
-            for(int j = 0; j<7; j++)
-            {
+        for (int i = 0; i < 6; i++) {
+            strWriter.append("\n|");
+            for (int j = 0; j < 7; j++) {
 
 
-                int farbe = spielfeld.getZeichenAusFarbfeld(i,j);
-                if(ersterZug == true)
-                {
-                    draw(1,strWriter,spielfeld.getZeichenAusSpielfeld(i,j));
-                }
-                else
-                {
-                    switch(farbe)
-                    {
+                int farbe = spielfeld.getZeichenAusFarbfeld(i, j);
+                if (ersterZug == true) {
+                    draw(1, strWriter, spielfeld.getZeichenAusSpielfeld(i, j));
+                } else {
+                    switch (farbe) {
                         case 0:
-                            draw(1, strWriter,spielfeld.getZeichenAusSpielfeld(i,j));break;
+                            draw(1, strWriter, spielfeld.getZeichenAusSpielfeld(i, j));
+                            break;
                         case 1:
-                            draw(3, strWriter,spielfeld.getZeichenAusSpielfeld(i,j));break;
+                            draw(3, strWriter, spielfeld.getZeichenAusSpielfeld(i, j));
+                            break;
                         case 2:
-                            draw(4, strWriter,spielfeld.getZeichenAusSpielfeld(i,j));break;
+                            draw(4, strWriter, spielfeld.getZeichenAusSpielfeld(i, j));
+                            break;
                         case 3:
-                            draw(5, strWriter,spielfeld.getZeichenAusSpielfeld(i,j));break;
+                            draw(5, strWriter, spielfeld.getZeichenAusSpielfeld(i, j));
+                            break;
                         case 4:
-                            draw(6, strWriter,spielfeld.getZeichenAusSpielfeld(i,j));break;
+                            draw(6, strWriter, spielfeld.getZeichenAusSpielfeld(i, j));
+                            break;
                         case 5:
-                            draw(7, strWriter,spielfeld.getZeichenAusSpielfeld(i,j));break;
+                            draw(7, strWriter, spielfeld.getZeichenAusSpielfeld(i, j));
+                            break;
                         case 6:
-                            draw(8, strWriter,spielfeld.getZeichenAusSpielfeld(i,j));break;
+                            draw(8, strWriter, spielfeld.getZeichenAusSpielfeld(i, j));
+                            break;
                     }
                 }
 

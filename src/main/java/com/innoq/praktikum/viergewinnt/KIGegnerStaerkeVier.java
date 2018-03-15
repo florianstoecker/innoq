@@ -18,7 +18,6 @@ public class KIGegnerStaerkeVier extends KIGegner {
 
         if (kannGewinnen()) {
             spielfeld.wirfSteinEin();
-            return;
         } else {
             char sign = spielfeld.getCurrentUser();
             spielfeld.setInsertPos(findeBestenZug(spielfeld, 3));
@@ -27,7 +26,6 @@ public class KIGegnerStaerkeVier extends KIGegner {
                 spielfeld.changeUser();
             }
             spielfeld.wirfSteinEin();
-            return;
         }
     }
 }
