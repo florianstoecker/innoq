@@ -21,7 +21,7 @@ public class KIGegnerStaerkeVier extends KIGegner {
             return;
         } else {
             char sign = spielfeld.getCurrentUser();
-            spielfeld.setInsertPos(findeBestenZug(spielfeld, 5));
+            spielfeld.setInsertPos(findeBestenZug(spielfeld, 3));
             char signTwo = spielfeld.getCurrentUser();
             if (sign != signTwo) {
                 spielfeld.changeUser();

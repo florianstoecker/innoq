@@ -93,7 +93,7 @@ public class Konsole {
         System.out.println("4: Schwer (MinMax" + COLOR_RESET);
     }
 
-    public void gewinnText(char currentUser) {
+    public void gewinnText(char currentUser, String winPosition) {
         int spieler;
         if (currentUser == '@') {
             spieler = 1;
@@ -102,6 +102,7 @@ public class Konsole {
         }
         Animation.an_Gewinn();
         System.out.println(BLACK_BOLD + "Der Gewinner ist Spieler " + spieler + "!");
+        System.out.println("Gewonnen wurde " + winPosition);
         System.out.println("Das Spiel ist zu Ende!" + COLOR_RESET);
     }
 }

@@ -8,11 +8,13 @@ public class Config {
     private static int auswahlFarbeZwei;
     private static int auswahlFarbeEins;
     private Konsole oberflaeche;
+    private GUI gui;
     public static Scanner scan = new Scanner(System.in);
 
     //Konstruktor
     public Config(Konsole oberflaeche){
         this.oberflaeche = oberflaeche;
+       // gui.gegnerAuswahlText();
         auswahlGegner = gegnerAuswahl();
         andereAbfragen();
 

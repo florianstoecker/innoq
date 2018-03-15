@@ -20,10 +20,10 @@ public class Spielfeld {
     private int anDerReihe;
     private int UserOne = 1;
     private int UserTwo = 1;
+    private String winPosition;
     private Konsole oberflaeche;
     private int anzahlZüge = 0;
     private Config config;
-    private int[] diagonalErgebnisse = new int[6];
     private List<List<Pair>> coordinatesList = new ArrayList<>();
     private Queue<Character> userQueue = new LinkedList<>();
 
@@ -81,7 +81,7 @@ public class Spielfeld {
         return true;
     }
 
-    private void errechnePaare(int diagonalErgebnis) {
+    private void errechneKoordinatenpaare(int diagonalErgebnis) {
         List<Pair> coordinates = new ArrayList<>();
         for (int reihe = 5; reihe >= 0; reihe--) {
             for (int spalte = 0; spalte < 7; spalte++) {
@@ -94,7 +94,7 @@ public class Spielfeld {
         coordinatesList.add(coordinates);
     }
 
-    private void errechnePaareZwei(int diagonalErgebnis) {
+    private void errechneKoordinatenpaareZwei(int diagonalErgebnis) {
         List<Pair> coordinates = new ArrayList<>();
         for (int spalte = 6; spalte >= 0; spalte--) {
             for (int reihe = 0; reihe < 6; reihe++) {
@@ -110,8 +110,8 @@ public class Spielfeld {
 
     private void errechnePaare() {
         for (int i = 3; i < 9; i++) {
-            errechnePaare(i);
-            errechnePaareZwei(i);
+            errechneKoordinatenpaare(i);
+            errechneKoordinatenpaareZwei(i);
         }
     }
 
@@ -124,6 +124,9 @@ public class Spielfeld {
             for (int j = 0; j < coordinates.size(); j++) {
                 Pair pair = coordinates.get(j);
                 if (winCounter.checkWin(spielfeld[(int) pair.getKey()][(int) pair.getValue()])) {
+                    int tmpOne = (int)pair.getKey() +1;
+                    int tmpTwo =(int)pair.getValue() + 1;
+                    winPosition = "Diagonal an Position Reihe:" +tmpOne+ " und Spalte:" +tmpTwo;
                     return true;
                 }
             }
@@ -137,7 +140,8 @@ public class Spielfeld {
             Counter winCounter = new Counter();
             for (int spalte = 0; spalte < 7; spalte++) {
                 if (winCounter.checkWin(spielfeld[reihe][spalte])) {
-                    System.out.println("wagerecht reihe:" + reihe);
+                    int tmp = reihe +1;
+                    winPosition = "Wagerecht in Reihe " + tmp;
                     return true;
                 }
             }
@@ -150,7 +154,8 @@ public class Spielfeld {
             Counter winCounter = new Counter();
             for (int reihe = 5; reihe >= 0; reihe--) {
                 if (winCounter.checkWin(spielfeld[reihe][spalte])) {
-                    System.out.println("senkrecht spalte:" + spalte);
+                    int tmp = spalte +1;
+                    winPosition = "Senkrecht in Spalte " + tmp;
                     return true;
                 }
             }
@@ -238,6 +243,10 @@ public class Spielfeld {
     }
 
     // Get- & Set-Methoden
+    public String getWinPosition()
+    {
+        return winPosition;
+    }
     public Character getCurrentUser() {
         return userQueue.element();
     }
