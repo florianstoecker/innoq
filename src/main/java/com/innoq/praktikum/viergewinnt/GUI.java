@@ -153,10 +153,10 @@ public class GUI extends JFrame {
             Graphics2D g2 = (Graphics2D) g;
             g2.setStroke(new BasicStroke(2f));
             g2.setColor(Color.BLACK);
-            for(int i = 105; i<660; i = i+80) {
+            for (int i = 105; i < 660; i = i + 80) {
                 g2.draw(new Line2D.Double(70, i, 630, i));
             }
-            for(int i = 70; i<640; i = i+80) {
+            for (int i = 70; i < 640; i = i + 80) {
                 g2.draw(new Line2D.Double(i, 110, i, 585));
             }
         }
