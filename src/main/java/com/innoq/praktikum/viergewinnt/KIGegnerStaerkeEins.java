@@ -9,7 +9,6 @@ public class KIGegnerStaerkeEins extends KIGegner {
         random();
         if (spielfeld.probeEinfügen(spielfeld.getInsertPos())) {
             spielfeld.wirfSteinEin();
-            return;
         } else {
             macheZug();
         }

@@ -1,6 +1,7 @@
 package com.innoq.praktikum.viergewinnt;
 
 public class Konsole {
+
     private static final String BLACK_BOLD = "\033[1;30m";
     private static final String COLOR_RESET = "\u001B[0m";
 

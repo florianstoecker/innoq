@@ -7,7 +7,6 @@ import java.util.*;
 
 public class Spielfeld {
 
-
     private int farbe;
     public int insertPos;
     private char[][] spielfeld = new char[6][7];
@@ -120,9 +119,9 @@ public class Spielfeld {
             for (int j = 0; j < coordinates.size(); j++) {
                 Pair pair = coordinates.get(j);
                 if (winCounter.checkWin(spielfeld[(int) pair.getKey()][(int) pair.getValue()])) {
-                    int tmpOne = (int)pair.getKey() +1;
-                    int tmpTwo =(int)pair.getValue() + 1;
-                    winPosition = "Diagonal an Position Reihe:" +tmpOne+ " und Spalte:" +tmpTwo;
+                    int tmpOne = (int) pair.getKey() + 1;
+                    int tmpTwo = (int) pair.getValue() + 1;
+                    winPosition = "Diagonal an Position Reihe:" + tmpOne + " und Spalte:" + tmpTwo;
                     return true;
                 }
             }
@@ -136,7 +135,7 @@ public class Spielfeld {
             Counter winCounter = new Counter();
             for (int spalte = 0; spalte < 7; spalte++) {
                 if (winCounter.checkWin(spielfeld[reihe][spalte])) {
-                    int tmp = reihe +1;
+                    int tmp = reihe + 1;
                     winPosition = "Wagerecht in Reihe " + tmp;
                     return true;
                 }
@@ -150,7 +149,7 @@ public class Spielfeld {
             Counter winCounter = new Counter();
             for (int reihe = 5; reihe >= 0; reihe--) {
                 if (winCounter.checkWin(spielfeld[reihe][spalte])) {
-                    int tmp = spalte +1;
+                    int tmp = spalte + 1;
                     winPosition = "Senkrecht in Spalte " + tmp;
                     return true;
                 }
@@ -239,10 +238,10 @@ public class Spielfeld {
     }
 
     // Get- & Set-Methoden
-    public String getWinPosition()
-    {
+    public String getWinPosition() {
         return winPosition;
     }
+
     public Character getCurrentUser() {
         return userQueue.element();
     }

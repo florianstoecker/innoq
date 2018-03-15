@@ -3,7 +3,7 @@ package com.innoq.praktikum.viergewinnt;
 public class Counter {
 
     private int counter = 0;
-    private Character checkSign = new Character('?');
+    private Character checkSign = '?';
 
     public boolean checkWin(Character zeichen) {
 

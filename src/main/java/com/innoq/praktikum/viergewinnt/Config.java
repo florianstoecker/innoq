@@ -3,6 +3,7 @@ package com.innoq.praktikum.viergewinnt;
 import java.util.Scanner;
 
 public class Config {
+
     private static int auswahlGegner;
     private static int beginner;
     private static int auswahlFarbeZwei;
@@ -12,22 +13,20 @@ public class Config {
     public static Scanner scan = new Scanner(System.in);
 
     //Konstruktor
-    public Config(Konsole oberflaeche){
+    public Config(Konsole oberflaeche) {
         this.oberflaeche = oberflaeche;
-       // gui.gegnerAuswahlText();
+        // gui.gegnerAuswahlText();
         auswahlGegner = gegnerAuswahl();
         andereAbfragen();
 
     }
 
     //Methoden
-    public int gegnerAuswahl()   // Menü - Gegnerauswahl
-    {
+    public int gegnerAuswahl() { // Menü - Gegnerauswahl
 
         oberflaeche.gegnerAuswahlText();
         auswahlGegner = scan.nextInt();
-        if(auswahlGegner != 2 && auswahlGegner != 1 )
-        {
+        if (auswahlGegner != 2 && auswahlGegner != 1) {
             oberflaeche.clear();
             oberflaeche.falscheEingabeText();
             return gegnerAuswahl();
@@ -35,13 +34,12 @@ public class Config {
         oberflaeche.clear();
         return auswahlGegner;
     }
-    public void auswahlBeginn()
-    {
+
+    public void auswahlBeginn() {
         oberflaeche.clear();
         oberflaeche.auswahlBeginnText();
         beginner = scan.nextInt();
-        if(beginner != 2 && beginner != 1 )
-        {
+        if (beginner != 2 && beginner != 1) {
             oberflaeche.clear();
             oberflaeche.falscheEingabeText();
             auswahlBeginn();
@@ -50,8 +48,8 @@ public class Config {
         }
         oberflaeche.clear();
     }
-    public void farbeAuswaehlen()
-    {
+
+    public void farbeAuswaehlen() {
         int zahlSpieler = 1;
         auswahlFarbeEins = auswahlFarbe(zahlSpieler); // Farben für Spieler werden in Zwischenspeichervariabeln gespeichert
         zahlSpieler++;
@@ -59,91 +57,78 @@ public class Config {
         auswahlFarbeZwei = auswahlFarbe(zahlSpieler);
         oberflaeche.clear();//Übergabe von Farbe und Auswahl des Gegners
     }
-    public int auswahlFarbe(int zahlSpieler) // Farbe für Spieler auswählen
-    {
+
+    public int auswahlFarbe(int zahlSpieler) {
         int auswahlFarbe = 0;
         oberflaeche.auswahlFarbeText(zahlSpieler);
         auswahlFarbe = scan.nextInt();
-        if(auswahlFarbe > 6 || auswahlFarbe < 1)
-        {
+        if (auswahlFarbe > 6 || auswahlFarbe < 1) {
             oberflaeche.falscheEingabeText();
             return auswahlFarbe(zahlSpieler);
         }
         return auswahlFarbe;
     }
-    private KIGegner kiErstellen(int kiStaerke, Spielfeld spielfeld, char sign, int anfänger)
-    {
-        switch(kiStaerke)
-        {
-            case 1: oberflaeche.clear();return new KIGegnerStaerkeEins(spielfeld, '@', anfänger);
 
-            case 2: oberflaeche.clear();return new KIGegnerStaerkeZwei(spielfeld, '@', anfänger);
+    private KIGegner kiErstellen(int kiStaerke, Spielfeld spielfeld, char sign, int anfänger) {
+        oberflaeche.clear();
 
-            case 3: oberflaeche.clear();return new KIGegnerStaerkeDrei(spielfeld, '@', anfänger);
+        switch (kiStaerke) {
+            case 1:
+                return new KIGegnerStaerkeEins(spielfeld, '@', anfänger);
 
-            case 4: oberflaeche.clear();return new KIGegnerStaerkeVier(spielfeld, '@', anfänger);
+            case 2:
+                return new KIGegnerStaerkeZwei(spielfeld, '@', anfänger);
+
+            case 3:
+                return new KIGegnerStaerkeDrei(spielfeld, '@', anfänger);
+
+            case 4:
+                return new KIGegnerStaerkeVier(spielfeld, '@', anfänger);
 
         }
         return null;
     }
-    public Spieler spielerZweiAuswaehlen(Spielfeld spielfeld, char sign, int anfänger)
-    {
-        if (auswahlGegner == 2)
-        {
+
+    public Spieler spielerZweiAuswaehlen(Spielfeld spielfeld, char sign, int anfänger) {
+        if (auswahlGegner == 2) {
             return kiErstellen(staerkeAuswahl(), spielfeld, sign, anfänger);
         }
-        if(auswahlGegner == 1)
-        {
+        if (auswahlGegner == 1) {
             oberflaeche.clear();
             return new LokalerSpieler(spielfeld, sign, anfänger);
         }
         return null;
     }
-    public boolean nochmal()
-    {
-        oberflaeche.nochmalText();
-        int nochmal = scan.nextInt();
-        if (nochmal == 1) {
-            oberflaeche.clear();
-            return true;
-        } else if (nochmal == 2)
-        {
-            return false;
-        }
-        return false;
-    }
-    public int staerkeAuswahl() // KI - Stärkeauswahl
-    {
+
+    public int staerkeAuswahl() {
         oberflaeche.staerkeAuswahlText();
         int dif = scan.nextInt();
-        if(dif>0 && dif <5)
-        {
+        if (dif > 0 && dif < 5) {
             return dif;
         }
         return staerkeAuswahl();
     }
-    public void andereAbfragen()
-    {
+
+    public void andereAbfragen() {
         auswahlBeginn();
         farbeAuswaehlen();
         oberflaeche.clear();
     }
 
     //Get und Set Methoden
-    public int getBeginner()
-    {
+    public int getBeginner() {
         return beginner;
     }
-    public int getAuswahlGegner()
-    {
+
+    public int getAuswahlGegner() {
         return auswahlGegner;
     }
-    public static int getAuswahlFarbeZwei()
-    {
+
+    public int getAuswahlFarbeZwei() {
         return auswahlFarbeZwei;
     }
-    public static int getAuswahlFarbeEins()
-    {
+
+    public int getAuswahlFarbeEins() {
         return auswahlFarbeEins;
     }
 
