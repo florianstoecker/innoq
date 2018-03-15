@@ -1,12 +1,8 @@
 package com.innoq.praktikum.viergewinnt;
 
-import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 import javafx.util.Pair;
 
 import java.util.*;
-import java.io.PrintWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 
 
 public class Spielfeld {

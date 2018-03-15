@@ -2,7 +2,6 @@ package com.innoq.praktikum.viergewinnt;
 
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.geom.Line2D;
 import java.util.HashMap;
