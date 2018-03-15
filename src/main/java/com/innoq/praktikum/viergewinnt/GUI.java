@@ -2,6 +2,7 @@ package com.innoq.praktikum.viergewinnt;
 
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.geom.Line2D;
 import java.util.HashMap;
@@ -17,6 +18,17 @@ public class GUI extends JFrame {
     private static final Map colours = new HashMap<Integer, String>();
     Graphics g;
     Component rand = new MyCanvas();
+    static {
+        colours.put(1, "\033[0;97m"); //WHITE
+        colours.put(2, "\u001B[0m"); //COLOR_RESET
+        colours.put(3, "\u001B[32m"); //GREEN
+        colours.put(4, "\u001B[31m"); //RED
+        colours.put(5, "\u001B[33m"); //YELLOW
+        colours.put(6, "\u001B[34m"); //BLUE
+        colours.put(7, "\u001B[35m"); //PURPLE
+        colours.put(8, "\u001B[36m"); //CYAN
+        colours.put(9, "\u001B[30m"); //BLACK
+    }
     public GUI() {
         window.setSize(new Dimension(700, 700));
         window.setLocation(500, 300);
@@ -34,28 +46,35 @@ public class GUI extends JFrame {
         standardButtonTwo = new JButton();
         panelButton = new JPanel();
 
+
         //Auf Panel Buttons packen
         panelButton.setSize(600,50);
         panelButton.setLocation(50,65);
         panelButton.add(button1);
+        button1.setPreferredSize(new Dimension(75, 40));
         panelButton.add(button2);
+        button2.setPreferredSize(new Dimension(75, 40));
         panelButton.add(button3);
+        button3.setPreferredSize(new Dimension(75, 40));
         panelButton.add(button4);
+        button4.setPreferredSize(new Dimension(75, 40));
         panelButton.add(button5);
+        button5.setPreferredSize(new Dimension(75, 40));
         panelButton.add(button6);
+        button6.setPreferredSize(new Dimension(75, 40));
         panelButton.add(button7);
+        button7.setPreferredSize(new Dimension(75, 40));
         title = new JLabel("vier Gewinnt !");
         title.setHorizontalAlignment(JLabel.CENTER);
         window.add(BorderLayout.PAGE_START, title);
-        window.add(panelButton);
-        window.setVisible(true);
+        window.setVisible(false);
     }
 
 
-    public void gegnerAuswahl() {
+    public void gegnerAuswahlText() {
         window.setVisible(false);
         window.getContentPane().removeAll();
-        JLabel sign = new JLabel("Wählen Sie gegen wen Sie spielen möchten(Spieler 2):");
+        JLabel sign = new JLabel("4 Gewinnt! \n Wählen Sie gegen wen Sie spielen möchten(Spieler 2):");
         standardButtonOne = new JButton("Weiterer Lokaler Spieler");
         standardButtonTwo= new JButton("Künstliche Intelligenz");
         standardButtonTwo.setSize(75,40);
@@ -65,7 +84,7 @@ public class GUI extends JFrame {
         panelButton.add(standardButtonTwo);
         sign.setHorizontalAlignment(JLabel.CENTER);
         sign.setSize(100,30);
-        window.add(sign);
+        window.add(BorderLayout.CENTER,sign);
         window.add(panelButton);
         window.setVisible(true);
     }
@@ -117,21 +136,20 @@ public class GUI extends JFrame {
 
     public void repaint(Spielfeld spielfeld)
     {
-        window.setVisible(false);
         window.getContentPane().removeAll();
         fillField(spielfeld);
-        window.setVisible(true);
+        SwingUtilities.updateComponentTreeUI(window);
     }
     class MyCanvas extends JComponent {
         public void paint(Graphics g) {
             Graphics2D g2 = (Graphics2D) g;
             g2.setStroke(new BasicStroke(2f));
             g2.setColor(Color.BLACK);
-            for(int i = 100; i<660; i = i+80) {
+            for(int i = 105; i<660; i = i+80) {
                 g2.draw(new Line2D.Double(70, i, 630, i));
             }
             for(int i = 70; i<640; i = i+80) {
-                g2.draw(new Line2D.Double(i, 100, i, 580));
+                g2.draw(new Line2D.Double(i, 110, i, 585));
                 }
         }
 

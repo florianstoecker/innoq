@@ -16,7 +16,7 @@ public class Main {
         Spieler s = s1;
 
         oberflaeche.spielBeginnText();
-        //gui.fillField(spielfeld);
+        gui.fillField(spielfeld);
         zeichneSpielfeld.zeichneSpielfeld(spielfeld);
         while (weiter == true) {
             switch (spielfeld.getCurrentUser()) {
@@ -33,7 +33,7 @@ public class Main {
             }
             s.macheZug();
             oberflaeche.gelegtText(spielfeld.getInsertPos() + 1);
-            //gui.repaint(spielfeld);
+            gui.repaint(spielfeld);
             zeichneSpielfeld.zeichneSpielfeld(spielfeld);
             spielfeld.anzahlZügeHoch();
             if (spielfeld.checkWin()) {
