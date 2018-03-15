@@ -5,7 +5,7 @@ public class Main {
     //Main-Methode
     public static void main(String[] args) {
         Konsole oberflaeche = new Konsole();
-        //GUI gui = new GUI();
+        GUI gui = new GUI();
         Config config = new Config(oberflaeche);
         ZeichneSpielfeld zeichneSpielfeld = new ZeichneSpielfeld();
         Spielfeld spielfeld = new Spielfeld(oberflaeche, config);
