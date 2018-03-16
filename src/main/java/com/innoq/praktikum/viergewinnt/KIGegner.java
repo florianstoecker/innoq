@@ -628,7 +628,7 @@ public class KIGegner extends Spieler {
     private int findeSpalte(int besterZug, int[] wertefeld) {
         int spalte = 0;
         for (int i = 0; i < 7; i++) {
-            if (wertefeld[i] == besterZug) {
+            if (wertefeld[i] == besterZug && spielfeld.probeEinfügen(i)) {
                 spalte = i;
             }
         }
@@ -841,6 +841,7 @@ public class KIGegner extends Spieler {
 
     private Spielfeld kopieAnlegen(Spielfeld spiel) {
         Spielfeld spielfeldTmp = new Spielfeld();
+        spielfeldTmp.setConfig(spielfeld.getConfig());
         spielfeldTmp.setUserQueue(spiel.getUserQueue());
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 6; j++) {

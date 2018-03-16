@@ -44,37 +44,6 @@ public class Konsole {
         System.out.println(BLACK_BOLD + "Spalte " + spalte + 1 + " ist voll!" + COLOR_RESET);
     }
 
-    public void auswahlBeginnText() {
-        System.out.println(BLACK_BOLD + "Wer Soll anfangen ?");
-        System.out.println("1: Spieler 1");
-        System.out.println("2: Spieler 2" + COLOR_RESET);
-    }
-
-    public void gegnerAuswahlText() {
-        System.out.println(BLACK_BOLD + "\n\n           4 Gewinnt!\n\n");
-        System.out.println("Wählen Sie gegen wen Sie spielen möchten(Spieler 2):\n\n");
-        System.out.println("1: Weiterer lokaler Spieler\n");
-        System.out.println("2: Künstliche Intelligenz" + COLOR_RESET);
-    }
-
-    public void falscheEingabeText() {
-        System.out.println(BLACK_BOLD + "Falsche Eingabe!" + COLOR_RESET);
-    }
-
-    public void spielBeginnText() {
-        System.out.println(BLACK_BOLD + "Das Spiel beginnt !" + COLOR_RESET);
-    }
-
-    public void auswahlFarbeText(int zahlSpieler) {
-        System.out.println(BLACK_BOLD + "Wählen sie eine Farbe für Spieler " + zahlSpieler);
-        System.out.println("1: Grün");
-        System.out.println("2: Rot");
-        System.out.println("3: Gelb");
-        System.out.println("4: Blau");
-        System.out.println("5: Lila");
-        System.out.println("6: Cyan" + COLOR_RESET);
-    }
-
     public void macheZugText(char currentUser, int anzZugEinz) {
         int spieler;
         if (currentUser == '@') {
@@ -86,13 +55,7 @@ public class Konsole {
 
     }
 
-    public void staerkeAuswahlText() {
-        System.out.println(BLACK_BOLD + "Wählen Sie die Stärke der KI:");
-        System.out.println("1: Zufallszug");
-        System.out.println("2: Einfach(Eigene Steine belegen)");
-        System.out.println("3: Mittel(kann gewinnen?/2 Felder in Verbindung zueinander?)");
-        System.out.println("4: Schwer (MinMax" + COLOR_RESET);
-    }
+
 
     public void gewinnText(char currentUser, String winPosition) {
         int spieler;

@@ -6,18 +6,16 @@ public class Main {
     public static void main(String[] args) {
         Konsole oberflaeche = new Konsole();
         GUI gui = new GUI();
-        Config config = new Config(oberflaeche);
+        Config config = new Config(gui);
         ZeichneSpielfeld zeichneSpielfeld = new ZeichneSpielfeld();
         Spielfeld spielfeld = new Spielfeld(oberflaeche, config);
+        gui.setSpielfeld(spielfeld);
+        gui.setConfig(config);
         boolean weiter = true;
-        Spieler s1 = new LokalerSpieler(spielfeld, 'X', config.getAuswahlFarbeEins());
-        Spieler s2 = config.spielerZweiAuswaehlen(spielfeld, '@', config.getAuswahlFarbeZwei());
+        Spieler s1 = new LokalerSpieler(spielfeld, 'X', config.getAuswahlFarbeEins(), gui);
+        Spieler s2 = config.spielerZweiAuswaehlen(spielfeld, '@', config.getAuswahlFarbeZwei(), gui);
 
         Spieler s = s1;
-
-        oberflaeche.spielBeginnText();
-        gui.fillField(spielfeld);
-        zeichneSpielfeld.zeichneSpielfeld(spielfeld);
         while (weiter) {
             switch (spielfeld.getCurrentUser()) {
                 case 'X':
@@ -31,18 +29,16 @@ public class Main {
                     }
                     break;
             }
-            s.macheZug();
-            oberflaeche.gelegtText(spielfeld.getInsertPos() + 1);
             gui.repaint(spielfeld);
             zeichneSpielfeld.zeichneSpielfeld(spielfeld);
+            s.macheZug();
             spielfeld.anzahlZügeHoch();
             if (spielfeld.checkWin()) {
-                oberflaeche.gewinnText(spielfeld.getCurrentUser(), spielfeld.getWinPosition());
+                gui.gewinn(spielfeld.getCurrentUser(), spielfeld.getWinPosition());
                 zeichneSpielfeld.zeichneSpielfeld(spielfeld);
                 weiter = false;
             } else if (spielfeld.voll()) {
-                zeichneSpielfeld.zeichneSpielfeld(spielfeld);
-                oberflaeche.feldVollText();
+                gui.repaint(spielfeld);
                 weiter = false;
             }
         }

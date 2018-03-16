@@ -38,15 +38,6 @@ public class Spielfeld {
             userQueue.add('X');
         }
     }
-
-    private Spielfeld(char[][] spielfeld, int anzahlZüge, Konsole oberflaeche) {
-        this.spielfeld = Arrays.copyOf(spielfeld, spielfeld.length);
-        this.anDerReihe = anDerReihe;
-        this.anzahlZüge = anzahlZüge;
-        this.oberflaeche = oberflaeche;
-    }
-
-
     //Methoden
     //Felder leeren
     private void initFelder() {
@@ -289,7 +280,14 @@ public class Spielfeld {
     public char getZeichenAusSpielfeld(int i, int j) {
         return spielfeld[i][j];
     }
-
+    public Config getConfig()
+    {
+        return config;
+    }
+    public void setConfig(Config config)
+    {
+        this.config = config;
+    }
     public int getZeichenAusFarbfeld(int i, int j) {
         return farbfeld[i][j];
     }
