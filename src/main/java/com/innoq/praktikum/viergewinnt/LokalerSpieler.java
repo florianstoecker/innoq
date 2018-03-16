@@ -3,35 +3,40 @@ package com.innoq.praktikum.viergewinnt;
 import java.util.Scanner;
 
 public class LokalerSpieler extends Spieler {
-    Scanner scan = new Scanner(System.in);
     private int anzZugEinz;
+    private GUI gui;
 
     //Konstruktor
-    public LokalerSpieler(Spielfeld spielfeld, char sign, int anfänger)
-    {
-      super(spielfeld, sign, anfänger);
-      anzZugEinz = 0;
+    public LokalerSpieler(Spielfeld spielfeld, char sign, int farbe, GUI gui) {
+        super(spielfeld, sign, farbe);
+        this.gui = gui;
+        anzZugEinz = 0;
     }
+
     //Methoden
-    public void macheZug()
-    {
-        int anDerReihe = spielfeld.getAnDerReihe();
+    public void macheZug() {
         int spaltenAuswahl;
-        spaltenAuswahl = scan.nextInt() - 1;
-        spielfeld.setInsertPos(spaltenAuswahl);
-        if(spielfeld.legalerZug() == true)
+        while(!gui.getClicked())
         {
-            spielfeld.setInsertPos(spaltenAuswahl);
-            spielfeld.wirfSteinEin();
-        }
-            else
+            try
             {
+                Thread.sleep(5);
+            }
+            catch(InterruptedException ex)
+            {
+                Thread.currentThread().interrupt();
+            }
+        }
+        spaltenAuswahl = spielfeld.getInsertPos();
+            if (spielfeld.probeEinfügen(spaltenAuswahl)) {
+                spielfeld.setInsertPos(spaltenAuswahl);
+                spielfeld.wirfSteinEin();
+                anzZugEinz++;
+            }
+            else {
                 macheZug();
             }
-            anzZugEinz ++;
-    }
-    public int getAnzZugEinz()
-    {
-        return anzZugEinz;
+        gui.setClicked(false);
     }
 }
+

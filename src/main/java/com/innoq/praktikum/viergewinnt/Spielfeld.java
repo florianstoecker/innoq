@@ -1,16 +1,11 @@
 package com.innoq.praktikum.viergewinnt;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Scanner;
-import java.io.PrintWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import javafx.util.Pair;
+
+import java.util.*;
 
 
 public class Spielfeld {
-
 
     private int farbe;
     public int insertPos;
@@ -18,198 +13,162 @@ public class Spielfeld {
     private int[][] farbfeld = new int[6][7];
     private char zeichenSpieler;
     private int anDerReihe;
+    private int UserOne = 1;
+    private int UserTwo = 1;
+    private String winPosition;
     private Konsole oberflaeche;
     private int anzahlZüge = 0;
     private Config config;
-
+    private List<List<Pair>> coordinatesList = new ArrayList<>();
     private Queue<Character> userQueue = new LinkedList<>();
 
     //Konstruktor
-    public Spielfeld()
-    {}
-    public Spielfeld( Konsole oberflaeche, Config config, ZeichneSpielfeld zeichneSpielfeld) {
+    public Spielfeld() {
+    }
+
+    public Spielfeld(Konsole oberflaeche, Config config) {
         this.oberflaeche = oberflaeche;
         this.config = config;
-        initSpielfeld();
-        initFarbfeld();
-
-        userQueue.add('X');
-        userQueue.add('@');
-    }
-
-    private Spielfeld(char[][] spielfeld, int anDerReihe, int anzahlZüge, Konsole oberflaeche) {
-        this.spielfeld = Arrays.copyOf(spielfeld, spielfeld.length);
-        this.anDerReihe = anDerReihe;
-        this.anzahlZüge = anzahlZüge;
-        this.oberflaeche = oberflaeche;
-    }
-
-    //Methoden
-
-    //Felder leeren
-    private void initSpielfeld()
-    {
-        for(int i = 0; i<6; i++)
-        {
-            for(int j = 0; j<7; j++)
-            {
-                spielfeld[i][j] = 'O';
-            }
+        initFelder();
+        if (config.getBeginner() == 1) {
+            userQueue.add('X');
+            userQueue.add('@');
+        } else if (config.getBeginner() == 2) {
+            userQueue.add('@');
+            userQueue.add('X');
         }
     }
-    public void initFarbfeld()
-    {
-
-        for(int i = 0; i<6; i++)
-        {
-            for(int j = 0; j<7; j++)
-            {
+    //Methoden
+    //Felder leeren
+    private void initFelder() {
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 7; j++) {
+                spielfeld[i][j] = 'O';
                 farbfeld[i][j] = 0;
             }
         }
     }
 
-    private void changeUser() {
-        Character currentUser = userQueue.poll();
+    //Spielmethoden
+    public void changeUser() {
+        char currentUser = userQueue.poll();
         userQueue.add(currentUser);
     }
 
-    private Character getCurrentUser() {
-        return userQueue.peek();
+    public boolean voll() {
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 7; j++) {
+                if (spielfeld[i][j] == 'O') {
+                    return false;
+                }
+            }
+
+        }
+        return true;
     }
 
-    private boolean checkWin(int i, int j, int factor) {
-        return spielfeld[i][j + 1] == zeichenSpieler && spielfeld[i][j + 2] == zeichenSpieler && spielfeld[i][j + 3] == zeichenSpieler;
+    private void errechneKoordinatenpaare(int diagonalErgebnis) {
+        List<Pair> coordinates = new ArrayList<>();
+        for (int reihe = 5; reihe >= 0; reihe--) {
+            for (int spalte = 0; spalte < 7; spalte++) {
+                if (reihe + spalte == diagonalErgebnis) {
+                    Pair<Integer, Integer> coordinate = new Pair<>(reihe, spalte);
+                    coordinates.add(coordinate);
+                }
+            }
+        }
+        coordinatesList.add(coordinates);
     }
 
-
-    //Spielmethoden
-    public boolean gewinn()
-    {
-        char zeichenSpieler = 'D';
-        if (anDerReihe == 1)
-        {
-            zeichenSpieler = 'X';
+    private void errechneKoordinatenpaareZwei(int diagonalErgebnis) {
+        List<Pair> coordinates = new ArrayList<>();
+        for (int spalte = 6; spalte >= 0; spalte--) {
+            for (int reihe = 0; reihe < 6; reihe++) {
+                if (reihe + spalte == diagonalErgebnis) {
+                    Pair<Integer, Integer> coordinate = new Pair<>(reihe, spalte);
+                    coordinates.add(coordinate);
+                }
+            }
         }
-        else if (anDerReihe == 2)
-        {
-            zeichenSpieler = '@';
+        coordinatesList.add(coordinates);
+
+    }
+
+    private void errechnePaare() {
+        for (int i = 3; i < 9; i++) {
+            errechneKoordinatenpaare(i);
+            errechneKoordinatenpaareZwei(i);
+        }
+    }
+
+    private boolean checkWinDiagonal() {
+        errechnePaare();
+        List<Pair> coordinates;
+        for (int i = 0; i < 12; i++) {
+            coordinates = coordinatesList.get(i);
+            Counter winCounter = new Counter();
+            for (int j = 0; j < coordinates.size(); j++) {
+                Pair pair = coordinates.get(j);
+                if (winCounter.checkWin(spielfeld[(int) pair.getKey()][(int) pair.getValue()])) {
+                    int tmpOne = (int) pair.getKey() + 1;
+                    int tmpTwo = (int) pair.getValue() + 1;
+                    winPosition = "Diagonal an Position Reihe:" + tmpOne + " und Spalte:" + tmpTwo;
+                    return true;
+                }
+            }
         }
 
-        for (int i = 0; i < 6; i++)
-        {
-            for (int j = 0; j < 7; j++)
-            {
-                if (spielfeld[i][j] == zeichenSpieler)
-                {
-                    if (j < 4) // wagerecht
-                    {
-                        if (spielfeld[i][j + 1] == zeichenSpieler && spielfeld[i][j + 2] == zeichenSpieler && spielfeld[i][j + 3] == zeichenSpieler)
-                        {
-                            return true;
-                        }
-                    }
-                    else if (j > 3) // wagerecht
-                    {
-                        if (spielfeld[i][j - 1] == zeichenSpieler && spielfeld[i][j - 2] == zeichenSpieler && spielfeld[i][j - 3] == zeichenSpieler)
-                        {
-                            return true;
-                        }
-                    }
-                    if (i < 3)
-                    {
-                        // senkrecht
-                        if (spielfeld[i + 1][j] == zeichenSpieler && spielfeld[i + 2][j] == zeichenSpieler && spielfeld[i + 3][j] == zeichenSpieler)
-                        {
-                            return true;
-                        }
-                        else if (j < 3) //diagonal
-                        {
-                            if (spielfeld[i + 1][j + 1] == zeichenSpieler && spielfeld[i + 2][j + 2] == zeichenSpieler && spielfeld[i + 3][j + 3] == zeichenSpieler)
-                            {
-                                return true;
-                            }
-                        }
-                        else if (j == 3) //diagonal
-                        {
-                            if (spielfeld[i + 1][j + 1] == zeichenSpieler && spielfeld[i + 2][j + 2] == zeichenSpieler && spielfeld[i + 3][j + 3] == zeichenSpieler)
-                            {
-                                return true;
-                            }
-                            else if (spielfeld[i + 1][j - 1] == zeichenSpieler && spielfeld[i + 2][j - 2] == zeichenSpieler && spielfeld[i + 3][j - 3] == zeichenSpieler)
-                            {
-                                return true;
-                            }
-                        }
-                        else if (j > 3)  //diagonal
-                        {
-                            if (spielfeld[i + 1][j - 1] == zeichenSpieler && spielfeld[i + 2][j - 2] == zeichenSpieler && spielfeld[i + 3][j - 3] == zeichenSpieler)
-                            {
-                                return true;
-                            }
-                        }
-                    }
+        return false;
+    }
 
-                    else if (i > 2)
-                    {
-                        // senkrecht
-                        if (spielfeld[i - 1][j] == zeichenSpieler && spielfeld[i - 2][j] == zeichenSpieler && spielfeld[i - 3][j] == zeichenSpieler)
-                        {
-                            return true;
-                        }
-                        if (j < 3) //diagonal
-                        {
-                            if (spielfeld[i - 1][j + 1] == zeichenSpieler && spielfeld[i - 2][j + 2] == zeichenSpieler && spielfeld[i - 3][j + 3] == zeichenSpieler)
-                            {
-
-                            }
-                        }
-                        else if (j == 3) //diagonal
-                        {
-                            if (spielfeld[i - 1][j + 1] == zeichenSpieler && spielfeld[i - 2][j + 2] == zeichenSpieler && spielfeld[i - 3][j + 3] == zeichenSpieler)
-                            {
-                                return true;
-                            }
-                            else if (spielfeld[i - 1][j - 1] == zeichenSpieler && spielfeld[i - 2][j - 2] == zeichenSpieler && spielfeld[i - 3][j - 3] == zeichenSpieler)
-                            {
-                                return true;
-                            }
-                        }
-                        else if (j > 3) //diagonal
-                        {
-                            if (spielfeld[i - 1][j - 1] == zeichenSpieler && spielfeld[i - 2][j - 2] == zeichenSpieler && spielfeld[i - 3][j - 3] == zeichenSpieler)
-                            {
-                                return true;
-                            }
-                        }
-                    }
+    private boolean checkWinWagerecht() {
+        for (int reihe = 5; reihe >= 0; reihe--) {
+            Counter winCounter = new Counter();
+            for (int spalte = 0; spalte < 7; spalte++) {
+                if (winCounter.checkWin(spielfeld[reihe][spalte])) {
+                    int tmp = reihe + 1;
+                    winPosition = "Wagerecht in Reihe " + tmp;
+                    return true;
                 }
             }
         }
         return false;
     }
-    public  void wechseln()
-    {
-        if(anDerReihe == 1)
-        {
-            anDerReihe = 2;
-        }
-        else if(anDerReihe == 2)
-        {
-            anDerReihe = 1;
-        }
-    }
-    public void wirfSteinEin()
-    {
-        int insertPosy = 5;
-        if(insertPos >= 0 && insertPos < 7) {
 
-            if (anDerReihe == 1) {
-                zeichenSpieler = 'X';
+    private boolean checkWinSenkrecht() {
+        for (int spalte = 0; spalte < 7; spalte++) {
+            Counter winCounter = new Counter();
+            for (int reihe = 5; reihe >= 0; reihe--) {
+                if (winCounter.checkWin(spielfeld[reihe][spalte])) {
+                    int tmp = spalte + 1;
+                    winPosition = "Senkrecht in Spalte " + tmp;
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean checkWin() {
+        if (anzahlZüge >= 8) {
+            if (checkWinSenkrecht() || checkWinWagerecht() || checkWinDiagonal()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void wirfSteinEin() {
+        int insertPosy = 5;
+        if (insertPos >= 0 && insertPos < 7) {
+            if (getCurrentUser() == 'X') {
                 farbe = config.getAuswahlFarbeEins();
-            } else if (anDerReihe == 2) {
-                zeichenSpieler = '@';
+                zeichenSpieler = 'X';
+                UserOne++;
+            } else {
                 farbe = config.getAuswahlFarbeZwei();
+                UserTwo++;
+                zeichenSpieler = '@';
             }
 
             if (spielfeld[insertPosy][insertPos] == 'O') {
@@ -224,88 +183,18 @@ public class Spielfeld {
                 farbfeld[insertPosy][insertPos] = farbe;
             }
         }
-        anzahlZüge++;
-        wechseln();
 
+        changeUser();
     }
-    public void wirfSteinEinKI(char zeichen)
-    {
-        int insertPosy = 5;
-        if(insertPos >= 0 && insertPos < 7) {
-
-            if (anDerReihe == 1) {
-                zeichenSpieler = 'X';
-                farbe = config.getAuswahlFarbeEins();
-            } else if (anDerReihe == 2) {
-                zeichenSpieler = '@';
-                farbe = config.getAuswahlFarbeZwei();
-            }
-
-            if (spielfeld[insertPosy][insertPos] == 'O') {
-                spielfeld[insertPosy][insertPos] = zeichen;
-                farbfeld[insertPosy][insertPos] = farbe;
-
-            } else {
-                while (spielfeld[insertPosy][insertPos] == 'X' || spielfeld[insertPosy][insertPos] == '@') {
-                    insertPosy--;
-                }
-                spielfeld[insertPosy][insertPos] = zeichen;
-                farbfeld[insertPosy][insertPos] = farbe;
-            }
-        }
-    }
-
 
     // Darf das Feld belegt werden?
-    public boolean legalerZug()
-    {
-        int insertPosy = 5;
-
-        if(insertPos >= 0 && insertPos < 7)
-        {
-
-            if (anDerReihe == 1) {
-                zeichenSpieler = 'X';
-                farbe = config.getAuswahlFarbeEins();
-            } else if (anDerReihe == 2) {
-                zeichenSpieler = '@';
-                farbe = config.getAuswahlFarbeZwei();
-            }
-            if (spielfeld[insertPosy][insertPos] == 'O')
-            {
-                return true;
-
-            }
-
-            else
-            {
-                while (spielfeld[insertPosy][insertPos] == 'X' || spielfeld[insertPosy][insertPos] == '@')
-                {
-                    insertPosy--;
-                    if (spalteVoll(insertPosy) == true)
-                    {
-                        oberflaeche.spalteVollText(insertPos + 1);
-                        return false;
-                    }
-
-                }
-                return true;
-            }
-        }
-        else
-        {
-            oberflaeche.falscheEingabeText();
-            return false;
-        }
-    }
-    public boolean feldLegbar(int Stellex, int Stelley)
-    {
+    public boolean feldLegbar(int Stellex, int Stelley) {
         boolean feldBelegbar = false;
-        if(spielfeld[Stellex][Stelley] == 'O') {
+        if (spielfeld[Stellex][Stelley] == 'O') {
             if (Stellex == 5) {
                 return true;
             } else {
-                for (int m = 5; m > Stellex; m --) {
+                for (int m = 5; m > Stellex; m--) {
                     if (spielfeld[m][Stelley] == 'O') {
                         return false;
                     } else {
@@ -320,56 +209,86 @@ public class Spielfeld {
         }
         return false;
     }
-    public static boolean spalteVoll(int reihe)
-    {
-        if(reihe == -1)
-        {
+
+    public boolean probeEinfügen(int insertPos) {
+        int insertPosy = 5;
+        if (spielfeld[insertPosy][insertPos] == 'O') {
             return true;
-        }
-        else
-        {
-            return false;
+
+        } else {
+            while (spielfeld[insertPosy][insertPos] != 'O') {
+                insertPosy--;
+                if (insertPosy <= -1) {
+                    oberflaeche.spalteVollText(insertPos);
+                    return false;
+                }
+            }
+            return true;
+
         }
     }
-
 
     // Get- & Set-Methoden
-    public int getAuswahlAnfänger()
-    {
-        return config.getAuswAnfänger();
+    public String getWinPosition() {
+        return winPosition;
     }
-    public Spielfeld getCopy() {
-        return new Spielfeld(spielfeld, anDerReihe, anzahlZüge, oberflaeche);
+
+    public Character getCurrentUser() {
+        return userQueue.element();
     }
-    public void setInsertPos(int spalte)
-    {
+
+    public void anzahlZügeHoch() {
+        anzahlZüge++;
+    }
+
+    public Queue getUserQueue() {
+        return userQueue;
+    }
+
+    public void setUserQueue(Queue userQueue) {
+        this.userQueue = userQueue;
+    }
+
+    public int getUserOne() {
+        return UserOne;
+    }
+
+    public int getUserTwo() {
+        return UserTwo;
+    }
+
+    public int getAuswahlAnfänger() {
+        return config.getBeginner();
+    }
+
+    public void setInsertPos(int spalte) {
         insertPos = spalte;
     }
-    public int getInsertPos()
-    {
+
+    public int getInsertPos() {
         return insertPos;
     }
-    public void setAnDerReihe(int anDerReihe) {
-        this.anDerReihe = anDerReihe;
-    }
-    public int getAnDerReihe()
-    {
-        return anDerReihe;
-    }
-    public int getAnzahlZüge()
-    {
+
+    public int getAnzahlZüge() {
         return anzahlZüge;
     }
-    public void setZeichenAnSpielfeld(int i, int j, char zeichen)
-    {
+
+    public void setZeichenAnSpielfeld(int i, int j, char zeichen) {
         spielfeld[i][j] = zeichen;
     }
-    public char getZeichenAusSpielfeld(int i, int j)
-    {
+
+    public char getZeichenAusSpielfeld(int i, int j) {
         return spielfeld[i][j];
     }
-    public int getZeichenAusFarbfeld(int i, int j)
+    public Config getConfig()
     {
+        return config;
+    }
+    public void setConfig(Config config)
+    {
+        this.config = config;
+    }
+    public int getZeichenAusFarbfeld(int i, int j) {
         return farbfeld[i][j];
     }
 

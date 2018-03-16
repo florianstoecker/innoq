@@ -1,20 +1,15 @@
 package com.innoq.praktikum.viergewinnt;
 
 public class KIGegnerStaerkeEins extends KIGegner {
-    public KIGegnerStaerkeEins(Spielfeld spielfeld, char sign, int anfänger)
-    {
-        super(spielfeld, sign, anfänger);
+    public KIGegnerStaerkeEins(Spielfeld spielfeld, char sign, int farbe) {
+        super(spielfeld, sign, farbe);
     }
-    public void macheZug()
-    {
+
+    public void macheZug() {
         random();
-        if(spielfeld.legalerZug() == true)
-        {
-            int auswahlSpalte =spielfeld.getInsertPos();
+        if (spielfeld.probeEinfügen(spielfeld.getInsertPos())) {
             spielfeld.wirfSteinEin();
-        }
-        else
-        {
+        } else {
             macheZug();
         }
     }

@@ -1,42 +1,33 @@
 package com.innoq.praktikum.viergewinnt;
 
 public class KIGegnerStaerkeZwei extends KIGegner {
-    public KIGegnerStaerkeZwei(Spielfeld spielfeld, char sign, int anfänger)
-    {
-        super(spielfeld, sign, anfänger);
+
+    public KIGegnerStaerkeZwei(Spielfeld spielfeld, char sign, int farbe) {
+        super(spielfeld, sign, farbe);
     }
-    public void macheZug()
-    {
+
+    public void macheZug() {
         betrachteterSpieler = 2;
 
-        if (kannGewinnen() == true) {
-            steinWurdeAusgewaehlt();
+        if (kannGewinnen()) {
+            spielfeld.wirfSteinEin();
             return;
         }
         betrachteterSpieler = 1;
 
-        if (kannGewinnen() == true) {
-            steinWurdeAusgewaehlt();
+        if (kannGewinnen()) {
+            spielfeld.wirfSteinEin();
             return;
         }
 
-        if(eigenerStein() == true)
-        {
-         steinWurdeAusgewaehlt();
-        }
-
-            else
-            {
+        if (eigenerStein()) {
+            spielfeld.wirfSteinEin();
+        } else {
+            random();
+            while (!spielfeld.probeEinfügen(spielfeld.getInsertPos())) {
                 random();
-                while(spielfeld.legalerZug() == false)
-                {
-                    random();
-                }
-                int auswahlSpalte = spielfeld.getInsertPos();
-                spielfeld.wirfSteinEin();
             }
-
-
+            spielfeld.wirfSteinEin();
         }
-
+    }
 }

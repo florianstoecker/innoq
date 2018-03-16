@@ -3,165 +3,75 @@ package com.innoq.praktikum.viergewinnt;
 import java.util.Scanner;
 
 public class Config {
-    private static boolean ersterZug = true;
-    private static int auswahlGegner;
-    private static int auswAnfänger;
-    private static int amZug;
-    private static int auswahlFarbeZwei;
-    private static int auswahlFarbeEins;
-    private Konsole oberflaeche;
+
+    private int auswahlGegner = 0;
+    private int beginner;
+    private int auswahlFarbeZwei;
+    private int auswahlFarbeEins;
+    private GUI gui;
     public static Scanner scan = new Scanner(System.in);
 
     //Konstruktor
-    public Config(Konsole oberflaeche){
-        this.oberflaeche = oberflaeche;
-        auswahlGegner = gegnerAuswahl();
+    public Config(GUI gui ) {
+        this.gui = gui;
+        auswahlGegner = this.gui.gegnerAuswahl();
         andereAbfragen();
 
     }
 
     //Methoden
-    public int gegnerAuswahl()   // Menü - Gegnerauswahl
-    {
 
-        oberflaeche.gegnerAuswahlText();
-        auswahlGegner = scan.nextInt();
-        if(auswahlGegner != 2 && auswahlGegner != 1 )
-        {
-            oberflaeche.clear();
-            oberflaeche.falscheEingabeText();
-            return gegnerAuswahl();
+    private KIGegner kiErstellen(int kiStaerke, Spielfeld spielfeld, char sign, int anfänger) {
+
+        switch (kiStaerke) {
+            case 1:
+                return new KIGegnerStaerkeEins(spielfeld, '@', anfänger);
+
+            case 2:
+                return new KIGegnerStaerkeZwei(spielfeld, '@', anfänger);
+
+            case 3:
+                return new KIGegnerStaerkeDrei(spielfeld, '@', anfänger);
+
+            case 4:
+                return new KIGegnerStaerkeVier(spielfeld, '@', anfänger);
+
         }
-        oberflaeche.clear();
-        return auswahlGegner;
+        return null;
     }
-    public void auswahlBeginn()
-    {
-        oberflaeche.clear();
-        oberflaeche.auswahlBeginnText();
-        auswAnfänger = scan.nextInt();
-        if(auswAnfänger != 2 && auswAnfänger != 1 )
-        {
-            oberflaeche.clear();
-            oberflaeche.falscheEingabeText();
-            auswahlBeginn();
-            oberflaeche.clear();
-            return;
+
+    public Spieler spielerZweiAuswaehlen(Spielfeld spielfeld, char sign, int anfänger, GUI gui) {
+        if (auswahlGegner == 2) {
+            return kiErstellen(gui.staerkeAuswahl(), spielfeld, sign, anfänger);
         }
-        oberflaeche.clear();
+        if (auswahlGegner == 1) {
+            return new LokalerSpieler(spielfeld, sign, anfänger, gui);
+        }
+        return null;
     }
-    public void farbeAuswaehlen()
-    {
+
+    public void andereAbfragen() {
         int zahlSpieler = 1;
-        auswahlFarbeEins = auswahlFarbe(zahlSpieler); // Farben für Spieler werden in Zwischenspeichervariabeln gespeichert
-        zahlSpieler++;
-        oberflaeche.clear();
-        auswahlFarbeZwei = auswahlFarbe(zahlSpieler);
-        oberflaeche.clear();//Übergabe von Farbe und Auswahl des Gegners
-    }
-    public int auswahlFarbe(int zahlSpieler) // Farbe für Spieler auswählen
-    {
-        int auswahlFarbe = 0;
-        oberflaeche.auswahlFarbeText(zahlSpieler);
-        auswahlFarbe = scan.nextInt();
-        if(auswahlFarbe > 6 || auswahlFarbe < 1)
-        {
-            oberflaeche.falscheEingabeText();
-            return auswahlFarbe(zahlSpieler);
-        }
-        return auswahlFarbe;
-    }
-    private KIGegner kiErstellen(int kiStaerke, Spielfeld spielfeld, char sign, int anfänger)
-    {
-        switch(kiStaerke)
-        {
-            case 1: return new KIGegnerStaerkeEins(spielfeld, '@', anfänger);
-
-            case 2: return new KIGegnerStaerkeZwei(spielfeld, '@', anfänger);
-
-            case 3: return new KIGegnerStaerkeDrei(spielfeld, '@', anfänger);
-
-            case 4: return new KIGegnerStaerkeVier(spielfeld, '@', anfänger);
-
-        }
-        return null;
-    }
-    public Spieler spielerZweiAuswaehlen(Spielfeld spielfeld, char sign, int anfänger)
-    {
-        if (auswahlGegner == 2)
-        {
-            return kiErstellen(staerkeAuswahl(), spielfeld, sign, anfänger);
-        }
-        if(auswahlGegner == 1)
-        {
-            return new LokalerSpieler(spielfeld, sign, anfänger);
-        }
-        return null;
-    }
-    public boolean nochmal()
-    {
-        oberflaeche.nochmalText();
-        int nochmal = scan.nextInt();
-        if (nochmal == 1) {
-            oberflaeche.clear();
-            return true;
-        } else if (nochmal == 2)
-        {
-            return false;
-        }
-        return false;
-    }
-    public int staerkeAuswahl() // KI - Stärkeauswahl
-    {
-        oberflaeche.staerkeAuswahlText();
-        int dif = scan.nextInt();
-        if(dif>0 && dif <5)
-        {
-            return dif;
-        }
-        return staerkeAuswahl();
-    }
-    public void andereAbfragen()
-    {
-        auswahlBeginn();
-        farbeAuswaehlen();
-        oberflaeche.clear();
-    }
-    public static void wechsleAuswAnfänger()
-    {
-        if(auswAnfänger == 1)
-        {
-            auswAnfänger = 2;
-        }
-        else if(auswAnfänger == 2)
-        {
-            auswAnfänger = 1;
-        }
+        beginner = gui.beginnerAuswahl();
+        auswahlFarbeEins = gui.farbAuswahl(zahlSpieler);
+        zahlSpieler ++;
+        auswahlFarbeZwei = gui.farbAuswahl(zahlSpieler);
     }
 
     //Get und Set Methoden
-    public int getBeginner()
-    {
-        return auswAnfänger;
+    public int getBeginner() {
+        return beginner;
     }
-    public int getAuswAnfänger()
-    {
-        return auswAnfänger;
-    }
-    public int getAuswahlGegner()
-    {
+
+    public int getAuswahlGegner() {
         return auswahlGegner;
     }
-    public void setAuswAnfänger(int choose)
-    {
-        auswAnfänger = choose;
-    }
-    public static int getAuswahlFarbeZwei()
-    {
+
+    public int getAuswahlFarbeZwei() {
         return auswahlFarbeZwei;
     }
-    public static int getAuswahlFarbeEins()
-    {
+
+    public int getAuswahlFarbeEins() {
         return auswahlFarbeEins;
     }
 

@@ -3,45 +3,44 @@ package com.innoq.praktikum.viergewinnt;
 public class KIGegnerStaerkeDrei extends KIGegner {
 
     //Konstruktor
-    public KIGegnerStaerkeDrei(Spielfeld spielfeld, char sign, int anfänger)
-    {
-        super(spielfeld, sign, anfänger);
+    public KIGegnerStaerkeDrei(Spielfeld spielfeld, char sign, int farbe) {
+        super(spielfeld, sign, farbe);
     }
 
     //Methoden
     public void macheZug() {
 
         betrachteterSpieler = 2;
-        if (kannGewinnen() == true) {
-            steinWurdeAusgewaehlt();
+        if (kannGewinnen()) {
+            spielfeld.wirfSteinEin();
             return;
         }
         betrachteterSpieler = 1;
 
-        if (kannGewinnen() == true) {
-            steinWurdeAusgewaehlt();
+        if (kannGewinnen()) {
+            spielfeld.wirfSteinEin();
             return;
         }
         betrachteterSpieler = 1;
-        if (zweiGleicheGewinnMöglich(0 )== true) {
-            steinWurdeAusgewaehlt();
+        if (zweiGleicheGewinnMöglich(0)) {
+            spielfeld.wirfSteinEin();
             return;
         }
         betrachteterSpieler = 2;
-        if (zweiGleicheGewinnMöglich(0) == true) {
-            steinWurdeAusgewaehlt();
+        if (zweiGleicheGewinnMöglich(0)) {
+            spielfeld.wirfSteinEin();
             return;
         }
-        if (eigenerStein() == true) {
-            steinWurdeAusgewaehlt();
+        if (eigenerStein()) {
+            spielfeld.wirfSteinEin();
             return;
         } else {
             random();
-            while (spielfeld.legalerZug() == false) {
+            while (!spielfeld.probeEinfügen(spielfeld.getInsertPos())) {
                 random();
             }
-            int auswahlSpalte = spielfeld.getInsertPos();
             spielfeld.wirfSteinEin();
+            return;
         }
 
 

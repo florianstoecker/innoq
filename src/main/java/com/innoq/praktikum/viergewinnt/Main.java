@@ -5,31 +5,42 @@ public class Main {
     //Main-Methode
     public static void main(String[] args) {
         Konsole oberflaeche = new Konsole();
-        Config config = new Config(oberflaeche);
+        GUI gui = new GUI();
+        Config config = new Config(gui);
         ZeichneSpielfeld zeichneSpielfeld = new ZeichneSpielfeld();
-        Spielfeld spielfeld = new Spielfeld(oberflaeche, config, zeichneSpielfeld);
-        int anfänger = 1;
-
-        spielfeld.setAnDerReihe(config.getBeginner());
-        Spieler s1 =  new LokalerSpieler(spielfeld, 'X', anfänger);
-        Spieler s2 = config.spielerZweiAuswaehlen(spielfeld, '@', anfänger);
+        Spielfeld spielfeld = new Spielfeld(oberflaeche, config);
+        gui.setSpielfeld(spielfeld);
+        gui.setConfig(config);
+        boolean weiter = true;
+        Spieler s1 = new LokalerSpieler(spielfeld, 'X', config.getAuswahlFarbeEins(), gui);
+        Spieler s2 = config.spielerZweiAuswaehlen(spielfeld, '@', config.getAuswahlFarbeZwei(), gui);
 
         Spieler s = s1;
-        oberflaeche.clear();
-
-        oberflaeche.spielBeginnText();
-        zeichneSpielfeld.zeichneSpielfeld(spielfeld);
-        do{
-            switch(spielfeld.getAnDerReihe()) {
-                case 1: s = s1;oberflaeche.macheZugText(spielfeld.getAnDerReihe(),2);break;
-                case 2: s = s2; if(config.getAuswahlGegner() == 1){oberflaeche.macheZugText(spielfeld.getAnDerReihe(), 2);}break;
+        while (weiter) {
+            switch (spielfeld.getCurrentUser()) {
+                case 'X':
+                    s = s1;
+                    oberflaeche.macheZugText(spielfeld.getCurrentUser(), spielfeld.getUserOne());
+                    break;
+                case '@':
+                    s = s2;
+                    if (config.getAuswahlGegner() == 1) {
+                        oberflaeche.macheZugText(spielfeld.getCurrentUser(), spielfeld.getUserTwo());
+                    }
+                    break;
             }
-            s.macheZug();
-            oberflaeche.gelegtText(spielfeld.getInsertPos() + 1);
+            gui.repaint(spielfeld);
             zeichneSpielfeld.zeichneSpielfeld(spielfeld);
-        }while(!spielfeld.gewinn());
-
-        oberflaeche.gewinnText(spielfeld.getAnDerReihe());
-        zeichneSpielfeld.zeichneSpielfeld(spielfeld);
+            s.macheZug();
+            spielfeld.anzahlZügeHoch();
+            if (spielfeld.checkWin()) {
+                gui.gewinn(spielfeld.getCurrentUser(), spielfeld.getWinPosition());
+                zeichneSpielfeld.zeichneSpielfeld(spielfeld);
+                weiter = false;
+            } else if (spielfeld.voll()) {
+                gui.repaint(spielfeld);
+                weiter = false;
+            }
+        }
     }
 }
