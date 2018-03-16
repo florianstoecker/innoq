@@ -16,7 +16,7 @@ public class GUI extends JFrame {
     private JPanel panelButtonMain, panelButton;
     private JLabel title, sign;
     private boolean clicked = false;
-    private JFrame window = new JFrame("vierGewinnt v_1.01");
+    private JFrame window = new JFrame("vierGewinnt v_1.3");
     private static final Map colours = new HashMap<Integer, String>();
     private Config config;
     private int gegnerAuswahl, beginnerAuswahl, farbAuswahl, kiStaerke;
@@ -215,6 +215,12 @@ public class GUI extends JFrame {
         } else {
             spieler = 2;
         }
+        panelButton = new JPanel();
+        standardButtonOne = new JButton("Feld anzeigen");
+        standardButtonOne.setLocation(20, 100);
+        standardButtonOne.addActionListener(this::actionPerformed);
+        standardButtonOne.setPreferredSize(new Dimension(100, 40));
+        panelButton.add(standardButtonOne);
         JLabel sign = new JLabel("Der Gewinner ist Spieler " + spieler + "!");
         sign.setHorizontalAlignment(JLabel.CENTER);
         sign.setSize(100, 30);
@@ -351,8 +357,12 @@ public class GUI extends JFrame {
                 farbAuswahl = 5;
                 clicked = true;
                 break;
-            case "Cyan":
+            case "Braun":
                 farbAuswahl = 6;
+                clicked = true;
+                break;
+            case "Schwarz":
+                farbAuswahl = 7;
                 clicked = true;
                 break;
             case "Zufall":
@@ -371,7 +381,10 @@ public class GUI extends JFrame {
                 kiStaerke = 4;
                 clicked = true;
                 break;
-
+            case " Feld anzeigen":
+                repaint(spielfeld);
+                clicked = true;
+                break;
 
         }
     }
@@ -388,19 +401,6 @@ public class GUI extends JFrame {
 
     public void setSpielfeld(Spielfeld spielfeld) {
         this.spielfeld = spielfeld;
-    }
-
-    public void enableButtons() {
-        window.getContentPane().removeAll();
-        window.add(panelButtonMain);
-        fillField(spielfeld);
-        SwingUtilities.updateComponentTreeUI(window);
-    }
-
-    public void disableButtons() {
-        window.getContentPane().removeAll();
-        fillField(spielfeld);
-        SwingUtilities.updateComponentTreeUI(window);
     }
 
     public void setConfig(Config config) {

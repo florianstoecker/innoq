@@ -55,18 +55,4 @@ public class Konsole {
 
     }
 
-
-
-    public void gewinnText(char currentUser, String winPosition) {
-        int spieler;
-        if (currentUser == '@') {
-            spieler = 1;
-        } else {
-            spieler = 2;
-        }
-        Animation.an_Gewinn();
-        System.out.println(BLACK_BOLD + "Der Gewinner ist Spieler " + spieler + "!");
-        System.out.println("Gewonnen wurde " + winPosition);
-        System.out.println("Das Spiel ist zu Ende!" + COLOR_RESET);
-    }
 }
