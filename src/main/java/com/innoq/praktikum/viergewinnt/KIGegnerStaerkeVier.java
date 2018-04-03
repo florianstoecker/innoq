@@ -7,14 +7,7 @@ public class KIGegnerStaerkeVier extends KIGegner {
         super(spielfeld, sign, farbe);
     }
 
-    //Methoden
-<<<<<<< HEAD
-    public void macheZug()
-    {
-        spielfeld.setInsertPos(findeBestenZug(spielfeld, 3));
-        spielfeld.wirfSteinEin();
-        return;
-=======
+
     public void macheZug() {
         betrachteterSpieler = 2;
         if (kannGewinnen()) {
@@ -34,6 +27,5 @@ public class KIGegnerStaerkeVier extends KIGegner {
             }
             spielfeld.wirfSteinEin();
         }
->>>>>>> dda3cbf197d366996a21544b08024453f15b7206
     }
 }

@@ -680,73 +680,6 @@ public class KIGegner extends Spieler {
                     System.out.println("Die Tiefe:" + tiefe + "   Spieler ist dran:" + spielfeld.getCurrentUser() + " Minimax:" + minimaxTmp + "    Die Spalte:" + spalte );
                     //TEST*/
 
-<<<<<<< HEAD
-      Spielfeld spielfeldTMP;
-      int minimax;
-      int minimaxTMP;
-      if(spielfeld.getAnDerReihe() == 2)
-      {
-          minimax = alpha;
-      }
-      else {
-          minimax = beta;
-      }
-      if(tiefe == 0)
-      {
-          return bewertung(spielfeld);
-      }
-      else
-      {
-          for(int i = 0; i < 7; i++)
-          {
-              spielfeldTMP = kopieAnlegen(spielfeld);
-              if(probeEinfügen(spielfeldTMP, i))
-              {
-                  spielfeldTMP.setInsertPos(i);
-                  spielfeldTMP.wirfSteinEin();
-
-                  //TEST
-                  for(int k = 0; k<6; k++)
-                  {
-                      for(int l = 0; l<7; l++) {
-                          System.out.print(spielfeldTMP.getZeichenAusSpielfeld(k,l));
-                      }
-                      System.out.println("");
-                      }
-                  System.out.println("");
-                  for(int k = 0; k<6; k++)
-                  {
-                      for(int l = 0; l<7; l++) {
-                          System.out.print(spielfeld.getZeichenAusSpielfeld(k,l));
-                      }
-                      System.out.println("");
-                  }
-                  System.out.println("");
-                  //TEST
-                  minimaxTMP = berechneMiniMax(spielfeldTMP, tiefe - 1, alpha, beta);
-                  if(spielfeld.getAnDerReihe() == 2)
-                  {
-                      minimax = java.lang.Math.max(minimaxTMP, minimax);
-                      alpha = minimax;
-                      if(alpha >= beta)
-                      {
-                          return beta;
-                      }
-                  }
-                  else
-                  {
-                      minimax = java.lang.Math.min(minimaxTMP, minimax);
-                      beta = minimax;
-                      if( beta<= alpha)
-                      {
-                          return alpha;
-                      }
-                  }
-              }
-          }
-        return minimax;
-      }
-=======
                     if (spielfeld.getCurrentUser() == '@') {
                         minimax = java.lang.Math.max(minimaxTmp, minimax);
                         //System.out.println("max:" +minimax);
@@ -770,7 +703,6 @@ public class KIGegner extends Spieler {
             }
             return minimax;
         }
->>>>>>> dda3cbf197d366996a21544b08024453f15b7206
     }
 
     private int bewertung(Spielfeld spiel) {
